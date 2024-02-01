@@ -14,9 +14,9 @@ Ensure you have the following installed on your system:
 
 ## Step 1: Clone the Repository
 
+
 First, clone the project repository using Git:
 
-```bash
 git clone <your-repository-url>
 cd swotting
 
@@ -24,7 +24,6 @@ cd swotting
 
 Navigate to the project's root directory and create a Python virtual environment named `venv`:
 
-```bash
 python3 -m venv venv
 
 ## Step 3: Activate the Virtual Environment

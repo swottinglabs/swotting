@@ -5,4 +5,4 @@ class Command(BaseCommand):
     help = "Release the spiders"
 
     def handle(self, *args, **options):
-        execute(['scrapy', 'crawl', 'yourspidername'])
+        execute(['scrapy', 'crawl', 'example'])

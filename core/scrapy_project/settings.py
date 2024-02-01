@@ -10,9 +10,12 @@
 import os
 import sys
 import django
+import dotenv
+
+dotenv.load_dotenv()
 
 # Setting up django's project full path.
-# sys.path.insert(0, '../../manage.py')
+sys.path.insert(0, '../../../swotting')
 # Setting up Django's settings module name.
 os.environ['DJANGO_SETTINGS_MODULE'] = 'swotting.settings'
 django.setup()

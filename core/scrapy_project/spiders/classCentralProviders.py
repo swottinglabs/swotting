@@ -4,6 +4,12 @@ import json
 import re
 import csv
 from bs4 import BeautifulSoup
+import time
+# from selenium import webdriver
+# from selenium.webdriver.chrome.options import Options
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
 
 # Todo to run: active the virtual environment and run the following command python3 manage.py scrape classCentralProviders in the ubuntu
 # TODO
@@ -83,17 +89,21 @@ class ProvidersSpider(scrapy.Spider):
             # Extract course information
             course_name = course.find('h2', itemprop='name').text if course.find('h2', itemprop='name') else None
             course_url = course.find('a', itemprop='url')['href'] if course.find('a', itemprop='url') else None
-            provider_name = course.find('span', text='Provider').find_next_sibling('a').text if course.find('span', text='Provider') else None
+            # provider_name = course.find('span', text='Provider').find_next_sibling('a').text if course.find('span', text='Provider') else None
             summary = course.find('p', class_='text-2 margin-bottom-xsmall').text.strip() if course.find('p', class_='text-2 margin-bottom-xsmall') else None
             duration = None
             duration_element = course.find('span', {'aria-label': 'Workload and duration'})
             if duration_element:
                 duration = duration_element.text.strip()
 
+            # end_url = self.get_end_url(course_url)
+            # print(f"End URL: {end_url}")
+
             # Rename 'course_url' to 'url_classCentral'
             courses_info.append({
                 'course_name': course_name,
                 'url_classCentral': course_url,
+                # 'end_url': end_url,
                 'provider_slug': provider_slug,
                 'summary': summary,
                 'duration': duration
@@ -114,7 +124,7 @@ class ProvidersSpider(scrapy.Spider):
 
         # Save the courses information to a CSV file, excluding duplicates
         with open('courses_info.csv', mode='a', newline='', encoding='utf-8') as csvfile:
-            fieldnames = ['course_name', 'url_classCentral', 'provider_slug', 'summary', 'duration']
+            fieldnames = ['course_name', 'url_classCentral', 'end_url', 'provider_slug', 'summary', 'duration']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             
             # Write the header only if the file is newly created
@@ -128,8 +138,8 @@ class ProvidersSpider(scrapy.Spider):
         current_page = response.meta['current_page']
         print(f"Current page complete: {current_page}")
         # For testing if current page over 4 then stop
-        if current_page > 4:
-            return courses_info
+        # if current_page > 1:
+        #     return courses_info
 
         modified_url = f"https://www.classcentral.com/maestro/provider/{provider_slug}?page={current_page+1}&free=true"
         print(f"Modified Url: {modified_url}")
@@ -159,7 +169,7 @@ class ProvidersSpider(scrapy.Spider):
 
         for provider in providers:
 
-            if provider["name"] != "Udemy": continue
+            if provider["name"] == "youtube" or provider["name"] == "Youtube" or provider["name"] == "YouTube": continue
             print(provider)
             
 
@@ -174,6 +184,47 @@ class ProvidersSpider(scrapy.Spider):
             # Use the callback parameter to specify the method that will handle the response
             yield scrapy.Request(url=modified_url, callback=self.parse_course_data, meta={'provider_slug': provider_slug, 'current_page': 1})
 
+
+
+    # def get_end_url(self, url_slug, max_wait=20):
+    #     # Configure Selenium to use Chrome in headless mode
+    #     options = Options()
+    #     options.headless = True
+    #     options.add_argument("--window-size=1920,1080")
+
+    #     # Initialize the WebDriver
+    #     driver = webdriver.Chrome(options=options)
+
+    #     start_url = f"https://www.classcentral.com{url_slug}/visit"
+
+    #     # Open the URL
+    #     driver.get(start_url)
+
+    #     # Start time for the wait loop
+    #     start_time = time.time()
+
+    #     # Loop until the URL changes or max_wait time is reached
+    #     while True:
+    #         current_time = time.time()
+    #         if driver.current_url != start_time or current_time - start_time > max_wait:
+    #             break
+    #         time.sleep(1)  # Wait for 1 second before checking again
+
+    #     # You can add more logic here if you need to interact with the page or extract data
+
+    #     end_url = driver.current_url
+    #     print(f"End URL: {end_url}")
+
+    #     # Print the current URL after waiting
+    #     print("Current URL after waiting:", driver.current_url)
+
+    #     # Close the browser
+    #     driver.quit()
+
+    #     if end_url == start_url:
+    #         return None
+        
+    #     return end_url
 
 
     

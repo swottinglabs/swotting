@@ -1,6 +1,8 @@
 import csv
 from django.core.management.base import BaseCommand
 from core.models import DigitalLearningResource, DigitalLearningResourcePlatform, DigitalLearningResourceCategory
+from core.utils import determine_platform_name_from_slug_code
+
 
 class Command(BaseCommand):
     help = 'Import digital learning resources from a CSV file'
@@ -12,6 +14,10 @@ class Command(BaseCommand):
         csv_file_path = options['csv_file']
 
         platform_slugs = {}
+
+        DigitalLearningResourceCategory.objects.create(
+            name='Online Course'
+        )
 
         with open(csv_file_path, newline='', encoding='utf-8') as csvfile:
             reader = csv.DictReader(csvfile)
@@ -28,7 +34,7 @@ class Command(BaseCommand):
         for k, v in platform_slugs.items():
             name = v.get('name', None)
             if name is not None:
-                platform_name = name.capitalize().replace('-', ' ').replace('_', ' ')
+                platform_name = determine_platform_name_from_slug_code(name)
                 existing_platform = DigitalLearningResourcePlatform.objects.filter(name=platform_name).first()
                 if existing_platform is None:
                     DigitalLearningResourcePlatform.objects.create(name=platform_name)

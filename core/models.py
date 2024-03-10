@@ -1,6 +1,7 @@
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
-from django_lifecycle import LifecycleModelMixin
+from django.utils.text import slugify
+from django_lifecycle import LifecycleModelMixin, hook, AFTER_CREATE
 from taggit.managers import TaggableManager
 
 
@@ -19,7 +20,7 @@ class DigitalLearningResourcePlatform(models.Model):
 
 
 class DigitalLearningResourceCategory(models.Model):
-    name = models.CharField(max_length=200, null=True,
+    name = models.CharField(max_length=200, null=True, unique=True,
                             blank=True, db_index=True)
 
     def __str__(self):
@@ -77,8 +78,18 @@ class DigitalLearningResource(LifecycleModelMixin, LearningResource):
     tags = TaggableManager(blank=True, related_name='digital_resources')
 
 
-    extra_data = models.JSONField(default=dict, blank=True, encoder=DjangoJSONEncoder,
-                                  help_text="Any additional metadata provided.")
-
     # TODO: Later?
     # file = models.FileField(upload_to='learning-resources/files', null=True, blank=True)
+
+    @hook(AFTER_CREATE)
+    def create_unique_slug(self):
+        base_slug = slugify(self.name)
+        unique_slug = base_slug
+        num = 1
+
+        while DigitalLearningResource.objects.filter(slug=unique_slug).exists():
+            unique_slug = f'{base_slug}-{num}'
+            num += 1
+
+        self.slug = unique_slug
+        self.save()

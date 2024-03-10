@@ -1,7 +1,9 @@
+import uuid
+
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 from django.utils.text import slugify
-from django_lifecycle import LifecycleModelMixin, hook, AFTER_CREATE
+from django_lifecycle import LifecycleModelMixin, hook, AFTER_CREATE, BEFORE_CREATE
 from taggit.managers import TaggableManager
 
 
@@ -60,7 +62,7 @@ class LearningResource(TimestampMixin, models.Model):
 
 class DigitalLearningResource(LifecycleModelMixin, LearningResource):
     external_id = models.CharField(max_length=200, null=True, blank=True,
-                                   db_index=True)
+                                   db_index=True, unique=True)
     thumbnail_url = models.URLField(max_length=450, null=True, blank=True)
 
     url = models.URLField(max_length=200, null=True, blank=True, unique=True)
@@ -81,15 +83,11 @@ class DigitalLearningResource(LifecycleModelMixin, LearningResource):
     # TODO: Later?
     # file = models.FileField(upload_to='learning-resources/files', null=True, blank=True)
 
-    @hook(AFTER_CREATE)
-    def create_unique_slug(self):
-        base_slug = slugify(self.name)
-        unique_slug = base_slug
-        num = 1
+    @classmethod
+    def create_unique_slug(cls, name: str):
+        base_slug = slugify(name)
+        unique_slug = f'{base_slug}-{uuid.uuid4().hex[:8]}'
 
-        while DigitalLearningResource.objects.filter(slug=unique_slug).exists():
-            unique_slug = f'{base_slug}-{num}'
-            num += 1
-
-        self.slug = unique_slug
-        self.save()
+        while cls.objects.filter(slug=unique_slug).exists():
+            unique_slug = f'{base_slug}-{uuid.uuid4().hex[:8]}'
+        return unique_slug

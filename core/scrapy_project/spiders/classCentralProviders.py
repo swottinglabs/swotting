@@ -1,22 +1,15 @@
-from pathlib import Path
-import scrapy
+import csv
 import json
 import re
-import csv
-from bs4 import BeautifulSoup
 import time
 
+import scrapy
+from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
-
-# from selenium import webdriver
-# from selenium.webdriver.chrome.options import Options
-# from selenium.webdriver.common.by import By
-# from selenium.webdriver.support.ui import WebDriverWait
-# from selenium.webdriver.support import expected_conditions as EC
 
 # Todo to run: active the virtual environment and run the following command python3 manage.py scrape classCentralProviders in the ubuntu
 # TODO
@@ -126,9 +119,6 @@ class ProvidersSpider(scrapy.Spider):
                 "source": "classCentral",
                 "language": "en"
             })
-
-            break # For testing purposes, remove this line to process all courses
-
         
         # for course in courses:
         #     # Extract course information
@@ -192,10 +182,11 @@ class ProvidersSpider(scrapy.Spider):
 
         current_page = response.meta['current_page']
         print(f"Current page complete: {current_page}")
-        # For testing if current page over 4 then stop
-        if current_page > 1:
+        # For testing if current page over 2 then stop
+        if current_page > 2:
             return courses_info
 
+        print('current_page', current_page)
         modified_url = f"https://www.classcentral.com/maestro/provider/{provider_slug}?page={current_page+1}&free=true&lang=english"
         print(f"Modified Url: {modified_url}")
         yield scrapy.Request(url=modified_url, callback=self.parse_course_data, meta={'provider_slug': provider_slug, 'current_page': current_page + 1})

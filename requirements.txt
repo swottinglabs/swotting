@@ -44,3 +44,4 @@ urllib3==2.2.0
 webdriver-manager==4.0.1
 w3lib==2.1.2
 zope.interface==6.1
+dj-database-url==2.1.0

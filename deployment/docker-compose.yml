@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  swottingdb:
+    container_name: postgres
+    image: ankane/pgvector:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    command: postgres -c shared_preload_libraries=pg_stat_statements -c pg_stat_statements.track=all -c max_connections=200
+    ports:
+      - "5432:5432"
+    environment: # set the environment variables here
+      POSTGRES_USER: swotting
+      POSTGRES_PASSWORD: swotting
+      POSTGRES_DB: swotting
+    env_file:
+      - ../.env
+
+
+volumes:
+  postgres_data:

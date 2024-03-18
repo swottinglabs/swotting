@@ -1,6 +1,9 @@
+import uuid
+
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
-from django_lifecycle import LifecycleModelMixin
+from django.utils.text import slugify
+from django_lifecycle import LifecycleModelMixin, hook, AFTER_CREATE, BEFORE_CREATE
 from taggit.managers import TaggableManager
 
 
@@ -19,7 +22,7 @@ class DigitalLearningResourcePlatform(models.Model):
 
 
 class DigitalLearningResourceCategory(models.Model):
-    name = models.CharField(max_length=200, null=True,
+    name = models.CharField(max_length=200, null=True, unique=True,
                             blank=True, db_index=True)
 
     def __str__(self):
@@ -59,7 +62,7 @@ class LearningResource(TimestampMixin, models.Model):
 
 class DigitalLearningResource(LifecycleModelMixin, LearningResource):
     external_id = models.CharField(max_length=200, null=True, blank=True,
-                                   db_index=True)
+                                   db_index=True, unique=True)
     thumbnail_url = models.URLField(max_length=450, null=True, blank=True)
 
     url = models.URLField(max_length=200, null=True, blank=True, unique=True)
@@ -77,8 +80,14 @@ class DigitalLearningResource(LifecycleModelMixin, LearningResource):
     tags = TaggableManager(blank=True, related_name='digital_resources')
 
 
-    extra_data = models.JSONField(default=dict, blank=True, encoder=DjangoJSONEncoder,
-                                  help_text="Any additional metadata provided.")
-
     # TODO: Later?
     # file = models.FileField(upload_to='learning-resources/files', null=True, blank=True)
+
+    @classmethod
+    def create_unique_slug(cls, name: str):
+        base_slug = slugify(name)
+        unique_slug = f'{base_slug}-{uuid.uuid4().hex[:8]}'
+
+        while cls.objects.filter(slug=unique_slug).exists():
+            unique_slug = f'{base_slug}-{uuid.uuid4().hex[:8]}'
+        return unique_slug

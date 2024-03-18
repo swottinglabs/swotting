@@ -12,23 +12,11 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-# from selenium import webdriver
-# from selenium.webdriver.chrome.options import Options
-# from selenium.webdriver.common.by import By
-# from selenium.webdriver.support.ui import WebDriverWait
-# from selenium.webdriver.support import expected_conditions as EC
 
-# Todo to run: active the virtual environment and run the following command python3 manage.py scrape classCentralProviders in the ubuntu
-# TODO
-# provider_name  is not working - DONE
-# Save courses to a csv file. - DONE
-# Write a function to get the link that is being requested. 
-# make 1-5 sec delay between requests - Done
-# make that it loops through all the pages. - Done
 
 
 class ProvidersSpider(scrapy.Spider):
-    name = "classCentralProviders"
+    name = "classCentral"
     start_urls = [
         "https://www.classcentral.com/providers",
     ]
@@ -193,8 +181,8 @@ class ProvidersSpider(scrapy.Spider):
         current_page = response.meta['current_page']
         print(f"Current page complete: {current_page}")
         # For testing if current page over 4 then stop
-        if current_page > 1:
-            return courses_info
+        # if current_page > 1:
+        #     return courses_info
 
         modified_url = f"https://www.classcentral.com/maestro/provider/{provider_slug}?page={current_page+1}&free=true&lang=english"
         print(f"Modified Url: {modified_url}")
@@ -228,7 +216,8 @@ class ProvidersSpider(scrapy.Spider):
 
             if provider["name"] == "youtube" or provider["name"] == "Youtube" or provider["name"] == "YouTube": continue
 
-            if provider["name"] != "edX": continue
+            # Testing purposes
+            # if provider["name"] != "edX": continue
 
             # Split the URL to get the provider name slug
             provider_slug = provider['url'].split('/')[-1]
@@ -241,47 +230,6 @@ class ProvidersSpider(scrapy.Spider):
             # Use the callback parameter to specify the method that will handle the response
             yield scrapy.Request(url=modified_url, callback=self.parse_course_data, meta={'provider_slug': provider_slug, 'current_page': 1})
 
-
-
-    # def get_end_url(self, url_slug, max_wait=20):
-    #     # Configure Selenium to use Chrome in headless mode
-    #     options = Options()
-    #     options.headless = True
-    #     options.add_argument("--window-size=1920,1080")
-
-    #     # Initialize the WebDriver
-    #     driver = webdriver.Chrome(options=options)
-
-    #     start_url = f"https://www.classcentral.com{url_slug}/visit"
-
-    #     # Open the URL
-    #     driver.get(start_url)
-
-    #     # Start time for the wait loop
-    #     start_time = time.time()
-
-    #     # Loop until the URL changes or max_wait time is reached
-    #     while True:
-    #         current_time = time.time()
-    #         if driver.current_url != start_time or current_time - start_time > max_wait:
-    #             break
-    #         time.sleep(1)  # Wait for 1 second before checking again
-
-    #     # You can add more logic here if you need to interact with the page or extract data
-
-    #     end_url = driver.current_url
-    #     print(f"End URL: {end_url}")
-
-    #     # Print the current URL after waiting
-    #     print("Current URL after waiting:", driver.current_url)
-
-    #     # Close the browser
-    #     driver.quit()
-
-    #     if end_url == start_url:
-    #         return None
-        
-    #     return end_url
 
     def get_end_url(self, url_slug, max_wait=20):
         # Configure Selenium to use Chrome in headless mode

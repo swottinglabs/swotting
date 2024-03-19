@@ -12,7 +12,7 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-# Bug: Does not seem to skip youtube provider - then the end url does not work. 
+# Bug: The Free Code Camp Provider are all Youtube courses that is why they are not working and taking around 5hours of time. 
 
 
 class ProvidersSpider(scrapy.Spider):
@@ -101,7 +101,8 @@ class ProvidersSpider(scrapy.Spider):
                     break  # Assuming the first matching link is the entity link
             
             # Get the final url
-            end_url = self.get_end_url(course_url)
+            # end_url = self.get_end_url(course_url)
+            end_url = ""
             
             # Append course information with the dynamic 'entity_url'
             courses_info.append({

@@ -48,6 +48,8 @@ class ProvidersSpider(scrapy.Spider):
 
             providers.append(item)
 
+        print("providers: ", providers)
+
         # Call getAllLinksFromProviders and yield each request
         for request in self.getAllLinksFromProviders(providers):
             yield request
@@ -212,9 +214,11 @@ class ProvidersSpider(scrapy.Spider):
 
         for provider in providers:
 
-            print("Provider: ", provider)
+            
+            # Skip youtube provider
+            if provider["name"] == "youtube" or provider["name"] == "Youtube" or provider["name"] == "YouTube" or provider["url"] == "https://www.classcentral.com/provider/youtube" : continue
 
-            if provider["name"] == "youtube" or provider["name"] == "Youtube" or provider["name"] == "YouTube": continue
+            print("Provider: ", provider)
 
             # Testing purposes
             # if provider["name"] != "edX": continue

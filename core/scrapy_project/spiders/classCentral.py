@@ -12,7 +12,7 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-
+# Bug: Does not seem to skip youtube provider - then the end url does not work. 
 
 
 class ProvidersSpider(scrapy.Spider):
@@ -254,7 +254,7 @@ class ProvidersSpider(scrapy.Spider):
         # Loop until the URL changes or max_wait time is reached
         while True:
             current_time = time.time()
-            if driver.current_url != start_url and current_time - start_time > max_wait:
+            if driver.current_url != start_url or current_time - start_time > max_wait:
                 break
             time.sleep(1)  # Wait for 1 second before checking again
 

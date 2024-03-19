@@ -53,7 +53,8 @@ class ProvidersSpider(scrapy.Spider):
         # Call getAllLinksFromProviders and yield each request
         for request in self.getAllLinksFromProviders(providers):
             yield request
-            
+
+
     def parse_course_data(self, response):
         # Extract the text content of the response object
         input_json_string = response.text  # or response.body.decode('utf-8') if you encounter encoding issues
@@ -81,6 +82,7 @@ class ProvidersSpider(scrapy.Spider):
         if not courses:
             print("No courses found")
             return
+
         
         for course in courses:
             # Extract course information as before
@@ -101,8 +103,8 @@ class ProvidersSpider(scrapy.Spider):
                     break  # Assuming the first matching link is the entity link
             
             # Get the final url
-            # end_url = self.get_end_url(course_url)
-            end_url = ""
+            end_url = self.get_end_url(course_url)
+            # end_url = ""
             
             # Append course information with the dynamic 'entity_url'
             courses_info.append({
@@ -112,46 +114,14 @@ class ProvidersSpider(scrapy.Spider):
                 'provider_slug': provider_slug,
                 'summary': summary,
                 'duration': duration,
-                'entity_url': entity_url,  # Dynamically found
+                'entity_url': entity_url,
                 "type": "free",
                 "source": "classCentral",
                 "language": "en"
             })
 
-            break # For testing purposes, remove this line to process all courses
+            # break # For testing purposes, remove this line to process all courses
 
-        
-        # for course in courses:
-        #     # Extract course information
-        #     course_name = course.find('h2', itemprop='name').text if course.find('h2', itemprop='name') else None
-        #     course_url = course.find('a', itemprop='url')['href'] if course.find('a', itemprop='url') else None
-        #     # provider_name = course.find('span', text='Provider').find_next_sibling('a').text if course.find('span', text='Provider') else None
-        #     summary = course.find('p', class_='text-2 margin-bottom-xsmall').text.strip() if course.find('p', class_='text-2 margin-bottom-xsmall') else None
-        #     duration = None
-        #     duration_element = course.find('span', {'aria-label': 'Workload and duration'})
-        #     if duration_element:
-        #         duration = duration_element.text.strip()
-
-        #     # Extract university URL
-        #     university_element = course.find('a', href=lambda href: href and '/university/' in href)
-        #     university_url = university_element['href'] if university_element else None
-
-        #     # end_url = self.get_end_url(course_url)
-        #     # print(f"End URL: {end_url}")
-
-        #     # Rename 'course_url' to 'url_classCentral' and add 'university_url'
-        #     courses_info.append({
-        #         'course_name': course_name,
-        #         'url_classCentral': course_url,
-        #         # 'end_url': end_url,
-        #         'provider_slug': provider_slug,
-        #         'summary': summary,
-        #         'duration': duration,
-        #         "type": "free",
-        #         "source": "classCentral",
-        #         "language": "en",
-        #         "university_url": university_url  # Add university_url here
-        #     })
 
         print("Finished parsing course data and found this many courses: ", len(courses_info))
 
@@ -183,7 +153,7 @@ class ProvidersSpider(scrapy.Spider):
 
         current_page = response.meta['current_page']
         print(f"Current page complete: {current_page}")
-        # For testing if current page over 4 then stop
+        # For testing if current page over 1 then stop
         # if current_page > 1:
         #     return courses_info
 
@@ -219,6 +189,9 @@ class ProvidersSpider(scrapy.Spider):
             # Skip youtube provider
             if provider["name"] == "youtube" or provider["name"] == "Youtube" or provider["name"] == "YouTube" or provider["url"] == "https://www.classcentral.com/provider/youtube" : continue
 
+            # Testing only do edx
+            # if provider["name"].lower() != "edx": continue
+
             print("Provider: ", provider)
 
             # Testing purposes
@@ -245,10 +218,15 @@ class ProvidersSpider(scrapy.Spider):
         options.add_argument("--no-sandbox")  # Add this if you are running in a container or restricted environment
         options.add_argument("--disable-dev-shm-usage")  # Add this to overcome limited resource problems
 
+        start_url = f"https://www.classcentral.com{url_slug}/visit"
+
+        # return none if the course is directly on classcentral (See example: https://www.classcentral.com/classroom/freecodecamp-flutter-course-for-beginners-37-hour-cross-platform-app-development-tutorial-104327)
+        if start_url.startswith("https://www.classcentral.com/classroom"): 
+            return None
+
         # Initialize the WebDriver with webdriver-manager
         driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
-        start_url = f"https://www.classcentral.com{url_slug}/visit"
 
         # Open the URL
         driver.get(start_url)

@@ -102,9 +102,12 @@ class ProvidersSpider(scrapy.Spider):
                     entity_url = link['href']
                     break  # Assuming the first matching link is the entity link
             
+            
+                        
+
             # Get the final url
-            end_url = self.get_end_url(course_url)
-            # end_url = ""
+            # end_url = self.get_end_url(course_url)
+            end_url = ""
             
             # Append course information with the dynamic 'entity_url'
             courses_info.append({

@@ -21,40 +21,83 @@ from webdriver_manager.chrome import ChromeDriverManager
 # If there is no end_url, then get it from the classCentral url by running the get_end_url
 # Then update the csv file with the end_url
 
+
 def get_end_urls_from_csv(csv_file):
     progress_file = csv_file + ".progress"
-    temp_file = csv_file + ".temp"
+
+    # If output does not exist, create it and write the headers
+    if not os.path.exists(csv_file.replace(".csv", "_updated.csv")):
+        with open(csv_file.replace(".csv", "_updated.csv"), 'w', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow(["course_name", "url_classCentral", "end_url", "provider_slug", "summary", "duration", "entity_url", "type", "source", "language"])
+
+    output_file = csv_file.replace(".csv", "_updated.csv")
+    # Define a new file name for the output where all processed lines will be saved
+    # output_file = csv_file.replace(".csv", "_updated.csv")
     
+    # Attempt to load the set of already processed rows
+    processed_lines = set()
     try:
         with open(progress_file, 'r') as f:
-            processed_urls = {line.strip() for line in f}
+            processed_lines = {int(line.strip()) for line in f}
     except FileNotFoundError:
-        processed_urls = set()
-
-    with open(csv_file, newline='', mode='r') as csvfile, \
-         open(temp_file, mode='w', newline='') as newfile, \
-         open(progress_file, 'a') as progfile:
-        
+        pass  # No progress file, start from scratch
+    
+    # Open the original file to read and the output file to write
+    with open(csv_file, 'r', newline='') as csvfile, open(output_file, 'a', newline='') as outfile:
         reader = csv.DictReader(csvfile)
-        writer = csv.DictWriter(newfile, fieldnames=reader.fieldnames)
+        writer = csv.DictWriter(outfile, fieldnames=reader.fieldnames)
+        # writer.writeheader()
+        
+        for i, row in enumerate(reader):
+            if i not in processed_lines:
+                print(f"Processing: {row['url_classCentral']}")
+                if row['end_url'] == "":
+                    # Update the 'end_url' field if it's empty
+                    row['end_url'] = get_end_url(row['url_classCentral'])
+                    print(f"Updated URL: {row['end_url']}")
+                
+                # After processing (and potentially updating) the row, write it to the output file
+                writer.writerow(row)
+                
+                # Mark the row as processed by adding its number to the progress file
+                with open(progress_file, 'a') as progfile:
+                    progfile.write(f"{i}\n")
+            # else:
+            #     # If the row has been processed before, just write it again without processing
+            #     writer.writerow(row)
+
+# def get_end_urls_from_csv(csv_file):
+    progress_file = csv_file + ".progress"
+    try:
+        with open(progress_file, 'r') as f:
+            processed_lines = set(int(line.strip()) for line in f)
+    except FileNotFoundError:
+        processed_lines = set()
+    
+    with open(csv_file, 'r+', newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        headers = reader.fieldnames
+        rows = list(reader)
+        
+        # Go back to the start of the file to prepare for writing
+        csvfile.seek(0)
+        writer = csv.DictWriter(csvfile, fieldnames=headers)
         writer.writeheader()
         
-        for row in reader:
-            if row['url_classCentral'] not in processed_urls:
+        for i, row in enumerate(rows):
+            if i not in processed_lines:
+                print(row['url_classCentral'])
                 if row['end_url'] == "":
-                    row['end_url'] = get_end_url(row['url_classCentral'])  # Update the URL
-                    print(row['url_classCentral'], row['end_url'])
-                
-                # Mark this URL as processed
-                progfile.write(row['url_classCentral'] + "\n")
-                progfile.flush()
-                
+                    row['end_url'] = get_end_url(row['url_classCentral'])
+                    print(row['end_url'])
+                    # Mark the row as processed
+                    with open(progress_file, 'a') as progfile:
+                        progfile.write(f"{i}\n")
             writer.writerow(row)
-    
-    # Replace original CSV with the updated one after all processing is done
-    os.replace(temp_file, csv_file)
-    os.remove(progress_file)
-
+        
+        # Truncate the file in case the last rows did not need updating and were shorter than the originals
+        csvfile.truncate()
 
 # def get_end_urls_from_csv(csv_file):
 #     # Initialize an empty list to hold updated rows

@@ -5,6 +5,7 @@ import re
 import csv
 from bs4 import BeautifulSoup
 import time
+import os
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -21,28 +22,63 @@ from webdriver_manager.chrome import ChromeDriverManager
 # Then update the csv file with the end_url
 
 def get_end_urls_from_csv(csv_file):
-    # Initialize an empty list to hold updated rows
-    updated_rows = []
-    headers = []
+    progress_file = csv_file + ".progress"
+    temp_file = csv_file + ".temp"
+    
+    try:
+        with open(progress_file, 'r') as f:
+            processed_urls = {line.strip() for line in f}
+    except FileNotFoundError:
+        processed_urls = set()
 
-    # Read the CSV file and update rows as necessary
-    with open(csv_file, newline='', mode='r') as csvfile:
+    with open(csv_file, newline='', mode='r') as csvfile, \
+         open(temp_file, mode='w', newline='') as newfile, \
+         open(progress_file, 'a') as progfile:
+        
         reader = csv.DictReader(csvfile)
-        headers = reader.fieldnames  # Capture the headers for writing later
-
-        for row in reader:
-            print(row['url_classCentral'])
-            if row['end_url'] == "":
-                end_url = get_end_url(row['url_classCentral'])
-                print(end_url)
-                row['end_url'] = end_url
-            updated_rows.append(row)
-
-    # Write the updated rows back to the CSV file
-    with open(csv_file, mode='w', newline='') as csvfile:
-        writer = csv.DictWriter(csvfile, fieldnames=headers)
+        writer = csv.DictWriter(newfile, fieldnames=reader.fieldnames)
         writer.writeheader()
-        writer.writerows(updated_rows)
+        
+        for row in reader:
+            if row['url_classCentral'] not in processed_urls:
+                if row['end_url'] == "":
+                    row['end_url'] = get_end_url(row['url_classCentral'])  # Update the URL
+                    print(row['url_classCentral'], row['end_url'])
+                
+                # Mark this URL as processed
+                progfile.write(row['url_classCentral'] + "\n")
+                progfile.flush()
+                
+            writer.writerow(row)
+    
+    # Replace original CSV with the updated one after all processing is done
+    os.replace(temp_file, csv_file)
+    os.remove(progress_file)
+
+
+# def get_end_urls_from_csv(csv_file):
+#     # Initialize an empty list to hold updated rows
+#     updated_rows = []
+#     headers = []
+
+#     # Read the CSV file and update rows as necessary
+#     with open(csv_file, newline='', mode='r') as csvfile:
+#         reader = csv.DictReader(csvfile)
+#         headers = reader.fieldnames  # Capture the headers for writing later
+
+#         for row in reader:
+#             print(row['url_classCentral'])
+#             if row['end_url'] == "":
+#                 end_url = get_end_url(row['url_classCentral'])
+#                 print(end_url)
+#                 row['end_url'] = end_url
+#             updated_rows.append(row)
+
+#     # Write the updated rows back to the CSV file
+#     with open(csv_file, mode='w', newline='') as csvfile:
+#         writer = csv.DictWriter(csvfile, fieldnames=headers)
+#         writer.writeheader()
+#         writer.writerows(updated_rows)
 
 
 

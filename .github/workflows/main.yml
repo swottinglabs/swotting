@@ -1,5 +1,12 @@
 name: CI
 
+permissions:
+  contents: read
+  packages: write
+  deployments: write
+  issues: write
+  pull-requests: write
+
 on:
   push:
     branches:
@@ -38,7 +45,7 @@ jobs:
           HUEY_IMMEDIATE: 'True'
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
 
-  build-staging:
+  build-production:
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -57,4 +64,4 @@ jobs:
           context: .
           file: ./deployment/django/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/your-image-name:latest
+          tags: ghcr.io/${{ github.repository_owner }}/swotting-prod:latest

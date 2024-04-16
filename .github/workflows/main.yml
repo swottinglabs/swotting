@@ -55,7 +55,7 @@ jobs:
         run: |
           echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
         env:
-          OWNER: '${{ env.OWNER_LC }}'
+          OWNER: '${{ OWNER_LC }}'
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:

@@ -1,5 +1,6 @@
 name: CI
 
+
 permissions:
   contents: read
   packages: write
@@ -65,3 +66,4 @@ jobs:
           file: ./deployment/django/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/swotting-prod:latest
+

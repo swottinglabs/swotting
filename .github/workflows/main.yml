@@ -83,5 +83,5 @@ jobs:
         run: doctl auth init --access-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
       - name: Deploy to DigitalOcean
-      run: |
-        doctl compute ssh swotting-production --ssh-command "docker pull ghcr.io/${{ github.repository_owner }}/swotting-prod:latest && docker stop swotting-app && docker run -d --restart unless-stopped --name swotting-webapp -p 80:80 ghcr.io/${{ github.repository_owner }}/swotting-prod:latest"
+        run: |
+          doctl compute ssh swotting-production --ssh-command "docker pull ghcr.io/${{ github.repository_owner }}/swotting-prod:latest && docker stop swotting-app && docker run -d --restart unless-stopped --name swotting-webapp -p 80:80 ghcr.io/${{ github.repository_owner }}/swotting-prod:latest"

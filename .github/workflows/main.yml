@@ -120,7 +120,6 @@ jobs:
 
       - name: Deploy to DigitalOcean
         run: |
-          su swotting
           cd /home/swotting
           docker pull ghcr.io/${{ github.repository_owner }}/swotting-prod:latest
           docker ps -a

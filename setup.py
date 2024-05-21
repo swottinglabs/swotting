@@ -15,7 +15,7 @@ setup(
         'django-cors-headers==3.14.0',
         'django-json-widget==1.1.1',
         'python-dotenv==1.0.0',
-        'django-taggit==3.1.0',
+        # 'django-taggit==3.1.0',
         'django-lifecycle==1.0.0',
         'huey==2.5.0',
         'djangorestframework==3.14',

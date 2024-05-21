@@ -150,7 +150,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Django Taggit Settings
-TAGGIT_CASE_INSENSITIVE=True
+TAGGIT_CASE_INSENSITIVE = True
 
 HUEY = {
     'huey_class': 'huey.RedisHuey',  # Huey implementation to use.

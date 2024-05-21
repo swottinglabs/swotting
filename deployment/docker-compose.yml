@@ -1,4 +1,3 @@
-version: "3.9"
 x-app: &default-app
   image: ghcr.io/swottinglabs/swotting-prod:latest
   restart: unless-stopped

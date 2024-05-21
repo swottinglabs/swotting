@@ -16,7 +16,7 @@ setup(
         'python-dotenv==1.0.0',
         'django-taggit==3.1.0',
         'django-lifecycle==1.0.0',
-        'huey==2.4.5',
+        'huey==2.5.0',
         'djangorestframework==3.14',
         'pydantic==2.5.2',
         'pydantic_core==2.14.5',

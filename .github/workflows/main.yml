@@ -83,26 +83,6 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      # - name: Install Docker Compose
-      #   run: |
-      #     curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o docker-compose
-      #     chmod +x docker-compose
-      #     sudo mv docker-compose /usr/local/bin/docker-compose
-
-      # - name: Transfer Docker Compose Files
-      #   run: |
-      #     rsync -av --exclude='.git/' --exclude='node_modules/' . user@<your-digital-ocean-server-ip>:/path/to/app
-      #   env:
-      #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-  
-      # - name: Deploy using Docker Compose
-      #   run: |
-      #     ssh user@165.22.29.100 "cd /home/swotting && docker-compose up -d"
-      #   env:
-      #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-
-
-
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
@@ -120,11 +100,18 @@ jobs:
 
       - name: Deploy to DigitalOcean
         run: |
-          cd /home/swotting
-          docker pull ghcr.io/${{ github.repository_owner }}/swotting-prod:latest
-          docker ps -a
-          docker compose down
-          docker compose up -d
+          ssh -i ~/.ssh/id_rsa swotting@165.22.29.100 "cd /home/swotting && \
+            docker pull ghcr.io/${{ github.repository_owner }}/swotting-prod:latest && \
+            docker ps -a && \
+            docker compose down && \
+            docker compose up -d"
+            
+  # su swotting
+  # cd /home/swotting
+  # docker pull ghcr.io/${{ github.repository_owner }}/swotting-prod:latest
+  # docker ps -a
+  # docker compose down
+  # docker compose up -d
 
 
       #     docker stop swotting-webapp || echo "No existing container to stop."

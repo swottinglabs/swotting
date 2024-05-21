@@ -65,3 +65,4 @@ jobs:
           file: ./deployment/django/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/swotting-prod:latest
+

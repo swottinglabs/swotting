@@ -1,6 +1,6 @@
 version: "3.9"
 x-app: &default-app
-  image: registry.gitlab.com/peter-stuart-turner/beeline:latest
+  image: ghcr.io/swottinglabs/swotting-prod:latest
   restart: unless-stopped
   env_file: .env
   logging:
@@ -32,7 +32,7 @@ services:
       POSTGRES_PASSWORD: swotting
       POSTGRES_DB: swotting
     env_file:
-      - ../.env
+      - ./.env
 
 
 volumes:

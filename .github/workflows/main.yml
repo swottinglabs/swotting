@@ -100,12 +100,12 @@ jobs:
 
       - name: Deploy to DigitalOcean
         run: |
-          ssh -i ~/.ssh/id_rsa swotting@165.22.29.100 "cd /home/swotting && \
+          ssh -i ~/.ssh/id_rsa root@165.22.29.100 "cd /home/swotting && \
             docker pull ghcr.io/${{ github.repository_owner }}/swotting-prod:latest && \
             docker ps -a && \
             docker compose down && \
             docker compose up -d"
-            
+
   # su swotting
   # cd /home/swotting
   # docker pull ghcr.io/${{ github.repository_owner }}/swotting-prod:latest

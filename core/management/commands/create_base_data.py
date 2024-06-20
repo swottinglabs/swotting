@@ -2,6 +2,7 @@ import csv
 from django.core.management.base import BaseCommand
 from core.models import DigitalLearningResource, DigitalLearningResourcePlatform, DigitalLearningResourceCategory
 from core.utils import determine_platform_name_from_slug_code
+import json
 
 
 class Command(BaseCommand):
@@ -32,6 +33,11 @@ class Command(BaseCommand):
                     platform_slugs['example_url'] = example_url
 
         for k, v in platform_slugs.items():
+            if isinstance(v, str):
+                try:
+                    v = json.loads(v)
+                except json.JSONDecodeError:
+                    continue
             name = v.get('name', None)
             if name is not None:
                 platform_name = determine_platform_name_from_slug_code(name)

@@ -17,7 +17,6 @@ import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -29,12 +28,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '165.22.29.100',  # Add your server's IP address
-    'localhost',       # Useful for local testing
-    '127.0.0.1',       # Useful for local testing
+    'localhost',  # Useful for local testing
+    '127.0.0.1',  # Useful for local testing
     'api.swotting.org'
 ]
-
-
 
 # Application definition
 
@@ -48,7 +45,7 @@ INSTALLED_APPS = [
     # 'huey.contrib.djhuey',
     # 'taggit',
     'core',
-    'rest_framework',	
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -82,7 +79,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'swotting.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -93,10 +89,9 @@ WSGI_APPLICATION = 'swotting.wsgi.application'
 #     }
 # }
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://USER:PASSWORD@HOST:PORT/DB_NAME', conn_max_age=600)
+    'default': dj_database_url.config(default='postgres://postgres:postgres@127.0.0.1/postgres',
+                                      conn_max_age=600)
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -116,7 +111,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -127,7 +121,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -144,16 +137,13 @@ STORAGES = {
     },
 }
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 # Django Taggit Settings
 TAGGIT_CASE_INSENSITIVE = True
-
 
 # REST Framework Settings
 REST_FRAMEWORK = {

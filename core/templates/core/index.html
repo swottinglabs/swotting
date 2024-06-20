@@ -1,155 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Swotting - Your Dual-Force in Learning!</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f4f4f4;
-        }
-
-        .header {
-            background: #0073e6;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 2.5em;
-        }
-
-        .header p {
-            margin: 0;
-            font-size: 1.2em;
-        }
-
-        .container {
-            width: 80%;
-            margin: auto;
-            overflow: hidden;
-        }
-
-        .showcase {
-            background: #333;
-            color: #fff;
-            padding: 30px 0;
-            text-align: center;
-        }
-
-        .showcase h2 {
-            font-size: 2em;
-        }
-
-        .showcase p {
-            font-size: 1.2em;
-        }
-
-        .features {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        .feature {
-            background: white;
-            flex: 1;
-            margin: 10px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .feature h3 {
-            font-size: 1.5em;
-        }
-
-        .feature p {
-            font-size: 1em;
-        }
-
-        .cta {
-            background: #0073e6;
-            color: white;
-            padding: 30px 0;
-            text-align: center;
-        }
-
-        .cta h2 {
-            font-size: 2em;
-        }
-
-        .cta a {
-            color: white;
-            text-decoration: none;
-            padding: 10px 20px;
-            background: #ff6f61;
-            display: inline-block;
-            margin-top: 10px;
-            border-radius: 5px;
-        }
-
-        .footer {
-            background: #333;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-        }
-
-        .footer p {
-            margin: 0;
-        }
-    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'core/css/styles.css' %}">
 </head>
 <body>
-<header class="header">
-    <div class="container">
-        <h1>Swotting</h1>
-        <p>Your Dual-Force in Learning!</p>
-    </div>
-</header>
-<section class="showcase">
-    <div class="container">
-        <h2>Welcome to Swotting</h2>
-        <p>A rich library and robust API rolled into one. Ideal for EdTech platforms, businesses, and learners in SA and
-            beyond. Elevate education with us!</p>
-    </div>
-</section>
-<section class="container features">
-    <div class="feature">
-        <i class="fas fa-book fa-3x"></i>
-        <h3>Vast Library</h3>
-        <p>Access a diverse range of educational resources from the largest library on the planet.</p>
-    </div>
-    <div class="feature">
-        <i class="fas fa-code fa-3x"></i>
-        <h3>Robust API</h3>
-        <p>Integrate seamlessly with our powerful API designed for EdTech platforms.</p>
-    </div>
-    <div class="feature">
-        <i class="fas fa-globe fa-3x"></i>
-        <h3>Global Reach</h3>
-        <p>Expand your learning horizons with resources from around the world.</p>
-    </div>
-</section>
-<section class="cta">
-    <div class="container">
-        <h2>Join the Learning Revolution!</h2>
-        <a href="/signup">Get Started</a>
-    </div>
-</section>
-<footer class="footer">
-    <div class="container">
-        <p>&copy; 2024 Swotting. All rights reserved.</p>
-    </div>
-</footer>
+    <header class="bg-primary text-white text-center py-5">
+        <div class="container">
+            <h1>Swotting</h1>
+            <p class="lead">Your Dual-Force in Learning!</p>
+        </div>
+    </header>
+    <section class="bg-dark text-white text-center py-5">
+        <div class="container">
+            <h2>Welcome to Swotting</h2>
+            <p class="lead">A rich library and robust API rolled into one. Ideal for EdTech platforms, businesses, and learners in SA and beyond. Elevate education with us!</p>
+        </div>
+    </section>
+    <section class="container my-5">
+        <div class="row text-center">
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <i class="fas fa-book fa-3x text-primary mb-3"></i>
+                        <h3 class="card-title">Vast Library</h3>
+                        <p class="card-text">Access a diverse range of educational resources from the largest library on the planet.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <i class="fas fa-code fa-3x text-primary mb-3"></i>
+                        <h3 class="card-title">Robust API</h3>
+                        <p class="card-text">Integrate seamlessly with our powerful API designed for EdTech platforms.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <i class="fas fa-globe fa-3x text-primary mb-3"></i>
+                        <h3 class="card-title">Global Reach</h3>
+                        <p class="card-text">Expand your learning horizons with resources from around the world.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="bg-primary text-white text-center py-5">
+        <div class="container">
+            <h2>Join the Learning Revolution!</h2>
+            <a href="/signup" class="btn btn-lg btn-light mt-3">Get Started</a>
+        </div>
+    </section>
+    <footer class="bg-dark text-white text-center py-3">
+        <div class="container">
+            <p>&copy; 2024 Swotting. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

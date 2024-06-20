@@ -61,11 +61,11 @@ class LearningResource(TimestampMixin, models.Model):
 
 
 class DigitalLearningResource(LifecycleModelMixin, LearningResource):
-    external_id = models.CharField(max_length=200, null=True, blank=True,
+    external_id = models.CharField(max_length=450, null=True, blank=True,
                                    db_index=True, unique=True)
     thumbnail_url = models.URLField(max_length=450, null=True, blank=True)
 
-    url = models.URLField(max_length=200, null=True, blank=True, unique=True)
+    url = models.URLField(max_length=450, null=True, blank=True, unique=True)
 
     platform = models.ForeignKey('core.DigitalLearningResourcePlatform',
                                  null=True, blank=True,

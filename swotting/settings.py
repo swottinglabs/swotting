@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'huey.contrib.djhuey',
     # 'taggit',
     'core',
+    'rest_framework',	
 ]
 
 MIDDLEWARE = [
@@ -151,6 +152,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Django Taggit Settings
 TAGGIT_CASE_INSENSITIVE = True
+
+
+# REST Framework Settings
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 500
+}
 
 HUEY = {
     'huey_class': 'huey.RedisHuey',  # Huey implementation to use.

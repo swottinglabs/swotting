@@ -18,7 +18,7 @@ class DigitalLearningResourceCategoryAdmin(admin.ModelAdmin):
 class DigitalLearningResourceAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug', 'platform', 'category', 'external_id', 'url')
     search_fields = ('name', 'slug', 'external_id', 'url')
-    list_filter = ('platform', 'category', 'tags')
+    list_filter = ('platform', 'category')
 
 admin.site.register(DigitalLearningResourcePlatform, DigitalLearningResourcePlatformAdmin)
 admin.site.register(DigitalLearningResourceCategory, DigitalLearningResourceCategoryAdmin)

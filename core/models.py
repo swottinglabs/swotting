@@ -4,7 +4,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 from django.utils.text import slugify
 from django_lifecycle import LifecycleModelMixin, hook, AFTER_CREATE, BEFORE_CREATE
-from taggit.managers import TaggableManager
+# from taggit.managers import TaggableManager
 
 
 class DigitalLearningResourcePlatform(models.Model):
@@ -77,7 +77,7 @@ class DigitalLearningResource(LifecycleModelMixin, LearningResource):
                                  related_name='digital_learning_resources',
                                  on_delete=models.SET_NULL)
 
-    tags = TaggableManager(blank=True, related_name='digital_resources')
+    # tags = TaggableManager(blank=True, related_name='digital_resources')
 
 
     # TODO: Later?

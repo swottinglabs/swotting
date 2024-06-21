@@ -43,7 +43,7 @@ class TimestampMixin(models.Model):
 
 class LearningResource(TimestampMixin, models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
-    slug = models.SlugField(unique=True, max_length=200)
+    slug = models.SlugField(unique=True, max_length=450)
     thumbnail_file = models.ImageField(upload_to='learning-resources/thumbnails',
                                        null=True, blank=True)
 

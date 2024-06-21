@@ -90,6 +90,7 @@ WSGI_APPLICATION = 'swotting.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
 DATABASES = {
     'default': dj_database_url.config(default='postgres://postgres:postgres@127.0.0.1/postgres',
                                       conn_max_age=600)

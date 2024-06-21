@@ -31,6 +31,7 @@ ALLOWED_HOSTS = [
     'localhost',  # Useful for local testing
     '127.0.0.1',  # Useful for local testing
     'api.swotting.org'
+    'swotting.org'
 ]
 
 # Application definition

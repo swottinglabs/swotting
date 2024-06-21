@@ -30,10 +30,16 @@ ALLOWED_HOSTS = [
     '165.22.29.100',  # Add your server's IP address
     'localhost',  # Useful for local testing
     '127.0.0.1',  # Useful for local testing
-    'api.swotting.org'
+    'api.swotting.org',
     'swotting.org',
     '*'
 ]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://api.swotting.org',
+    'https://swotting.org'
+]
+
 
 # Application definition
 

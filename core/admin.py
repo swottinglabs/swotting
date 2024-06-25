@@ -4,11 +4,14 @@ from .models import (
     DigitalLearningResourceCategory,
     LearningResource,
     DigitalLearningResource,
+    WaitlistEntry
 )
+
 
 class DigitalLearningResourcePlatformAdmin(admin.ModelAdmin):
     list_display = ('name', 'url')
     search_fields = ('name', 'url')
+
 
 class DigitalLearningResourceCategoryAdmin(admin.ModelAdmin):
     list_display = ('name',)
@@ -20,6 +23,14 @@ class DigitalLearningResourceAdmin(admin.ModelAdmin):
     search_fields = ('name', 'slug', 'external_id', 'url')
     list_filter = ('platform', 'category')
 
+
+class WaitingListEntryAdmin(admin.ModelAdmin):
+    list_display = ('email', 'created_at')
+    search_fields = ('email',)
+    list_filter = ('created_at',)
+
+
 admin.site.register(DigitalLearningResourcePlatform, DigitalLearningResourcePlatformAdmin)
 admin.site.register(DigitalLearningResourceCategory, DigitalLearningResourceCategoryAdmin)
 admin.site.register(DigitalLearningResource, DigitalLearningResourceAdmin)
+admin.site.register(WaitlistEntry, WaitingListEntryAdmin)

@@ -10,6 +10,6 @@ urlpatterns = [
     path('courses/<int:id>', views.DigitalLearningResourceDetailView.as_view(), name='course'),
 
     # Landing page
+    path('join-waitlist/', views.join_waitlist, name='join_waitlist'),
     path('', TemplateView.as_view(template_name="core/index.html"), name='index'),
-
 ]

@@ -91,3 +91,11 @@ class DigitalLearningResource(LifecycleModelMixin, LearningResource):
         while cls.objects.filter(slug=unique_slug).exists():
             unique_slug = f'{base_slug}-{uuid.uuid4().hex[:8]}'
         return unique_slug
+
+
+class WaitlistEntry(models.Model):
+    email = models.EmailField(unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email

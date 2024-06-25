@@ -1,3 +1,6 @@
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from .forms import WaitlistForm
 from rest_framework import generics, permissions, filters
 from .models import DigitalLearningResourcePlatform, DigitalLearningResourceCategory, DigitalLearningResource
 from .serializers import DigitalLearningResourcePlatformSerializer, DigitalLearningResourceCategorySerializer, DigitalLearningResourceSerializer
@@ -27,4 +30,16 @@ class DigitalLearningResourceDetailView(generics.RetrieveDestroyAPIView):
     lookup_field = 'id'
     http_method_names = ['get', 'put', 'delete']
 
+
+def join_waitlist(request):
+    if request.method == "POST":
+        form = WaitlistForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'message': 'Subscription successful!'}, status=200)
+        else:
+            return JsonResponse({'message': 'Error joining waitlist!'}, status=400)
+    else:
+        form = WaitlistForm()
+    return render(request, 'core/index.html', {'form': form})
 

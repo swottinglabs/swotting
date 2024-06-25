@@ -11,8 +11,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
-
+from dotenv import load_dotenv
 import dj_database_url
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -54,6 +57,7 @@ INSTALLED_APPS = [
     # 'taggit',
     'core',
     'rest_framework',
+    'algoliasearch-django',
 ]
 
 MIDDLEWARE = [
@@ -165,6 +169,13 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 5
 }
+
+# Algolia Settings
+ALGOLIA = {
+    'APPLICATION_ID': os.getenv('ALGOLIA_APPLICATION_ID'),
+    'API_KEY': os.getenv('ALGOLIA_API_KEY')
+}
+
 
 # HUEY = {
 #     'huey_class': 'huey.RedisHuey',  # Huey implementation to use.

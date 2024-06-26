@@ -36,7 +36,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --cache-dir .cache/pip -U pip
-          pip install --cache-dir .cache/pip -e .
+          pip install --cache-dir .cache/pip -r requirements.txt
       - name: Collect static
         run: python manage.py collectstatic --noinput
       - name: Run tests

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .forms import WaitlistForm
 from rest_framework import generics, permissions, filters
+from algoliasearch_django import raw_search
 from .models import DigitalLearningResourcePlatform, DigitalLearningResourceCategory, DigitalLearningResource
 from .serializers import DigitalLearningResourcePlatformSerializer, DigitalLearningResourceCategorySerializer, DigitalLearningResourceSerializer
 
@@ -42,4 +43,32 @@ def join_waitlist(request):
     else:
         form = WaitlistForm()
     return render(request, 'core/index.html', {'form': form})
+
+# def search_digital_learning_resources(request):
+#     query = request.GET.get('q', '')
+#     params = {"hitsPerPage": 5}
+#     if query:
+#         response = raw_search(DigitalLearningResource, query, params)
+#         print(response)
+#         results = response.get('hits', [])
+#     else:
+#         results = []
+
+#     return {'results': results, 'query': query}
+
+def search_digital_learning_resources(request):
+    query = request.GET.get('q', '')
+    params = {"hitsPerPage": 10}
+    if query:
+        response = raw_search(DigitalLearningResource, query, params)
+        results = response.get('hits', [])
+    else:
+        results = []
+
+    return JsonResponse(
+        {
+            'query': query, 
+            'length': len(results),
+            'results': results
+        }, status=200)
 

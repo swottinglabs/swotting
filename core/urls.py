@@ -8,6 +8,8 @@ urlpatterns = [
     path('categories', views.DigitalLearningResourceCategoryListCreateView.as_view(), name='categories'),
     path('courses', views.DigitalLearningResourceListCreateView.as_view(), name='courses'),
     path('courses/<int:id>', views.DigitalLearningResourceDetailView.as_view(), name='course'),
+    path('search', views.search_digital_learning_resources, name='search'),
+
 
     # Landing page
     path('join-waitlist/', views.join_waitlist, name='join_waitlist'),

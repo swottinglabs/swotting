@@ -44,6 +44,8 @@ jobs:
         env:
           HUEY_IMMEDIATE: 'True'
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
+          ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
+          ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
 
   build-production:
     needs: test

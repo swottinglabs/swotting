@@ -172,8 +172,10 @@ REST_FRAMEWORK = {
 
 # Algolia Settings
 ALGOLIA = {
-    'APPLICATION_ID': os.getenv('ALGOLIA_APP_ID'),
-    'API_KEY': os.getenv('ALGOLIA_API_KEY')
+    # 'APPLICATION_ID': os.getenv('ALGOLIA_APP_ID'),
+    # 'API_KEY': os.getenv('ALGOLIA_API_KEY')
+    'APPLICATION_ID': 'RZXVUPXRA2',
+    'API_KEY': 'b8989c134003a562aa8776ad7908acbb'
 }
 
 

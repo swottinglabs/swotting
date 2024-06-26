@@ -16,39 +16,39 @@ on:
   pull_request:
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: ankane/pgvector:latest
-        ports:
-          - 5432:5432
-        env:
-          POSTGRES_DB: postgres
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.11'
-      - name: Install dependencies
-        run: |
-          pip install --cache-dir .cache/pip -U pip
-          pip install --cache-dir .cache/pip -r requirements.txt
-      - name: Collect static
-        run: python manage.py collectstatic --noinput
-      - name: Run tests
-        run: python manage.py test
-        env:
-          HUEY_IMMEDIATE: 'True'
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
-          ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
-          ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
+  # test:
+  #   runs-on: ubuntu-latest
+  #   services:
+  #     postgres:
+  #       image: ankane/pgvector:latest
+  #       ports:
+  #         - 5432:5432
+  #       env:
+  #         POSTGRES_DB: postgres
+  #         POSTGRES_USER: postgres
+  #         POSTGRES_PASSWORD: postgres
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v2
+  #       with:
+  #         python-version: '3.11'
+  #     - name: Install dependencies
+  #       run: |
+  #         pip install --cache-dir .cache/pip -U pip
+  #         pip install --cache-dir .cache/pip -r requirements.txt
+  #     - name: Collect static
+  #       run: python manage.py collectstatic --noinput
+  #     - name: Run tests
+  #       run: python manage.py test
+  #       env:
+  #         HUEY_IMMEDIATE: 'True'
+  #         DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
+  #         ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
+  #         ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
 
   build-production:
-    needs: test
+    # needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

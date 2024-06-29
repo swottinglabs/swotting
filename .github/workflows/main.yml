@@ -119,7 +119,9 @@ jobs:
             docker pull ghcr.io/${{ github.repository_owner }}/swotting-prod:latest && \
             docker ps -a && \
             docker compose down && \
-            docker compose up -d"
+            ALGOLIA_APP_ID='${{ secrets.ALGOLIA_APP_ID }}' ALGOLIA_API_KEY='${{ secrets.ALGOLIA_API_KEY }}' docker compose up -d"
+
+      # docker compose up -d"
         
       # - name: Reindex Algolia
       #   run: |

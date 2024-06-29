@@ -9,6 +9,9 @@ x-app: &default-app
 
 services:
   web:
+    environment:
+        - ALGOLIA_APP_ID=${ALGOLIA_APP_ID}
+        - ALGOLIA_API_KEY=${ALGOLIA_API_KEY}
     <<: *default-app
     ports:
       - "127.0.0.1:8006:8000"

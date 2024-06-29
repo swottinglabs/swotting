@@ -44,8 +44,10 @@ jobs:
         env:
           HUEY_IMMEDIATE: 'True'
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
-          ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
+          ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
           ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
+          # ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
+          # ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
 
   # Build and push Docker image to GitHub Container Registry
   build-production:
@@ -104,6 +106,8 @@ jobs:
       - name: Deploy to DigitalOcean
         run: |
           ssh -i ~/.ssh/id_rsa root@165.22.29.100 "cd /home/swotting && \
+            export ALGOLIA_APP_ID='${{ secrets.ALGOLIA_APP_ID }}' && \
+            export ALGOLIA_API_KEY='${{ secrets.ALGOLIA_API_KEY }}' && \
             docker pull ghcr.io/${{ github.repository_owner }}/swotting-prod:latest && \
             docker ps -a && \
             docker compose down && \

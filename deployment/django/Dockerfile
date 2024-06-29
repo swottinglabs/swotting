@@ -1,6 +1,12 @@
 # Use an official Python runtime as a parent image
 FROM python:3.11-bullseye as builder
 
+ARG ALGOLIA_APP_ID
+ARG ALGOLIA_API_KEY
+
+ENV ALGOLIA_APP_ID=$ALGOLIA_APP_ID
+ENV ALGOLIA_API_KEY=$ALGOLIA_API_KEY
+
 # Upgrade pip and install wheels
 RUN pip install --upgrade pip wheel setuptools
 

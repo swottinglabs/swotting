@@ -71,6 +71,9 @@ jobs:
           file: ./deployment/django/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/swotting-prod:latest
+          build-args: |
+            ALGOLIA_APP_ID=${{ secrets.ALGOLIA_APP_ID }}
+            ALGOLIA_API_KEY=${{ secrets.ALGOLIA_API_KEY }}
   
   deploy-to-digitalocean:
     needs: build-production

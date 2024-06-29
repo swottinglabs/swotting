@@ -19,6 +19,9 @@ WORKDIR /app
 COPY requirements.txt /app/
 RUN pip wheel --no-cache-dir --wheel-dir=/root/wheels -r requirements.txt
 
+# Ensure gunicorn is installed
+RUN pip install gunicorn
+
 # Now, copy the wheels and other required files to the second stage
 FROM python:3.11-slim-bullseye
 

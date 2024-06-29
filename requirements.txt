@@ -50,3 +50,4 @@ djangorestframework==3.15.2
 psycopg2-binary==2.9.9
 algoliasearch-django==3.0.0
 whitenoise==6.7.0
+gunicorn==22.0.0

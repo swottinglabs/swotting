@@ -121,10 +121,10 @@ jobs:
             docker compose down && \
             docker compose up -d"
         
-      - name: Reindex Algolia
-        run: |
-          ssh -i ~/.ssh/id_rsa root@165.22.29.100 "cd /home/swotting && \
-            docker exec -e ALGOLIA_APPLICATION_ID=${{ secrets.ALGOLIA_APP_ID }} -e ALGOLIA_API_KEY=${{ secrets.ALGOLIA_API_KEY }} swotting-web-1 python manage.py algolia_reindex"
+      # - name: Reindex Algolia
+      #   run: |
+      #     ssh -i ~/.ssh/id_rsa root@165.22.29.100 "cd /home/swotting && \
+      #       docker exec -e ALGOLIA_APPLICATION_ID=${{ secrets.ALGOLIA_APP_ID }} -e ALGOLIA_API_KEY=${{ secrets.ALGOLIA_API_KEY }} swotting-web-1 python manage.py algolia_reindex"
 
   # su swotting
   # cd /home/swotting

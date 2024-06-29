@@ -65,6 +65,9 @@ RUN if [ -n "$ALGOLIA_APP_ID" ] && [ -n "$ALGOLIA_API_KEY" ]; then \
 # Expose the port the app runs on
 EXPOSE 8000
 
+ENV ALGOLIA_APP_ID=$ALGOLIA_APP_ID
+ENV ALGOLIA_API_KEY=$ALGOLIA_API_KEY
+
 # Start Gunicorn with the specified settings
 CMD ["gunicorn", "-b", "0.0.0.0:8000", "--capture-output", "--timeout", "120", "swotting.wsgi"]
 

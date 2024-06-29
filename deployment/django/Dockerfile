@@ -1,11 +1,21 @@
 # Use an official Python runtime as a parent image
-FROM python:3.11-bullseye as builder
+# FROM python:3.11-bullseye as builder
+
+# ARG ALGOLIA_APP_ID
+# ARG ALGOLIA_API_KEY
+
+# ENV ALGOLIA_APP_ID=$ALGOLIA_APP_ID
+# ENV ALGOLIA_API_KEY=$ALGOLIA_API_KEY
+
+FROM python:3.11-slim-bullseye
 
 ARG ALGOLIA_APP_ID
 ARG ALGOLIA_API_KEY
 
 ENV ALGOLIA_APP_ID=$ALGOLIA_APP_ID
 ENV ALGOLIA_API_KEY=$ALGOLIA_API_KEY
+
+WORKDIR /app
 
 # Upgrade pip and install wheels
 RUN pip install --upgrade pip wheel setuptools
@@ -52,7 +62,12 @@ RUN pip install --no-cache-dir --find-links=/root/wheels -r requirements.txt
 COPY . /app/
 
 # Collect static files
-RUN python manage.py collectstatic --no-input
+# RUN python manage.py collectstatic --no-input
+RUN if [ -n "$ALGOLIA_APP_ID" ] && [ -n "$ALGOLIA_API_KEY" ]; then \
+        python manage.py collectstatic --no-input; \
+    else \
+        echo "Skipping collectstatic due to missing Algolia credentials"; \
+    fi
 
 # Expose the port the app runs on
 EXPOSE 8000

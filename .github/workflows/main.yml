@@ -64,6 +64,10 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Debug
+        run: |
+          echo "ALGOLIA_APP_ID is set: ${{ secrets.ALGOLIA_APP_ID != '' }}"
+          echo "ALGOLIA_API_KEY is set: ${{ secrets.ALGOLIA_API_KEY != '' }}"
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:

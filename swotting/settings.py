@@ -171,6 +171,13 @@ REST_FRAMEWORK = {
 }
 
 # Algolia Settings
+ALGOLIA_APP_ID = os.getenv('ALGOLIA_APP_ID')
+ALGOLIA_API_KEY = os.getenv('ALGOLIA_API_KEY')
+
+print(f"Algolia App ID: {ALGOLIA_APP_ID}")
+print(f"Algolia API Key: {'*' * len(ALGOLIA_API_KEY) if ALGOLIA_API_KEY else 'Not Set'}")
+
+# Algolia Settings
 ALGOLIA = {
     'APPLICATION_ID': os.getenv('ALGOLIA_APP_ID'),
     'API_KEY': os.getenv('ALGOLIA_API_KEY')

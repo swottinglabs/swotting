@@ -18,6 +18,11 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      HUEY_IMMEDIATE: 'True'
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
+      ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
+      ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
     services:
       postgres:
         image: ankane/pgvector:latest
@@ -41,13 +46,6 @@ jobs:
         run: python manage.py collectstatic --noinput
       - name: Run tests
         run: python manage.py test
-        env:
-          HUEY_IMMEDIATE: 'True'
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
-          ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
-          ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
-          # ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
-          # ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
 
   # Build and push Docker image to GitHub Container Registry
   build-production:

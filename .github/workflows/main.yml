@@ -47,6 +47,7 @@ jobs:
           ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
           ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
 
+  # Build and push Docker image to GitHub Container Registry
   build-production:
     needs: test
     runs-on: ubuntu-latest

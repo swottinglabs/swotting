@@ -2,8 +2,8 @@ import os
 from scrapy.spiders import SitemapSpider
 from scrapy.exceptions import CloseSpider
 
-class EdxSpider(SitemapSpider):
-    name = 'edx'
+class ProvidersSpider(SitemapSpider):
+    name = 'edx_spider'
     sitemap_urls = ['https://www.edx.org/sitemap-0.xml']
     sitemap_rules = [
         ('/learn/', 'parse_course'),

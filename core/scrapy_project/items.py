@@ -6,7 +6,14 @@
 import scrapy
 
 
-class ScrapyProjectItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class LearningResourceItem(scrapy.Item):
+    name = scrapy.Field()
+    description = scrapy.Field()
+    link = scrapy.Field()
+    provider_url = scrapy.Field()
+    course_creator_urls = scrapy.Field()
+    lastmod = scrapy.Field()
+    format = scrapy.Field()
+    has_certificate = scrapy.Field()
+    thumbnail_file = scrapy.Field()
+    content = scrapy.Field()

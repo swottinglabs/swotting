@@ -2,8 +2,11 @@ import os
 from scrapy.spiders import SitemapSpider
 from scrapy.exceptions import CloseSpider
 
+# Link in Sitemap: https://www.edx.org/learn/cybersecurity/acca-manage-the-cyber-threat-for-finance-professionals
+# Link to fetch the data from: https://www.edx.org/page-data/learn/cybersecurity/acca-manage-the-cyber-threat-for-finance-professionals/page-data.json
+
 class ProvidersSpider(SitemapSpider):
-    name = 'edx_spider'
+    name = 'edx'
     sitemap_urls = ['https://www.edx.org/sitemap-0.xml']
     sitemap_rules = [
         ('/learn/', 'parse_course'),

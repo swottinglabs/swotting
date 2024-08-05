@@ -45,3 +45,6 @@ class ProvidersSpider(SitemapSpider):
             self.logger.error(f"Failed to parse JSON from {response.url}")
 
         self.logger.info(f'Processed course data from {response.url}')
+
+
+        

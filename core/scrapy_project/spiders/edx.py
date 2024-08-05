@@ -20,12 +20,17 @@ class ProvidersSpider(SitemapSpider):
             if '/learn/' in url:
                 # Convert the sitemap URL directly to the data URL
                 data_url = f"https://www.edx.org/page-data{url[20:]}/page-data.json"
+                print("data_url: ", data_url)
                 yield Request(url=data_url, callback=self.parse_course)
 
     def parse_course(self, response):
         try:
             # Create a directory to store the response
             os.makedirs('edx_responses', exist_ok=True)
+
+            print("---------------------------------------------------------------------")
+            print(response.url)
+            print(response)
             
             # Save the response to a file
             filename = f"edx_responses/response_{response.url.split('/')[-2]}.json"

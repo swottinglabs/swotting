@@ -1,7 +1,8 @@
 import json
+import os
 from scrapy.spiders import SitemapSpider
 from scrapy.http import Request
-from core.scrapy_project.items import LearningResourceItem
+from scrapy.exceptions import CloseSpider
 
 class ProvidersSpider(SitemapSpider):
     name = 'edx_spider'
@@ -23,28 +24,18 @@ class ProvidersSpider(SitemapSpider):
 
     def parse_course(self, response):
         try:
-            data = json.loads(response.text)
-            course_info = data.get('result', {}).get('pageContext', {}).get('course', {})
+            # Create a directory to store the response
+            os.makedirs('edx_responses', exist_ok=True)
+            
+            # Save the response to a file
+            filename = f"edx_responses/response_{response.url.split('/')[-2]}.json"
+            with open(filename, 'wb') as f:
+                f.write(response.body)
+            
+            self.logger.info(f'Saved response to {filename}')
+            
+            # Stop the spider after processing the first link
+            raise CloseSpider('First link processed')
 
-            item = LearningResourceItem()
-            item['name'] = course_info.get('title')
-            item['description'] = course_info.get('description')
-            item['link'] = f"https://www.edx.org/learn/{course_info.get('slug')}"
-            item['provider_url'] = 'https://www.edx.org'
-            item['course_creator_urls'] = [school.get('url') for school in course_info.get('schools', [])]
-            item['lastmod'] = course_info.get('modifiedDate')
-            item['format'] = course_info.get('productType')
-            item['has_certificate'] = course_info.get('certificateType') is not None
-            item['thumbnail_file'] = course_info.get('cardImageUrl')
-            item['content'] = course_info.get('overview')
-            item['categories'] = [subject.get('name') for subject in course_info.get('subjects', [])]
-
-            yield item
-
-        except json.JSONDecodeError:
-            self.logger.error(f"Failed to parse JSON from {response.url}")
-
-        self.logger.info(f'Processed course data from {response.url}')
-
-
-        
+        except Exception as e:
+            self.logger.error(f"Error processing {response.url}: {str(e)}")

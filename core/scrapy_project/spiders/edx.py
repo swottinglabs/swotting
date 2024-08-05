@@ -18,13 +18,16 @@ class ProvidersSpider(SitemapSpider):
         for entry in entries:
             url = entry['loc']
             if '/learn/' in url:
-                print("---------------------------------------------------------------------")
-                print("Sitemap filter processing URL:", url)
-                # Convert the sitemap URL directly to the data URL
-                data_url = f"https://www.edx.org/page-data{url[20:]}/page-data.json"
-                yield Request(url=data_url, callback=self.parse_course)
+                yield entry
 
     def parse_course(self, response):
+        print("---------------------------------------------------------------------")
+        print("Processing URL:", response.url)
+        # Convert the sitemap URL to the data URL
+        data_url = f"https://www.edx.org/page-data{response.url[20:]}/page-data.json"
+        yield Request(url=data_url, callback=self.parse_course_data)
+
+    def parse_course_data(self, response):
         try:
             # Create a directory to store the response
             os.makedirs('edx_responses', exist_ok=True)

@@ -8,7 +8,7 @@ class ProvidersSpider(SitemapSpider):
     name = 'edx_spider'
     sitemap_urls = ['https://www.edx.org/sitemap-0.xml']
     sitemap_rules = [
-        ('/boot-camps/', 'parse_course'),
+        ('/learn/', 'parse_course'),
     ]
     custom_settings = {
         'USER_AGENT': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36',
@@ -16,7 +16,9 @@ class ProvidersSpider(SitemapSpider):
 
     def parse(self, response):
         # This method will be called for each URL in the sitemap
-        if '/boot-camps/' in response.url:
+        if '/learn/' in response.url:
+            print("---------------------------------------------------------------------")
+            print("Pares response url", response.url)
             # Convert the URL to the data URL
             data_url = f"https://www.edx.org/page-data{response.url[20:]}/page-data.json"
             yield Request(url=data_url, callback=self.parse_course)

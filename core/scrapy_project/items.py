@@ -17,3 +17,4 @@ class LearningResourceItem(scrapy.Item):
     has_certificate = scrapy.Field()
     thumbnail_file = scrapy.Field()
     content = scrapy.Field()
+    categories = scrapy.Field()

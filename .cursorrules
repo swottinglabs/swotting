@@ -1,0 +1,12 @@
+This is a scraper that scrapes free learning resources from the interenet from sites such as Khan Academy, Coursera, edX, etc.
+
+Please follow these coding standards:
+- Use snake case for all variable names
+- Always make the code reusable and modular, create helper functions and classes
+
+Here are libraries you can use - if you need more libraries, ask and make a recommendation and present alternatives:
+- requests
+- bs4
+- django
+- scrapy
+- playwright

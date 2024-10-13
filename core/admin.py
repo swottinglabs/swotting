@@ -1,36 +1,46 @@
 from django.contrib import admin
 from .models import (
-    DigitalLearningResourcePlatform,
-    DigitalLearningResourceCategory,
+    Platform,
+    Tag,
     LearningResource,
-    DigitalLearningResource,
-    WaitlistEntry
+    Level,
+    CreatorType,
+    Creator,
+    Format,
+    Language
 )
 
 
-class DigitalLearningResourcePlatformAdmin(admin.ModelAdmin):
-    list_display = ('name', 'url')
+class PlatformAdmin(admin.ModelAdmin):
+    list_display = ('name', 'url', 'isScraping', 'isIndependent')
     search_fields = ('name', 'url')
+    list_filter = ('isScraping', 'isIndependent')
 
 
-class DigitalLearningResourceCategoryAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('name', 'level', 'parentTag')
     search_fields = ('name',)
+    list_filter = ('level',)
 
 
-class DigitalLearningResourceAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug', 'platform', 'category', 'external_id', 'url')
-    search_fields = ('name', 'slug', 'external_id', 'url')
-    list_filter = ('platform', 'category')
+class LearningResourceAdmin(admin.ModelAdmin):
+    list_display = ('name', 'platformId', 'url', 'isFree', 'hasCertificate')
+    search_fields = ('name', 'platformCourseId', 'url')
+    list_filter = ('platformId', 'isFree', 'hasCertificate', 'level', 'formats', 'languages')
 
 
-class WaitingListEntryAdmin(admin.ModelAdmin):
-    list_display = ('email', 'created_at')
-    search_fields = ('email',)
-    list_filter = ('created_at',)
+class CreatorAdmin(admin.ModelAdmin):
+    list_display = ('name', 'url', 'type')
+    search_fields = ('name', 'platformCreatorId')
+    list_filter = ('type',)
 
 
-admin.site.register(DigitalLearningResourcePlatform, DigitalLearningResourcePlatformAdmin)
-admin.site.register(DigitalLearningResourceCategory, DigitalLearningResourceCategoryAdmin)
-admin.site.register(DigitalLearningResource, DigitalLearningResourceAdmin)
-admin.site.register(WaitlistEntry, WaitingListEntryAdmin)
+# Register your models here
+admin.site.register(Platform, PlatformAdmin)
+admin.site.register(Tag, TagAdmin)
+admin.site.register(LearningResource, LearningResourceAdmin)
+admin.site.register(Level)
+admin.site.register(CreatorType)
+admin.site.register(Creator, CreatorAdmin)
+admin.site.register(Format)
+admin.site.register(Language)

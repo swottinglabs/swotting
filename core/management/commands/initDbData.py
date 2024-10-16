@@ -56,3 +56,4 @@ class Command(BaseCommand):
         instance, created = model.objects.get_or_create(**filtered_data)
         if created:
             self.stdout.write(f'Created {model.__name__}: {instance}')
+ 

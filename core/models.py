@@ -83,6 +83,7 @@ class LearningResource(models.Model):
     description = models.TextField()
     languages = models.ManyToManyField(Language)
     isFree = models.BooleanField(default=True)
+    isLimitedFree = models.BooleanField(default=False)
     dollarPrice = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     hasCertificate = models.BooleanField(default=False)
     certificateDollarPrice = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
@@ -102,6 +103,7 @@ class LearningResource(models.Model):
         null=True, 
         blank=True
     )
+    
 
     def __str__(self):
         return self.name

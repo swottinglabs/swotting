@@ -23,10 +23,14 @@ class EdxScraper(BaseScraper, SitemapSpider):
     LANGUAGE = ['en']
     FORMAT = "Video"
     
-
+    # Add a class variable for the limit
+    DEBUG_LIMIT = 1
+    
     def __init__(self, platform_id=None, *args, **kwargs):
         BaseScraper.__init__(self, platform_id, *args, **kwargs)
         SitemapSpider.__init__(self, *args, **kwargs)
+        # Counter for processed URLs
+        self.url_count = 0
 
     def sitemap_filter(self, entries):
         # Invalid: A url with only one '/' after the learn is a category page e.g. https://www.edx.org/learn/media-law
@@ -35,10 +39,15 @@ class EdxScraper(BaseScraper, SitemapSpider):
         # Valid: A url with 3 or more '/' after the base_url is a course e.g. https://www.edx.org/learn/statistics/university-of-adelaide-mathtrackx-statistics
 
         for entry in entries:
+            # Stop if we've reached the limit
+            if self.url_count >= self.DEBUG_LIMIT:
+                break
+                
             url = entry['loc']
             
             pattern = rf'^{re.escape(self.base_url)}/learn/[^/]+/[^/]+$'
             if re.match(pattern, url):
+                self.url_count += 1
                 entry['loc'] = self._convert_to_json_url(entry['loc'])
                 yield entry
 
@@ -138,6 +147,11 @@ class EdxScraper(BaseScraper, SitemapSpider):
             course = json_data.get('result', {}).get('pageContext', {}).get('course', {})
             active_run = course.get('activeCourseRun', {})
             clean_url = response.url.replace('page-data/', '').replace('page-data.json', '')
+
+            # Create id for the course and creators
+            learning_resource_id = str(uuid4())
+            creator_ids = [str(uuid4()) for _ in range(len(course.get('owners', [])))]
+
             
             seat_info = self._get_seat_info(
                 active_run.get('seats', []),
@@ -146,44 +160,60 @@ class EdxScraper(BaseScraper, SitemapSpider):
             )
             
             course_data = {
+                'id': learning_resource_id,
+                'creators': creator_ids,
                 'name': course.get('title'),
                 'url': clean_url,
                 'scraped_timestamp': datetime.now().isoformat(),
-                'uuid': str(uuid4()),
-                'platform': 'edx',
+                'platform_id': 'edx',
                 'description': self._clean_html_description(course.get('fullDescription')),
                 'html_description': course.get('fullDescription'),
                 'platform_course_id': course.get('uuid'),
-                'language': course.get('language', self.LANGUAGE),
-                'is_deleted': not active_run.get('isEnrollable', True),
+                'languages': [course.get('language', self.LANGUAGE)],
                 'is_free': seat_info['is_free'],
                 'is_limited_free': seat_info['is_limited_free'],
-                'dollar_price': seat_info['dollar_price'],
+                'dollar_price': float(seat_info['dollar_price']) if seat_info['dollar_price'] else None,
                 'has_certificate': seat_info['has_certificate'],
                 'short_description': self._clean_html_description(course.get('shortDescription')),
                 'platform_last_update': course.get('updatedAt'),
                 'platform_thumbnail_url': course.get('originalImage', {}).get('src'),
                 'duration_h': self._calculate_duration_hours(active_run),
-                'reviews_count': course.get('courseReview', {}).get('reviewCount'),
-                'reviews_rating': course.get('courseReview', {}).get('avgCourseRating'),
+                'plarform_reviews_count': course.get('courseReview', {}).get('reviewCount'),
+                'platform_reviews_rating': course.get('courseReview', {}).get('avgCourseRating'),
                 'level': course.get('levelType', None),
                 'short_description': self._clean_html_description(course.get('shortDescription')),
                 'enrollment_count': course.get('enrollmentCount', None),
                 'is_active': active_run.get('isEnrollable', True),
                 'tags': self._get_course_tags(course),
-                'format': self.FORMAT
+                'format': self.FORMAT,
             }
 
             creators = [
                 {
+                    'id': creator_ids[index],
+                    'learning_resource_id': learning_resource_id,
                     'platform_id': owner.get('uuid'),
                     'name': owner.get('name'),
-                    'platform_thumbnail_url': owner.get('logoImageUrl')
+                    'platform_thumbnail_url': owner.get('logoImageUrl'),
+                    'url': owner.get('marketingUrl'),
+                    'description': '',
+                    
                 }
-                for owner in course.get('owners', [])
+                for index, owner in enumerate(course.get('owners', []))
             ]
 
-            print(course_data)
+            # Yield course first
+            yield {
+                'type': 'learning_resource',
+                'data': course_data
+            }
+
+            # Yield creators
+            for creator in creators:
+                yield {
+                    'type': 'creator',
+                    'data': creator
+                }
             
         except Exception as e:
             self.logger.error(f"Error parsing JSON from {response.url}: {str(e)}")

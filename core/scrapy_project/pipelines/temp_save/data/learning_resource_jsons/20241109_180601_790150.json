@@ -1,0 +1,41 @@
+{
+  "id": "70ebeba8-c5e9-4000-b837-9ab6cd8dd432",
+  "creators": [
+    "d93a0d6e-3e25-4406-803a-49010ff7a212"
+  ],
+  "name": "Manage the cyber threat for finance professionals",
+  "url": "https://www.edx.org/learn/cybersecurity/acca-manage-the-cyber-threat-for-finance-professionals/",
+  "scraped_timestamp": "2024-11-09T18:06:01.782589",
+  "platform_id": "edx",
+  "description": "This course is designed for accountancy, finance and business professional s working in all organisations from small business, large corporates or financial services or who are just interested in learning more about the vulnerabilities organisations are exposed to and the options available to protect their organisation. With a focus on practical skills throughout, this course provides the ability to apply skills as well as understand them.",
+  "html_description": "<p><span lang=\"EN-GB\">This course is designed for accountancy, finance and business </span><span lang=\"EN-GB\">professional</span><span lang=\"EN-GB\">s</span><span lang=\"EN-GB\"> working in all </span><span lang=\"EN-GB\">organisations</span><span lang=\"EN-GB\"> from small business, large corporates or financial services or who are just interested in learning more </span><span lang=\"EN-GB\">about </span><span lang=\"EN-GB\">the </span><span lang=\"EN-GB\">vulnerabilities organisations are exposed to and the options available to protect their organisation.</span><span lang=\"EN-GB\"></span><span lang=\"EN-GB\"> With a focus on practical skills throughout, this course provides the ability to apply skills as well as understand them. </span></p>",
+  "platform_course_id": "a7d4760b-c921-48cf-adb9-1d64f86969db",
+  "languages": [
+    [
+      "en"
+    ]
+  ],
+  "is_free": false,
+  "is_limited_free": true,
+  "dollar_price": 199.0,
+  "has_certificate": true,
+  "short_description": "In this course, we use scenarios/examples to examine the threat of a cyber-attack and good practices on mitigating the risk.",
+  "platform_last_update": "2024-10-11T11:29:47.119166Z",
+  "platform_thumbnail_url": "https://prod-discovery.edx-cdn.org/media/course/image/a7d4760b-c921-48cf-adb9-1d64f86969db-57ee8b221860.png",
+  "duration_h": 16.0,
+  "plarform_reviews_count": null,
+  "platform_reviews_rating": null,
+  "level": "Intermediate",
+  "enrollment_count": 3108,
+  "is_active": true,
+  "tags": [
+    "Finance",
+    "Accounting",
+    "Cyber Threat Intelligence",
+    "Financial Services",
+    "Computer Science",
+    "Economics & Finance",
+    "Business & Management"
+  ],
+  "format": "Video"
+}

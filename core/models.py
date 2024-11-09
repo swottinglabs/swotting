@@ -11,13 +11,6 @@ class Level(models.Model):
         return self.name
 
 
-class CreatorType(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.name
-
 
 class Creator(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -25,7 +18,6 @@ class Creator(models.Model):
     url = models.URLField(max_length=255, blank=True, null=True)
     platform_id = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    type = models.ForeignKey(CreatorType, on_delete=models.SET_NULL, null=True)
     platform_thumbnail_url = models.URLField(max_length=255, blank=True, null=True)
 
     def __str__(self):
@@ -91,7 +83,7 @@ class LearningResource(models.Model):
     level = models.ForeignKey(Level, on_delete=models.SET_NULL, null=True)
     platform_last_update = models.DateTimeField(null=True, blank=True)
     platform_thumbnail_url = models.URLField(max_length=255, blank=True, null=True)
-    duration = models.DurationField(null=True, blank=True)
+    duration_h = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     platform_reviews_count = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)
     enrollment_count = models.PositiveIntegerField(default=0)

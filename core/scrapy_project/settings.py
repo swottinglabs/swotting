@@ -11,19 +11,24 @@ import os
 import sys
 import django
 import dotenv
+from pathlib import Path
 
 dotenv.load_dotenv()
 
-# Setting up django's project full path.
-sys.path.insert(0, '../../../swotting')
-# Setting up Django's settings module name.
+# Get the root directory
+ROOT_DIR = Path(__file__).resolve().parent.parent.parent.parent
+
+# Add the root directory to the Python path
+sys.path.insert(0, str(ROOT_DIR))
+
+# Setting up Django's settings module name
 os.environ['DJANGO_SETTINGS_MODULE'] = 'swotting.settings'
 django.setup()
 
 BOT_NAME = "scrapy_project"
 
-SPIDER_MODULES = ["scrapy_project.spiders"]
-NEWSPIDER_MODULE = "scrapy_project.spiders"
+SPIDER_MODULES = ["core.scrapy_project.scrapers"]
+NEWSPIDER_MODULE = "core.scrapy_project.scrapers"
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -104,3 +109,13 @@ ROBOTSTXT_OBEY = False
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
+
+ITEM_PIPELINES = {
+    # Validators
+    # 'scrapy_project.pipelines.CreatorValidatorPipeline': 100,
+    # 'scrapy_project.pipelines.LearningResourceValidatorPipeline': 110,
+    
+    # Temp Save
+    # 'scrapy_project.pipelines.temp_save.CreatorTempSavePipeline': 150,
+    'core.scrapy_project.pipelines.temp_save.learning_resource_temp_save.LearningResourceTempSavePipeline': 160,
+}

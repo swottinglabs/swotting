@@ -1,15 +1,11 @@
 from rest_framework import serializers
-from .models import Level, CreatorType, Creator, Platform, Format, Language, Tag, LearningResource
+from .models import Level, Creator, Platform, Format, Language, Tag, LearningResource
 
 class LevelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Level
         fields = '__all__'
 
-class CreatorTypeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CreatorType
-        fields = '__all__'
 
 class CreatorSerializer(serializers.ModelSerializer):
     class Meta:

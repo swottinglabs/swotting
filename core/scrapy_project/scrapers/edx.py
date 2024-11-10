@@ -148,10 +148,6 @@ class EdxScraper(BaseScraper, SitemapSpider):
             active_run = course.get('activeCourseRun', {})
             clean_url = response.url.replace('page-data/', '').replace('page-data.json', '')
 
-            # Create id for the course and creators
-            learning_resource_id = str(uuid4())
-            creator_ids = [str(uuid4()) for _ in range(len(course.get('owners', [])))]
-
             
             seat_info = self._get_seat_info(
                 active_run.get('seats', []),
@@ -159,9 +155,17 @@ class EdxScraper(BaseScraper, SitemapSpider):
                 enrollment_end=active_run.get('enrollmentEnd')
             )
             
-            course_data = {
-                'id': learning_resource_id,
-                'creators': creator_ids,
+            learning_resource = {
+                'creators': [
+                    {
+                        'name': owner.get('name'),
+                        'platform_id': owner.get('uuid'),
+                        'url': owner.get('marketingUrl'),
+                        'platform_thumbnail_url': owner.get('logoImageUrl'),
+                        'description': ''
+                    }
+                    for owner in course.get('owners', [])
+                ],
                 'name': course.get('title'),
                 'url': clean_url,
                 'scraped_timestamp': datetime.now().isoformat(),
@@ -169,7 +173,7 @@ class EdxScraper(BaseScraper, SitemapSpider):
                 'description': self._clean_html_description(course.get('fullDescription')),
                 'html_description': course.get('fullDescription'),
                 'platform_course_id': course.get('uuid'),
-                'languages': [course.get('language', self.LANGUAGE)],
+                'languages': course.get('language', self.LANGUAGE),
                 'is_free': seat_info['is_free'],
                 'is_limited_free': seat_info['is_limited_free'],
                 'dollar_price': float(seat_info['dollar_price']) if seat_info['dollar_price'] else None,
@@ -188,32 +192,14 @@ class EdxScraper(BaseScraper, SitemapSpider):
                 'format': self.FORMAT,
             }
 
-            creators = [
-                {
-                    'id': creator_ids[index],
-                    'learning_resource_id': learning_resource_id,
-                    'platform_id': owner.get('uuid'),
-                    'name': owner.get('name'),
-                    'platform_thumbnail_url': owner.get('logoImageUrl'),
-                    'url': owner.get('marketingUrl'),
-                    'description': '',
-                    
-                }
-                for index, owner in enumerate(course.get('owners', []))
-            ]
+            learning_resource['platform_course_id'] = 'test123'
+            learning_resource['platform_id'] = 'edX'
 
             # Yield course first
             yield {
                 'type': 'learning_resource',
-                'data': course_data
+                'data': learning_resource
             }
-
-            # Yield creators
-            for creator in creators:
-                yield {
-                    'type': 'creator',
-                    'data': creator
-                }
             
         except Exception as e:
             self.logger.error(f"Error parsing JSON from {response.url}: {str(e)}")

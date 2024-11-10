@@ -111,11 +111,15 @@ TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
 
 ITEM_PIPELINES = {
-    # Validators
-    # 'scrapy_project.pipelines.CreatorValidatorPipeline': 100,
-    # 'scrapy_project.pipelines.LearningResourceValidatorPipeline': 110,
+    # Pre-process Validators
+    'core.scrapy_project.pipelines.validators.pre_process_validator.PreProcessValidatorPipeline': 110,
     
-    # Temp Save
-    # 'scrapy_project.pipelines.temp_save.CreatorTempSavePipeline': 150,
-    'core.scrapy_project.pipelines.temp_save.learning_resource_temp_save.LearningResourceTempSavePipeline': 160,
+    # Duplicate Filter
+    'core.scrapy_project.pipelines.learning_resources.duplicate_filter.DuplicateFilterPipeline': 115,
+    
+    # Text Cleaning
+    'core.scrapy_project.pipelines.learning_resources.clean_text.TextCleanerPipeline': 120,
+    
+    # Database Validation (final step before saving)
+    'core.scrapy_project.pipelines.validators.database_validator.DatabaseValidatorPipeline': 900,
 }

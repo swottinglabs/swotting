@@ -2,7 +2,7 @@ import csv
 import os
 from django.core.management.base import BaseCommand
 from django.db import transaction
-from core.models import Level, CreatorType, Creator, Platform, Format, Language, Tag, LearningResource
+from core.models import Level, Creator, Platform, Format, Language, Tag, LearningResource
 
 class Command(BaseCommand):
     help = 'Initialize database with initial data'
@@ -16,7 +16,6 @@ class Command(BaseCommand):
         self.stdout.write('Initializing database...')
 
         self.init_model(Level, 'levels.csv')
-        self.init_model(CreatorType, 'creator_types.csv')
         self.init_model(Creator, 'creators.csv')
         self.init_model(Platform, 'platforms.csv')
         self.init_model(Format, 'formats.csv')

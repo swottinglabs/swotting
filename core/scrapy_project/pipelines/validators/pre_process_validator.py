@@ -2,8 +2,8 @@ from typing import Any, Dict
 from ...validators import LearningResourceInput
 from .base_validator import BaseValidatorPipeline
 
-class LearningResourceValidatorPipeline(BaseValidatorPipeline):
-    """Pipeline to validate learning resource data using LearningResourceInput model"""
+class PreProcessValidatorPipeline(BaseValidatorPipeline):
+    """Pipeline to validate incoming learning resource data using LearningResourceInput model"""
     
     def process_item(self, item: Dict[str, Any], spider: Any) -> Dict[str, Any]:
         if 'type' not in item or item['type'] != 'learning_resource':

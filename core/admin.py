@@ -24,7 +24,7 @@ class TagAdmin(admin.ModelAdmin):
 class LearningResourceAdmin(admin.ModelAdmin):
     list_display = ('name', 'platform_id', 'url', 'is_free', 'has_certificate')
     search_fields = ('name', 'platform_course_id', 'url')
-    list_filter = ('platform_id', 'is_free', 'has_certificate', 'level', 'formats', 'languages')
+    list_filter = ('platform_id', 'is_free', 'has_certificate', 'level', 'format', 'languages')
 
 
 class CreatorAdmin(admin.ModelAdmin):

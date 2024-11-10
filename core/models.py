@@ -78,7 +78,7 @@ class LearningResource(models.Model):
     dollar_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     has_certificate = models.BooleanField(default=False)
     creators = models.ManyToManyField(Creator)
-    formats = models.ManyToManyField(Format)
+    format = models.ForeignKey(Format, on_delete=models.SET_NULL, null=True)
     tags = models.ManyToManyField(Tag)
     level = models.ForeignKey(Level, on_delete=models.SET_NULL, null=True)
     platform_last_update = models.DateTimeField(null=True, blank=True)

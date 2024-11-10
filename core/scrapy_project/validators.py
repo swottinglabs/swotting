@@ -23,6 +23,7 @@ class CreatorBase(BaseModel):
 class LearningResourceBase(BaseModel):
     # Must have fields
     platform_course_id: str
+    scraped_timestamp: datetime
     platform_id: str
     url: HttpUrl
     name: str
@@ -37,7 +38,7 @@ class LearningResourceBase(BaseModel):
     dollar_price: Optional[Decimal] = Field(None, decimal_places=2, max_digits=10)
     has_certificate: bool
     creators: List[CreatorBase] = []
-    formats: List[str] = []
+    format: str
     tags: List[str] = []
 
     # Nice to have fields
@@ -164,8 +165,6 @@ class LearningResourceInput(LearningResourceBase):
 
 class LearningResourceOutput(LearningResourceBase):
     """Validation model for learning resource data before saving to database"""
-    id: UUID4
-    scraped_timestamp: datetime
 
     @field_validator('languages')
     @classmethod

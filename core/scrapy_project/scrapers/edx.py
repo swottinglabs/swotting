@@ -23,14 +23,9 @@ class EdxScraper(BaseScraper, SitemapSpider):
     LANGUAGE = ['en']
     FORMAT = "Video"
     
-    # Add a class variable for the limit
-    DEBUG_LIMIT = 5
-    
     def __init__(self, platform_id=None, *args, **kwargs):
         BaseScraper.__init__(self, platform_id, *args, **kwargs)
         SitemapSpider.__init__(self, *args, **kwargs)
-        # Counter for processed URLs
-        self.url_count = 0
 
     def sitemap_filter(self, entries):
         # Invalid: A url with only one '/' after the learn is a category page e.g. https://www.edx.org/learn/media-law
@@ -39,15 +34,10 @@ class EdxScraper(BaseScraper, SitemapSpider):
         # Valid: A url with 3 or more '/' after the base_url is a course e.g. https://www.edx.org/learn/statistics/university-of-adelaide-mathtrackx-statistics
 
         for entry in entries:
-            # Stop if we've reached the limit
-            if self.url_count >= self.DEBUG_LIMIT:
-                break
-                
             url = entry['loc']
             
             pattern = rf'^{re.escape(self.base_url)}/learn/[^/]+/[^/]+$'
             if re.match(pattern, url):
-                self.url_count += 1
                 entry['loc'] = self._convert_to_json_url(entry['loc'])
                 yield entry
 

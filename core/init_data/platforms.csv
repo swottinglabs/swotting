@@ -1,7 +1,7 @@
-url,name,description,isScraping,lastFullScrape,isIndependent
-https://www.edx.org/,edx,Online learning platform offering courses from top universities and institutions,True,,False
-https://www.udemy.com/,Udemy,Global marketplace for learning and teaching online,False,,False
-https://www.udacity.com/,Udacity,Online learning platform focusing on technology and computer science courses,False,,False
-https://www.coursera.org/,Coursera,Online learning platform partnering with universities and organizations,False,,False
-https://explore.skillbuilder.aws/,AWS Skill Builder,Learning platform for AWS cloud skills and certifications,False,,False
-https://learn.microsoft.com/,Microsoft Learn,Free online training platform for Microsoft technologies,False,,False
+id,url,name,description,isScraping,lastFullScrape,isIndependent
+edx,https://www.edx.org/,edx,Online learning platform offering courses from top universities and institutions,True,,False
+udemy,https://www.udemy.com/,Udemy,Global marketplace for learning and teaching online,False,,False
+udacity,https://www.udacity.com/,Udacity,Online learning platform focusing on technology and computer science courses,False,,False
+coursera,https://www.coursera.org/,Coursera,Online learning platform partnering with universities and organizations,False,,False
+aws_skill_builder,https://explore.skillbuilder.aws/,AWS Skill Builder,Learning platform for AWS cloud skills and certifications,False,,False
+microsoft_learn,https://learn.microsoft.com/,Microsoft Learn,Free online training platform for Microsoft technologies,False,,False

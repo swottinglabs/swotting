@@ -6,6 +6,7 @@ import pycountry
 
 class CreatorBase(BaseModel):
     name: str
+    platform_creator_id: str
     url: Optional[HttpUrl] = None
     platform_id: Optional[str] = None
     description: Optional[str] = None
@@ -114,7 +115,6 @@ class CreatorInput(CreatorBase):
 
 class CreatorOutput(CreatorBase):
     """Validation model for creator data before saving to database"""
-    id: UUID4
 
 class LearningResourceInput(LearningResourceBase):
     """Validation model for incoming learning resource data"""

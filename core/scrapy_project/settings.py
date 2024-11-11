@@ -120,6 +120,9 @@ ITEM_PIPELINES = {
     # Text Cleaning
     'core.scrapy_project.pipelines.learning_resources.clean_text.TextCleanerPipeline': 120,
     
-    # Database Validation (final step before saving)
+    # Database Validation
     'core.scrapy_project.pipelines.validators.database_validator.DatabaseValidatorPipeline': 900,
+    
+    # Database Save (final step)
+    'core.scrapy_project.pipelines.learning_resources.database_save.DatabaseSavePipeline': 950,
 }

@@ -10,28 +10,27 @@ class Level(models.Model):
     def __str__(self):
         return self.name
 
-
-
-class Creator(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=255)
-    url = models.URLField(max_length=255, blank=True, null=True)
-    platform_id = models.CharField(max_length=255, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
-    platform_thumbnail_url = models.URLField(max_length=255, blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-
 class Platform(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.CharField(primary_key=True, max_length=255)
     url = models.URLField(max_length=255)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     is_scraping = models.BooleanField(default=False)
     last_full_scrape = models.DateTimeField(null=True, blank=True)
     is_independent = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
+
+
+class Creator(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=255)
+    url = models.URLField(max_length=255, blank=True, null=True)
+    platform = models.ForeignKey(Platform, on_delete=models.CASCADE, blank=True, null=True)
+    platform_creator_id = models.CharField(max_length=255, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    platform_thumbnail_url = models.URLField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.name

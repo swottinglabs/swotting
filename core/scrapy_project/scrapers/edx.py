@@ -24,7 +24,7 @@ class EdxScraper(BaseScraper, SitemapSpider):
     FORMAT = "Video"
     
     # Add a class variable for the limit
-    DEBUG_LIMIT = 1
+    DEBUG_LIMIT = 5
     
     def __init__(self, platform_id=None, *args, **kwargs):
         BaseScraper.__init__(self, platform_id, *args, **kwargs)
@@ -141,6 +141,29 @@ class EdxScraper(BaseScraper, SitemapSpider):
         # Combine both lists
         return skill_names + subject_names
 
+    def _standardize_level(self, level):
+        """
+        Standardize course level to one of: Beginner, Intermediate, or Advanced.
+        
+        Args:
+            level (str): Raw level from EdX
+            
+        Returns:
+            str: Standardized level or None if no match
+        """
+        level_mapping = {
+            'introductory': 'Beginner',
+            'intermediate': 'Intermediate',
+            'advanced': 'Advanced',
+            'beginner': 'Beginner'
+        }
+        
+        if not level:
+            return None
+            
+        normalized_level = level.lower().strip()
+        return level_mapping.get(normalized_level)
+
     def parse(self, response):
         try:
             json_data = response.json()
@@ -159,7 +182,8 @@ class EdxScraper(BaseScraper, SitemapSpider):
                 'creators': [
                     {
                         'name': owner.get('name'),
-                        'platform_id': owner.get('uuid'),
+                        'platform_id': 'edx',
+                        'platform_creator_id': owner.get('uuid'),
                         'url': owner.get('marketingUrl'),
                         'platform_thumbnail_url': owner.get('logoImageUrl'),
                         'description': ''
@@ -176,24 +200,21 @@ class EdxScraper(BaseScraper, SitemapSpider):
                 'languages': course.get('language', self.LANGUAGE),
                 'is_free': seat_info['is_free'],
                 'is_limited_free': seat_info['is_limited_free'],
-                'dollar_price': float(seat_info['dollar_price']) if seat_info['dollar_price'] else None,
+                'dollar_price': float(seat_info['dollar_price']) if seat_info['dollar_price'] else None, # should be improved e.g. does not work for this page https://www.edx.org/learn/business-administration/acca-business-and-technology
                 'has_certificate': seat_info['has_certificate'],
                 'short_description': self._clean_html_description(course.get('shortDescription')),
                 'platform_last_update': course.get('updatedAt'),
                 'platform_thumbnail_url': course.get('originalImage', {}).get('src'),
                 'duration_h': self._calculate_duration_hours(active_run),
                 'plarform_reviews_count': course.get('courseReview', {}).get('reviewCount'),
-                'platform_reviews_rating': course.get('courseReview', {}).get('avgCourseRating'),
-                'level': course.get('levelType', None),
+                'platform_reviews_rating': round(float(course.get('courseReview', {}).get('avgCourseRating', 0)), 2) if course.get('courseReview', {}).get('avgCourseRating') else None,
+                'level': self._standardize_level(course.get('levelType')),
                 'short_description': self._clean_html_description(course.get('shortDescription')),
                 'enrollment_count': course.get('enrollmentCount', None),
                 'is_active': active_run.get('isEnrollable', True),
                 'tags': self._get_course_tags(course),
                 'format': self.FORMAT,
             }
-
-            learning_resource['platform_course_id'] = 'test123'
-            learning_resource['platform_id'] = 'edX'
 
             # Yield course first
             yield {

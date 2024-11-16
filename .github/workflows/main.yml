@@ -47,7 +47,6 @@ jobs:
       - name: Run tests
         run: python manage.py test
 
-  # Build and push Docker image to GitHub Container Registry
   build-production:
     needs: test
     runs-on: ubuntu-latest
@@ -78,7 +77,7 @@ jobs:
           build-args: |
             ALGOLIA_APP_ID=${{ secrets.ALGOLIA_APP_ID }}
             ALGOLIA_API_KEY=${{ secrets.ALGOLIA_API_KEY }}
-  
+
   deploy-to-digitalocean:
     needs: build-production
     runs-on: ubuntu-latest
@@ -111,15 +110,147 @@ jobs:
       - name: Authenticate with DigitalOcean
         run: doctl auth init --access-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
-      - name: Deploy to DigitalOcean
+      - name: Deploy to DigitalOcean and Run Scrape Command
         run: |
-          ssh -i ~/.ssh/id_rsa root@165.22.29.100 "cd /home/swotting && \
-            export ALGOLIA_APP_ID='${{ secrets.ALGOLIA_APP_ID }}' && \
-            export ALGOLIA_API_KEY='${{ secrets.ALGOLIA_API_KEY }}' && \
-            docker pull ghcr.io/${{ github.repository_owner }}/swotting-prod:latest && \
-            docker ps -a && \
-            docker compose down && \
-            ALGOLIA_APP_ID='${{ secrets.ALGOLIA_APP_ID }}' ALGOLIA_API_KEY='${{ secrets.ALGOLIA_API_KEY }}' docker compose up -d"
+          ssh -i ~/.ssh/id_rsa root@165.22.29.100 "
+            cd /home/swotting &&
+            export ALGOLIA_APP_ID='${{ secrets.ALGOLIA_APP_ID }}' &&
+            export ALGOLIA_API_KEY='${{ secrets.ALGOLIA_API_KEY }}' &&
+            docker pull ghcr.io/${{ github.repository_owner }}/swotting-prod:latest &&
+            docker ps -a &&
+            docker compose down &&
+            ALGOLIA_APP_ID='${{ secrets.ALGOLIA_APP_ID }}' ALGOLIA_API_KEY='${{ secrets.ALGOLIA_API_KEY }}' docker compose up -d &&
+            # Wait for the containers to start
+            sleep 10 &&
+            # Get the container ID or name
+            CONTAINER_NAME=$(docker compose ps -q web) &&
+            # Run the scrape command inside the container
+            docker exec $CONTAINER_NAME python manage.py scrape edx
+          "
+
+
+# name: CI
+
+# permissions:
+#   contents: read
+#   packages: write
+#   deployments: write
+#   issues: write
+#   pull-requests: write
+
+# on:
+#   push:
+#     branches:
+#       - main
+#     tags:
+#       - '*'
+#   pull_request:
+
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     env:
+#       HUEY_IMMEDIATE: 'True'
+#       DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
+#       ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
+#       ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
+#     services:
+#       postgres:
+#         image: ankane/pgvector:latest
+#         ports:
+#           - 5432:5432
+#         env:
+#           POSTGRES_DB: postgres
+#           POSTGRES_USER: postgres
+#           POSTGRES_PASSWORD: postgres
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Set up Python
+#         uses: actions/setup-python@v2
+#         with:
+#           python-version: '3.11'
+#       - name: Install dependencies
+#         run: |
+#           pip install --cache-dir .cache/pip -U pip
+#           pip install --cache-dir .cache/pip -r requirements.txt
+#       - name: Collect static
+#         run: python manage.py collectstatic --noinput
+#       - name: Run tests
+#         run: python manage.py test
+
+#   # Build and push Docker image to GitHub Container Registry
+#   build-production:
+#     needs: test
+#     runs-on: ubuntu-latest
+#     env:
+#       ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
+#       ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Set up Docker Buildx
+#         uses: docker/setup-buildx-action@v1
+#       - name: Login to GitHub Container Registry
+#         uses: docker/login-action@v1
+#         with:
+#           registry: ghcr.io
+#           username: ${{ github.actor }}
+#           password: ${{ secrets.GITHUB_TOKEN }}
+#       - name: Debug
+#         run: |
+#           echo "ALGOLIA_APP_ID is set: ${{ secrets.ALGOLIA_APP_ID != '' }}"
+#           echo "ALGOLIA_API_KEY is set: ${{ secrets.ALGOLIA_API_KEY != '' }}"
+#       - name: Build and push Docker image
+#         uses: docker/build-push-action@v2
+#         with:
+#           context: .
+#           file: ./deployment/django/Dockerfile
+#           push: true
+#           tags: ghcr.io/${{ github.repository_owner }}/swotting-prod:latest
+#           build-args: |
+#             ALGOLIA_APP_ID=${{ secrets.ALGOLIA_APP_ID }}
+#             ALGOLIA_API_KEY=${{ secrets.ALGOLIA_API_KEY }}
+  
+#   deploy-to-digitalocean:
+#     needs: build-production
+#     runs-on: ubuntu-latest
+#     permissions: write-all
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
+
+#       - name: Setup SSH Key
+#         run: |
+#           mkdir -p ~/.ssh
+#           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+#           chmod 600 ~/.ssh/id_rsa
+#           ssh-keyscan -H 165.22.29.100 >> ~/.ssh/known_hosts
+#         env:
+#           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+#       - name: Login to GitHub Container Registry
+#         uses: docker/login-action@v1
+#         with:
+#           registry: ghcr.io
+#           username: ${{ github.actor }}
+#           password: ${{ secrets.GITHUB_TOKEN }}
+
+#       - name: Install doctl
+#         run: |
+#           curl -sL https://github.com/digitalocean/doctl/releases/download/v1.64.0/doctl-1.64.0-linux-amd64.tar.gz | tar -xzv
+#           sudo mv doctl /usr/local/bin
+
+#       - name: Authenticate with DigitalOcean
+#         run: doctl auth init --access-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+#       - name: Deploy to DigitalOcean
+#         run: |
+#           ssh -i ~/.ssh/id_rsa root@165.22.29.100 "cd /home/swotting && \
+#             export ALGOLIA_APP_ID='${{ secrets.ALGOLIA_APP_ID }}' && \
+#             export ALGOLIA_API_KEY='${{ secrets.ALGOLIA_API_KEY }}' && \
+#             docker pull ghcr.io/${{ github.repository_owner }}/swotting-prod:latest && \
+#             docker ps -a && \
+#             docker compose down && \
+#             ALGOLIA_APP_ID='${{ secrets.ALGOLIA_APP_ID }}' ALGOLIA_API_KEY='${{ secrets.ALGOLIA_API_KEY }}' docker compose up -d"
 
       # - name: Deploy to DigitalOcean
       #   run: |

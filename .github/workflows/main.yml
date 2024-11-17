@@ -86,33 +86,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Debug SSH Setup
+      - name: Setup SSH
         run: |
-          # Check SSH directory permissions
-          ls -la ~/.ssh
-          
-          # Check SSH key content (safely)
-          wc -l ~/.ssh/id_rsa
-          
-          # Test SSH connection with verbose output
-          ssh -v -i ~/.ssh/id_rsa root@165.22.29.100 "echo 'SSH test'"
-
-      - name: Setup SSH with detailed checks
-        run: |
-          # Create .ssh directory with correct permissions
+          # First create the SSH directory
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
           
-          # Write and secure private key
+          # Write the SSH key
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           
           # Add host to known_hosts
           ssh-keyscan -H 165.22.29.100 >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
-          
-          # Verify key format
-          ssh-keygen -l -f ~/.ssh/id_rsa || echo "Invalid key format"
+
+      - name: Debug SSH Setup
+        run: |
+          # Now we can safely check the setup
+          ls -la ~/.ssh
+          wc -l ~/.ssh/id_rsa
+          ssh -v -i ~/.ssh/id_rsa root@165.22.29.100 "echo 'SSH test'"
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
@@ -237,14 +230,26 @@ jobs:
 #       - name: Checkout code
 #         uses: actions/checkout@v2
 
-#       - name: Setup SSH Key
+#       - name: Setup SSH
 #         run: |
+#           # First create the SSH directory
 #           mkdir -p ~/.ssh
+#           chmod 700 ~/.ssh
+#           
+#           # Write the SSH key
 #           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
 #           chmod 600 ~/.ssh/id_rsa
+#           
+#           # Add host to known_hosts
 #           ssh-keyscan -H 165.22.29.100 >> ~/.ssh/known_hosts
-#         env:
-#           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+#           chmod 644 ~/.ssh/known_hosts
+
+#       - name: Debug SSH Setup
+#         run: |
+#           # Now we can safely check the setup
+#           ls -la ~/.ssh
+#           wc -l ~/.ssh/id_rsa
+#           ssh -v -i ~/.ssh/id_rsa root@165.22.29.100 "echo 'SSH test'"
 
 #       - name: Login to GitHub Container Registry
 #         uses: docker/login-action@v1

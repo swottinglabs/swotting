@@ -9,17 +9,13 @@ x-app: &default-app
 
 services:
   web:
+    <<: *default-app
     environment:
         - ALGOLIA_APP_ID=${ALGOLIA_APP_ID}
         - ALGOLIA_API_KEY=${ALGOLIA_API_KEY}
-    <<: *default-app
     ports:
       - "127.0.0.1:8006:8000"
     command: gunicorn -b 0.0.0.0:8000 --timeout 120 --capture-output swotting.wsgi
-
-  tasks:
-    <<: *default-app
-    command: manage.py run_huey
 
   swottingdb:
     container_name: swottingdb
@@ -35,13 +31,6 @@ services:
       POSTGRES_DB: swotting
     env_file:
       - ./.env
-
-  redis:
-    image: redis:latest
-    restart: unless-stopped
-    volumes:
-      - redis_data:/data
-    command: redis-server --save 60 1 --loglevel warning
 
 
 volumes:

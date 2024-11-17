@@ -19,7 +19,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      HUEY_IMMEDIATE: 'True'
+      # HUEY_IMMEDIATE: 'True'
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
       ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
       ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
@@ -86,21 +86,33 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Debug SSH
-      # - name: Debug SSH
-      #   run: |
-      #     ls -la ~/.ssh
-      #     ssh -v -i ~/.ssh/id_rsa root@165.22.29.100
-
-      - name: Setup SSH Key
+      - name: Debug SSH Setup
         run: |
+          # Check SSH directory permissions
+          ls -la ~/.ssh
+          
+          # Check SSH key content (safely)
+          wc -l ~/.ssh/id_rsa
+          
+          # Test SSH connection with verbose output
+          ssh -v -i ~/.ssh/id_rsa root@165.22.29.100 "echo 'SSH test'"
+
+      - name: Setup SSH with detailed checks
+        run: |
+          # Create .ssh directory with correct permissions
           mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          
+          # Write and secure private key
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
+          
+          # Add host to known_hosts
           ssh-keyscan -H 165.22.29.100 >> ~/.ssh/known_hosts
-
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          chmod 644 ~/.ssh/known_hosts
+          
+          # Verify key format
+          ssh-keygen -l -f ~/.ssh/id_rsa || echo "Invalid key format"
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1

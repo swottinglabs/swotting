@@ -91,6 +91,7 @@ jobs:
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
+      # Can we delete this?
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
@@ -107,7 +108,7 @@ jobs:
 
       - name: Deploy and run scraper
         run: |
-          DROPLET_IP=$(doctl compute droplet get swotting --format PublicIPv4)
+          DROPLET_IP=$(doctl compute droplet get swotting-production --format PublicIPv4)
           ssh -i ~/.ssh/id_rsa root@$DROPLET_IP "
             cd /home/swotting &&
             export ALGOLIA_APP_ID='${{ secrets.ALGOLIA_APP_ID }}' &&

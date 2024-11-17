@@ -86,6 +86,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # Debug SSH
+      - name: Debug SSH
+        run: |
+          ls -la ~/.ssh
+          ssh -v -i ~/.ssh/id_rsa root@165.22.29.100
+
       - name: Setup SSH Key
         run: |
           mkdir -p ~/.ssh
@@ -119,16 +125,16 @@ jobs:
             export ALGOLIA_API_KEY='${{ secrets.ALGOLIA_API_KEY }}' &&
             docker pull ghcr.io/${{ github.repository_owner }}/swotting-prod:latest &&
             docker ps -a &&
-            docker compose down &&
-            ALGOLIA_APP_ID='${{ secrets.ALGOLIA_APP_ID }}' ALGOLIA_API_KEY='${{ secrets.ALGOLIA_API_KEY }}' docker compose up -d &&
+            docker compose -f deployment/docker-compose.yml down &&
+            ALGOLIA_APP_ID='${{ secrets.ALGOLIA_APP_ID }}' ALGOLIA_API_KEY='${{ secrets.ALGOLIA_API_KEY }}' \
+            docker compose -f deployment/docker-compose.yml up -d &&
             # Wait for the containers to start
             sleep 10 &&
-            # Get the container ID or name
-            CONTAINER_NAME=$(docker compose ps -q web) &&
+            # Get the container ID or name (adjust service name if different in your compose file)
+            CONTAINER_NAME=$(docker compose -f deployment/docker-compose.yml ps -q web) &&
             # Run the scrape command inside the container
             docker exec $CONTAINER_NAME python manage.py scrape edx
           "
-
 
 # name: CI
 
@@ -281,3 +287,4 @@ jobs:
       #     docker stop swotting-webapp || echo "No existing container to stop."
       #     docker rm swotting-webapp || echo "No existing container to remove."
       #     docker run -d --restart unless-stopped --name swotting-webapp -p 80:80 ghcr.io/${{ github.repository_owner }}/swotting-prod:latest
+

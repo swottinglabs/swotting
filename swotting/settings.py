@@ -13,7 +13,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 import dj_database_url
-from huey import RedisHuey
+# from huey import RedisHuey
 # from redis import ConnectionPool
 
 # Load environment variables from .env file
@@ -59,7 +59,7 @@ INSTALLED_APPS = [
     'core',
     'rest_framework',
     'algoliasearch_django',
-    'huey.contrib.djhuey',
+    # 'huey.contrib.djhuey',
 ]
 
 MIDDLEWARE = [

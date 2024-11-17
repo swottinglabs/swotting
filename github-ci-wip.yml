@@ -36,7 +36,7 @@ jobs:
       - name: Run tests
         run: python manage.py test
         env:
-          HUEY_IMMEDIATE: 'True'
+          # HUEY_IMMEDIATE: 'True'
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
 
   build-staging:

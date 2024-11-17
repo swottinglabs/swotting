@@ -86,39 +86,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install and configure doctl
-        uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-
-      # Can we delete this?
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Setup SSH for Droplet access
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H $(doctl compute droplet get swotting-production --format PublicIPv4) >> ~/.ssh/known_hosts
-
       - name: Deploy and run scraper
+        env:
+          ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
+          ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
         run: |
-          DROPLET_IP=$(doctl compute droplet get swotting-production --format PublicIPv4)
+          # Using hardcoded IP instead of doctl lookup
+          DROPLET_IP="165.22.29.100"
+          echo "Deploying to droplet IP: $DROPLET_IP"
+          
+          # Test SSH connection first
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no root@$DROPLET_IP "echo 'SSH connection successful'"
+          
+          # Main deployment
           ssh -i ~/.ssh/id_rsa root@$DROPLET_IP "
             cd /home/swotting &&
-            export ALGOLIA_APP_ID='${{ secrets.ALGOLIA_APP_ID }}' &&
-            export ALGOLIA_API_KEY='${{ secrets.ALGOLIA_API_KEY }}' &&
             docker pull ghcr.io/${{ github.repository_owner }}/swotting-prod:latest &&
             docker compose -f deployment/docker-compose.yml down &&
-            ALGOLIA_APP_ID='${{ secrets.ALGOLIA_APP_ID }}' ALGOLIA_API_KEY='${{ secrets.ALGOLIA_API_KEY }}' \
+            ALGOLIA_APP_ID='${{ secrets.ALGOLIA_APP_ID }}' \
+            ALGOLIA_API_KEY='${{ secrets.ALGOLIA_API_KEY }}' \
             docker compose -f deployment/docker-compose.yml up -d &&
             sleep 10 &&
-            CONTAINER_NAME=$(docker compose -f deployment/docker-compose.yml ps -q web) &&
-            docker exec $CONTAINER_NAME python manage.py scrape edx
+            CONTAINER_NAME=\$(docker compose -f deployment/docker-compose.yml ps -q web) &&
+            docker exec \$CONTAINER_NAME python manage.py scrape edx
           "
 

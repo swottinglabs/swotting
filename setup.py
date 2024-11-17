@@ -8,7 +8,7 @@ setup(
     install_requires=[
         'dj-database-url==2.1.0',
         'psycopg2-binary==2.9.5',
-        'redis==5.0.4',
+        # 'redis==5.0.4',
         'gunicorn==20.1.0',
         'requests==2.31.0',
         'Django==4.2.11',
@@ -17,7 +17,7 @@ setup(
         'python-dotenv==1.0.0',
         # 'django-taggit==3.1.0',
         'django-lifecycle==1.0.0',
-        'huey==2.5.0',
+        # 'huey==2.5.0',
         'djangorestframework==3.14',
         'pydantic==2.5.2',
         'pydantic_core==2.14.5',

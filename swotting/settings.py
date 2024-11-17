@@ -14,7 +14,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 import dj_database_url
 from huey import RedisHuey
-from redis import ConnectionPool
+# from redis import ConnectionPool
 
 # Load environment variables from .env file
 load_dotenv()
@@ -184,5 +184,5 @@ ALGOLIA = {
 
 
 # Huey Configuration
-pool = ConnectionPool.from_url(os.environ.get('REDIS_URL', 'redis://localhost:6379'))
-HUEY = RedisHuey('swotting', connection_pool=pool)
+# pool = ConnectionPool.from_url(os.environ.get('REDIS_URL', 'redis://localhost:6379'))
+# HUEY = RedisHuey('swotting', connection_pool=pool)

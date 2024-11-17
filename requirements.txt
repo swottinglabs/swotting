@@ -53,6 +53,5 @@ gunicorn==22.0.0
 django-lifecycle==1.2.4
 pydantic==2.9.2
 pycountry==24.6.1
-huey
-redis
+
 

@@ -119,7 +119,7 @@ jobs:
             docker compose down && \
             ALGOLIA_APP_ID='${{ secrets.ALGOLIA_APP_ID }}' ALGOLIA_API_KEY='${{ secrets.ALGOLIA_API_KEY }}' docker compose up -d && \
             CONTAINER_NAME=\$(docker compose ps -q web) && \
-            (crontab -l 2>/dev/null; echo '0 3 * * * docker exec '\$CONTAINER_NAME' python manage.py scrape edx') | sort - | uniq - | crontab -"
+            (crontab -l 2>/dev/null; echo '0 4 * * * docker exec '\$CONTAINER_NAME' python manage.py scrape edx') | sort - | uniq - | crontab -"
 
             
 # ALGOLIA_APP_ID='${{ secrets.ALGOLIA_APP_ID }}' ALGOLIA_API_KEY='${{ secrets.ALGOLIA_API_KEY }}' docker compose up -d && \

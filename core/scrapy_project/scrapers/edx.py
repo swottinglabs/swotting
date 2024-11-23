@@ -15,7 +15,7 @@ from scrapy.spiders import SitemapSpider
 class EdxScraper(BaseScraper, SitemapSpider):
     name = 'edx_scraper'
     base_url = 'https://www.edx.org'
-    sitemap_urls = [ base_url + '/sitemap-0.xml']
+    sitemap_urls = [ base_url + '/sitemap.xml']
 
     # Constants
     IS_FREE = False

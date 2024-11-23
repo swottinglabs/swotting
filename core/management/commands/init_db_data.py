@@ -16,7 +16,8 @@ class Command(BaseCommand):
     def get_user_confirmation(self):
         """Helper function to get user confirmation for data deletion"""
         while True:
-            response = input('Do you want to delete all existing data before initialization? (y/n): ').lower()
+            # response = input('Do you want to delete all existing data before initialization? (y/n): ').lower()
+            response = 'y'
             if response in ['y', 'n']:
                 return response == 'y'
             self.stdout.write(self.style.WARNING('Please enter y or n'))

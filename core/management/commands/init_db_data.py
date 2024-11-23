@@ -37,8 +37,8 @@ class Command(BaseCommand):
         self.stdout.write('Starting database initialization process...')
         
         # Prompt for data deletion
-        if self.get_user_confirmation():
-            self.delete_all_data()        
+        # if self.get_user_confirmation():
+        #     self.delete_all_data()        
         
 
         self.stdout.write('Initializing database with new data...')

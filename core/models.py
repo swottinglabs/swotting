@@ -45,7 +45,13 @@ class Format(models.Model):
 
 
 class Language(models.Model):
-    iso_code = models.CharField(max_length=10, primary_key=True)
+    iso_code = models.CharField(
+        max_length=10, 
+        primary_key=True,
+        unique=True,
+        null=False,
+        blank=False
+        )
     name = models.CharField(max_length=255)
 
     def __str__(self):

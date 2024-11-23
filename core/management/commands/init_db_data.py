@@ -1,7 +1,7 @@
 import csv
 import os
 from django.core.management.base import BaseCommand
-from django.db import transaction
+from django.db import connection, transaction
 from core.models import Level, Creator, Platform, Format, Language, Tag, LearningResource
 
 class Command(BaseCommand):
@@ -10,18 +10,42 @@ class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.data_dir = 'core/init_data'
+        # List of models to handle
+        self.models = [Level, Creator, Platform, Format, Language, Tag, LearningResource]
+
+    def get_user_confirmation(self):
+        """Helper function to get user confirmation for data deletion"""
+        while True:
+            response = input('Do you want to delete all existing data before initialization? (y/n): ').lower()
+            if response in ['y', 'n']:
+                return response == 'y'
+            self.stdout.write(self.style.WARNING('Please enter y or n'))
+
+    def delete_all_data(self):
+        """Helper function to delete all data from models"""
+        for model in reversed(self.models):  # Reverse to handle foreign key dependencies
+            self.stdout.write(f'Deleting all {model.__name__} records...')
+            model.objects.all().delete()
+            self.stdout.write(self.style.SUCCESS(f'All {model.__name__} records deleted'))
+    
+    
+
 
     @transaction.atomic
     def handle(self, *args, **kwargs):
-        self.stdout.write('Initializing database...')
+        self.stdout.write('Starting database initialization process...')
+        
+        # Prompt for data deletion
+        if self.get_user_confirmation():
+            self.delete_all_data()        
+        
 
-        self.init_model(Level, 'levels.csv')
-        self.init_model(Creator, 'creators.csv')
-        self.init_model(Platform, 'platforms.csv')
-        self.init_model(Format, 'formats.csv')
-        self.init_model(Language, 'languages.csv')
-        self.init_model(Tag, 'tags.csv')
-        self.init_model(LearningResource, 'learning_resources.csv')
+        self.stdout.write('Initializing database with new data...')
+
+        # Initialize models
+        for model in self.models:
+            filename = f"{model.__name__.lower()}.csv"
+            self.init_model(model, filename)
 
         self.stdout.write(self.style.SUCCESS('Database initialization complete'))
 

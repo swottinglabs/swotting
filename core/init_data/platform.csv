@@ -1,4 +1,4 @@
-id,url,name,description,isScraping,lastFullScrape,isIndependent
+id,url,name,description,is_scraping,last_full_scrape,is_independent
 edx,https://www.edx.org/,edx,Online learning platform offering courses from top universities and institutions,True,,False
 udemy,https://www.udemy.com/,Udemy,Global marketplace for learning and teaching online,False,,False
 udacity,https://www.udacity.com/,Udacity,Online learning platform focusing on technology and computer science courses,False,,False

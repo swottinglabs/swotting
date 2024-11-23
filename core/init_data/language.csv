@@ -1,4 +1,4 @@
-isoCode,name
+iso_code,name
 aa,Afar
 ab,Abkhazian
 ae,Avestan
@@ -182,5 +182,3 @@ yo,Yoruba
 za,Zhuang; Chuang
 zh,Chinese
 zu,Zulu
-
-

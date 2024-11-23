@@ -118,9 +118,9 @@ jobs:
             docker ps -a && \
             docker compose down && \
             ALGOLIA_APP_ID='${{ secrets.ALGOLIA_APP_ID }}' ALGOLIA_API_KEY='${{ secrets.ALGOLIA_API_KEY }}' docker compose up -d && \
-            sleep 10 && \
-            CONTAINER_NAME=\$(docker compose ps -q web) && \
-            docker exec \$CONTAINER_NAME python manage.py scrape edx"
+# sleep 10 && \
+# CONTAINER_NAME=\$(docker compose ps -q web) && \
+# docker exec \$CONTAINER_NAME python manage.py scrape edx"
 
 
 

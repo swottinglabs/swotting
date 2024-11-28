@@ -1,36 +1,42 @@
 from django.contrib import admin
 from .models import (
-    DigitalLearningResourcePlatform,
-    DigitalLearningResourceCategory,
+    Platform,
+    Tag,
     LearningResource,
-    DigitalLearningResource,
-    WaitlistEntry
+    Level,
+    Creator,
+    Format,
+    Language
 )
 
 
-class DigitalLearningResourcePlatformAdmin(admin.ModelAdmin):
-    list_display = ('name', 'url')
+class PlatformAdmin(admin.ModelAdmin):
+    list_display = ('name', 'url', 'is_scraping', 'is_independent')
     search_fields = ('name', 'url')
+    list_filter = ('is_scraping', 'is_independent')
 
 
-class DigitalLearningResourceCategoryAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('name', )
     search_fields = ('name',)
 
 
-class DigitalLearningResourceAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug', 'platform', 'category', 'external_id', 'url')
-    search_fields = ('name', 'slug', 'external_id', 'url')
-    list_filter = ('platform', 'category')
+class LearningResourceAdmin(admin.ModelAdmin):
+    list_display = ('name', 'platform_id', 'url', 'is_free', 'has_certificate')
+    search_fields = ('name', 'platform_course_id', 'url')
+    list_filter = ('platform_id', 'is_free', 'has_certificate', 'level', 'format', 'languages')
 
 
-class WaitingListEntryAdmin(admin.ModelAdmin):
-    list_display = ('email', 'created_at')
-    search_fields = ('email',)
-    list_filter = ('created_at',)
+class CreatorAdmin(admin.ModelAdmin):
+    list_display = ('name', 'url')
+    search_fields = ('name', 'platform_creator_id')
 
 
-admin.site.register(DigitalLearningResourcePlatform, DigitalLearningResourcePlatformAdmin)
-admin.site.register(DigitalLearningResourceCategory, DigitalLearningResourceCategoryAdmin)
-admin.site.register(DigitalLearningResource, DigitalLearningResourceAdmin)
-admin.site.register(WaitlistEntry, WaitingListEntryAdmin)
+# Register your models here
+admin.site.register(Platform, PlatformAdmin)
+admin.site.register(Tag, TagAdmin)
+admin.site.register(LearningResource, LearningResourceAdmin)
+admin.site.register(Level)
+admin.site.register(Creator, CreatorAdmin)
+admin.site.register(Format)
+admin.site.register(Language)

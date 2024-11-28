@@ -1,45 +1,47 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.http import JsonResponse
-from .forms import WaitlistForm
-from rest_framework import generics, permissions, filters
-from .models import DigitalLearningResourcePlatform, DigitalLearningResourceCategory, DigitalLearningResource
-from .serializers import DigitalLearningResourcePlatformSerializer, DigitalLearningResourceCategorySerializer, DigitalLearningResourceSerializer
+from rest_framework import generics, filters
+from algoliasearch_django import raw_search
+from .models import Platform, Tag, LearningResource
+from .serializers import PlatformSerializer, TagSerializer, LearningResourceSerializer
 
 
-class DigitalLearningResourcePlatformListCreateView(generics.ListCreateAPIView):
-    queryset = DigitalLearningResourcePlatform.objects.all()
-    serializer_class = DigitalLearningResourcePlatformSerializer
+class PlatformListCreateView(generics.ListCreateAPIView):
+    queryset = Platform.objects.all()
+    serializer_class = PlatformSerializer
     http_method_names = ['get']
 
-class DigitalLearningResourceCategoryListCreateView(generics.ListCreateAPIView):
-    queryset = DigitalLearningResourceCategory.objects.all()
-    serializer_class = DigitalLearningResourceCategorySerializer
+class TagListCreateView(generics.ListCreateAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
     http_method_names = ['get']
 
-class DigitalLearningResourceListCreateView(generics.ListCreateAPIView):
-    queryset = DigitalLearningResource.objects.all()
-    serializer_class = DigitalLearningResourceSerializer
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+class LearningResourceListCreateView(generics.ListCreateAPIView):
+    queryset = LearningResource.objects.all()
+    serializer_class = LearningResourceSerializer
     http_method_names = ['get', 'post']
     filter_backends = [filters.SearchFilter]
-    search_fields = ['name', 'extra_data__summary']
+    search_fields = ['name', 'description']
 
-class DigitalLearningResourceDetailView(generics.RetrieveDestroyAPIView):
-    queryset = DigitalLearningResource.objects.all()
-    serializer_class = DigitalLearningResourceSerializer
+class LearningResourceDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = LearningResource.objects.all()
+    serializer_class = LearningResourceSerializer
     lookup_field = 'id'
     http_method_names = ['get', 'put', 'delete']
 
 
-def join_waitlist(request):
-    if request.method == "POST":
-        form = WaitlistForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return JsonResponse({'message': 'Subscription successful!'}, status=200)
-        else:
-            return JsonResponse({'message': 'Error joining waitlist!'}, status=400)
+def search_learning_resources(request):
+    query = request.GET.get('q', '')
+    params = {"hitsPerPage": 10}
+    if query:
+        response = raw_search(LearningResource, query, params)
+        results = response.get('hits', [])
     else:
-        form = WaitlistForm()
-    return render(request, 'core/index.html', {'form': form})
+        results = []
 
+    return JsonResponse(
+        {
+            'query': query, 
+            'length': len(results),
+            'results': results
+        }, status=200)

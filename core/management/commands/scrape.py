@@ -15,10 +15,9 @@ class Command(BaseCommand):
         process = CrawlerProcess(get_project_settings())
 
         # Dynamically importing the spider class based on spider_name
-        spider_module = __import__(f"core.scrapy_project.spiders.{spider_name}", fromlist=[''])
-        spider_class = getattr(spider_module, 'ProvidersSpider')  # Assuming a consistent naming convention
+        spider_module = __import__(f"core.scrapy_project.scrapers.{spider_name}", fromlist=[''])
+        spider_class = getattr(spider_module, f'{spider_name.capitalize()}Scraper')  # Use the correct class name
 
         # Starting the spider
         process.crawl(spider_class)
         process.start()
-

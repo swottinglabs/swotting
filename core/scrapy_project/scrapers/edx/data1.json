@@ -1,0 +1,3216 @@
+{
+    "data": {
+        "allContentfulSitewideBanner": {
+            "edges": [
+                {
+                    "node": {
+                        "active": true,
+                        "languageCode": "es",
+                        "targetCountry": null,
+                        "backgroundColor": "#5DE3BF",
+                        "campaignId": "edx-spanish-career-success-month-2024",
+                        "textColor": "#000000",
+                        "content": {
+                            "raw": "{\"data\":{},\"content\":[{\"data\":{},\"content\":[{\"data\":{},\"marks\":[{\"type\":\"bold\"}],\"value\":\"El éxito de tu carrera, a tu manera. Ahorra hasta un 30% \",\"nodeType\":\"text\"},{\"data\":{},\"marks\":[],\"value\":\"hasta el 28 de octubre. Usa el código \",\"nodeType\":\"text\"},{\"data\":{},\"marks\":[{\"type\":\"bold\"}],\"value\":\"EDXSUCCESS24\",\"nodeType\":\"text\"},{\"data\":{},\"marks\":[],\"value\":\". \",\"nodeType\":\"text\"},{\"data\":{\"uri\":\"https://www.edx.org/es/career-success-promo\"},\"content\":[{\"data\":{},\"marks\":[],\"value\":\"Saber más\",\"nodeType\":\"text\"}],\"nodeType\":\"hyperlink\"},{\"data\":{},\"marks\":[],\"value\":\".\",\"nodeType\":\"text\"}],\"nodeType\":\"paragraph\"}],\"nodeType\":\"document\"}"
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "active": true,
+                        "languageCode": "en",
+                        "targetCountry": null,
+                        "backgroundColor": "#5DE3BF",
+                        "campaignId": "edx-career-success-month-2024",
+                        "textColor": "#000000",
+                        "content": {
+                            "raw": "{\"data\":{},\"content\":[{\"data\":{},\"content\":[{\"data\":{},\"marks\":[{\"type\":\"bold\"}],\"value\":\"Your career success — your way. Save up to 30% off\",\"nodeType\":\"text\"},{\"data\":{},\"marks\":[],\"value\":\" select programs until October 28. Use code \",\"nodeType\":\"text\"},{\"data\":{},\"marks\":[{\"type\":\"bold\"}],\"value\":\"EDXSUCCESS24\",\"nodeType\":\"text\"},{\"data\":{},\"marks\":[],\"value\":\". \",\"nodeType\":\"text\"},{\"data\":{\"uri\":\"https://www.edx.org/career-success-promo\"},\"content\":[{\"data\":{},\"marks\":[],\"value\":\"Learn more\",\"nodeType\":\"text\"}],\"nodeType\":\"hyperlink\"},{\"data\":{},\"marks\":[],\"value\":\".\",\"nodeType\":\"text\"}],\"nodeType\":\"paragraph\"}],\"nodeType\":\"document\"}"
+                        }
+                    }
+                }
+            ]
+        },
+        "contentfulProductLandingPage": {
+            "modules": [
+                {},
+                {},
+                {},
+                {
+                    "id": "d0bebada-499e-5ce2-912a-26a2f2c22a58",
+                    "name": "edX Boot Camps Container Page AI Card List (no title)",
+                    "cardList": [
+                        "f6be0bc0-5787-4fc3-a19c-07a45899253b",
+                        "290a11e1-929f-4cb5-8316-bb81243a2aa0",
+                        "08f225ab-3a08-4637-b754-52cf47896682",
+                        "9442497d-a80b-49dd-a8d0-b3f84ad4f2dc",
+                        "1ad91b99-41ae-4332-819d-33b7aafe2223",
+                        "c7f5dc9f-57f7-480b-b617-3e9d0e96057f",
+                        "8afdf83c-3993-49fd-80e0-78b1b194e5f0",
+                        "ca3ae689-8109-422a-868f-6a7b5d8ca5c2",
+                        "c1f2e3bf-53af-4213-b8df-f7d616396aeb",
+                        "fe9eedc7-8520-43fa-a3ce-94e7932b6b7d",
+                        "a954d0f3-e8ce-4d97-96eb-728e9f6890e8",
+                        "936428b4-634b-419c-8951-9e32cda7603a",
+                        "2096f930-2221-4f50-b381-fc81648439e1",
+                        "9f604c34-5e9a-4461-8adc-bb9245f163b1",
+                        "3d71b3b3-9af4-43a9-b3f3-ed3874c33dde",
+                        "68885b51-97ed-4106-b844-930edad8f408",
+                        "bc7d21e1-a3ef-43d6-b4ea-bc84bf255a58",
+                        "e04c471e-dba7-4bdf-8f60-c4fed11ca50a"
+                    ]
+                },
+                {},
+                {
+                    "id": "0b7f31e9-a2ea-5bcf-970f-322d4c5f6e45",
+                    "name": "Boot Camps Card List - Coding Boot Camps (no title)",
+                    "cardList": [
+                        "6acd026f-de7f-4f48-bbdc-dafe3bd664d0",
+                        "d9e117c8-e8f8-410e-9d1c-59ab5d7bbc87",
+                        "55255e36-1791-4721-bd3d-802eab45c1dd",
+                        "498b151c-a9ec-4b96-abc3-44a1fb0dc976",
+                        "3c23a3f5-5711-4fff-817c-f244ed6aff19",
+                        "369f4f2b-4af2-4d09-83bf-54ceb3f6458d",
+                        "08e4ed1d-26b2-4aba-af63-b28c8bcd7630",
+                        "ec425736-30d6-4257-8b34-35465e19d59d",
+                        "b1a23283-e703-45d9-bafd-24bff90f4b5d",
+                        "83cb72ac-1596-4a97-b364-707c4b417e17",
+                        "0dbf4ec1-12d5-413b-a505-6c04c5a82499",
+                        "3206dbc7-24be-4a19-8c26-f6dbecb061af",
+                        "c21482ad-3485-4134-948b-1682cb4bd114",
+                        "069bc6de-e715-4432-8551-00c3b15baf96",
+                        "d4428191-9706-4b8c-9625-5e8ba4dc3cec",
+                        "e4d598df-0f44-4fa4-8ddc-beb7aca29ef1",
+                        "ebbc5b4e-cbc1-4294-914f-52da5525c0f4",
+                        "a8d839fe-c408-4edf-9fd1-95319cad3557",
+                        "e64f2754-52fe-42e2-917d-26be75b014c3",
+                        "a1fed1d7-959b-4de1-890d-fa7990f18c27",
+                        "a1a31730-b791-454a-90d0-2f635290d3d2",
+                        "283c22c1-c390-4be7-8092-2b2d2148faca",
+                        "603cdd69-4629-4b8f-bc7d-490e6d072cef",
+                        "037363f1-3ec2-4931-91cc-e9a263802ad7",
+                        "17da9f09-4c10-4fd9-9e9d-e478446e0ec1",
+                        "e6bf5a39-eb48-4864-9101-1d922377b2f9",
+                        "13a65bd3-dc41-4926-a316-356a1b9c5c82"
+                    ]
+                },
+                {},
+                {
+                    "id": "191c921a-6f57-5ce5-8505-b7dad4e47232",
+                    "name": "Boot Camps Card List - Cybersecurity Boot Camps (no title)",
+                    "cardList": [
+                        "04785fe8-f2f3-42f2-a743-ef9d0c7e0868",
+                        "b2f5d206-cd9d-4890-bf62-9e173cc36e04",
+                        "edb4ad12-63d2-4628-9e01-bafaa266eb98",
+                        "208397bb-a921-466c-9be1-4230051badcc",
+                        "72cf28b8-b616-4444-97c1-0b53603ed682",
+                        "e3bbbe84-5dee-4a85-889e-4df55e7c5227",
+                        "7215232f-4790-450f-9837-695745f1b7f6",
+                        "f3b5d570-b1c1-4475-8a87-ad45d978f2d1",
+                        "5e464835-8b65-4f28-9f9b-7f72d74747cc",
+                        "10433481-11f1-459c-813c-d8537d3bbcb6",
+                        "b3e4a9e6-5391-4189-be9d-a12c3ecf3204",
+                        "876535e8-e44e-48e0-8536-7b331a352334",
+                        "02dea2af-ec08-4b35-8d20-8d2a70c666e0",
+                        "e84bd914-897f-4a23-9432-35068673c96c",
+                        "79633938-eb8d-46d1-bf24-9f71db496fa8",
+                        "d244f6a1-1b06-4a06-a90c-a7fba35dca03",
+                        "3c4bfdec-39cd-4262-88de-fdda488d0956",
+                        "acfffc62-7a67-4de9-9c29-dd3604df2d4d",
+                        "bc639433-1f8d-4a83-bb46-3c40028519b9",
+                        "50a16779-faf0-4c8d-bfad-4f5b48926c3e",
+                        "1b0e1bcd-8ad9-4cd5-9a7f-d74c62604040",
+                        "44ecf965-2e3f-4401-855a-d9016bd04c35",
+                        "037397de-3f8b-44be-8c24-fc381088b780",
+                        "6fa34b8e-ae81-4d75-9c3f-6601de757470",
+                        "2b628374-4488-4af3-8921-cc8e05947bf7"
+                    ]
+                },
+                {},
+                {
+                    "id": "41a050fa-dec4-59d8-a085-6e54621c3dff",
+                    "name": "Boot Camps Card List - Data Analytics Boot Camps (no title)",
+                    "cardList": [
+                        "cfb6f6db-6c13-4406-9011-2a3b5e7b0d96",
+                        "a06a7436-b59d-466c-bca3-1b942e50698f",
+                        "d0ffd0aa-6aa9-4f90-b376-31c6becb396f",
+                        "750d822d-20d2-442f-9dde-b07b7c8b2b9a",
+                        "d0867545-ffbf-46f6-8dd2-4078eb8b823f",
+                        "cd721797-ddf0-42b4-80af-e6d82128f658",
+                        "0bca67cc-5e62-4075-b88e-0a4103c38770",
+                        "4a6659b5-38e2-4892-8822-a3cd3a11ad59",
+                        "9daa7fee-19d5-4388-8223-f688bb31bcfe",
+                        "0b2281fb-7b70-4ed3-9ba8-dac1aa198cd8",
+                        "c2b48805-6726-48ca-bb30-f55a473fd5f9",
+                        "3f1cab13-6c58-4a59-9147-d2da60b83da9",
+                        "3fed6173-330e-47e4-9f19-ba60ac21b95f",
+                        "e6996776-648e-483a-8c08-dda7b598e166",
+                        "1ba487af-119b-4d01-8e7e-7c15ae7ec5a2",
+                        "159d4543-3f5e-4c1a-9b5a-a5e93bafa7c5",
+                        "ac329ec1-54a2-4160-a91c-6be4b5807143",
+                        "1953c352-1723-4a96-8b97-21846c4d1dd0",
+                        "da6f2779-0c43-4ec3-8811-ee7d5cc3337a",
+                        "3557a0ca-e9d1-4361-96b5-a90187ce91c3",
+                        "88bb0415-2da2-4fea-b603-6adf1f7e56bf",
+                        "fcf1a2a5-1424-4c96-b29c-fe164b0dd2f3",
+                        "28781dc3-760c-47dd-a9b6-67bd4221d707"
+                    ]
+                },
+                {},
+                {
+                    "id": "68f67df6-c839-540c-87b5-3ed514aaf281",
+                    "name": "Boot Camps Card List - UI/UX Boot Camps (no title)",
+                    "cardList": [
+                        "88a46a60-a372-4a82-a5c2-2deed055e66e",
+                        "249f02a3-fede-4fb3-bd62-1d225405adb9",
+                        "3c1a0335-b256-4b58-9f3a-cb1e60adfd9f",
+                        "5ba504a5-edc4-4dfd-b8a5-2f517b9d68d0",
+                        "a0e3f2af-1f99-4384-ae70-aae96db6d467",
+                        "875ff1ab-c78a-457a-9379-8bc0104e2fd0",
+                        "a20c07ae-32b0-4887-b6ca-eb885bdbd5b8",
+                        "8903dbd9-25ca-40de-9099-3269ec1e4680",
+                        "4f034313-1e84-4cd3-a15c-e92d2c240d66",
+                        "da945c42-8ff9-4558-9062-25c5bf331f36",
+                        "5191928d-6f2b-4fd9-b991-4cd6bd5c235a",
+                        "96720fa0-ff5b-4823-9882-dcf088c9cb2c"
+                    ]
+                },
+                {},
+                {
+                    "id": "7237a8c4-98c8-54ef-a5c9-1969a3465a4e",
+                    "name": "Boot Camps Card List - Digital Marketing Boot Camps (no title)",
+                    "cardList": [
+                        "4ebd25e8-d9e8-4c7c-a645-a95cd2a3c5b5",
+                        "be606e1c-3447-424a-a383-16267283dff3",
+                        "6250261b-75cb-4f57-93f8-7be1fdb22e96",
+                        "af9762b0-290d-45ae-864e-71cd6373a18d",
+                        "62a20dae-d4ea-4876-98bb-7b6ab95a1cd0",
+                        "558c379e-8136-477c-9c41-0943da6dc8d7",
+                        "9980e4c0-54d3-4dbb-87fe-c8b7ec01f495",
+                        "2097464c-9934-4ff6-b495-f2dd13d71c16",
+                        "54778067-cdb8-4c1c-b40f-48a2646cf75d"
+                    ]
+                },
+                {},
+                {},
+                {}
+            ]
+        },
+        "allCourse": {
+            "edges": [
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "2097464c-9934-4ff6-b495-f2dd13d71c16"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "290a11e1-929f-4cb5-8316-bb81243a2aa0"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "04785fe8-f2f3-42f2-a743-ef9d0c7e0868"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "3f1cab13-6c58-4a59-9147-d2da60b83da9"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "55255e36-1791-4721-bd3d-802eab45c1dd"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "bc639433-1f8d-4a83-bb46-3c40028519b9"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "3557a0ca-e9d1-4361-96b5-a90187ce91c3"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "13a65bd3-dc41-4926-a316-356a1b9c5c82"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "e04c471e-dba7-4bdf-8f60-c4fed11ca50a"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [],
+                            "states": []
+                        },
+                        "uuid": "51830603-3a75-4143-8ab6-402df526997b"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "be606e1c-3447-424a-a383-16267283dff3"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "f6be0bc0-5787-4fc3-a19c-07a45899253b"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "72cf28b8-b616-4444-97c1-0b53603ed682"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "9daa7fee-19d5-4388-8223-f688bb31bcfe"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "498b151c-a9ec-4b96-abc3-44a1fb0dc976"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "249f02a3-fede-4fb3-bd62-1d225405adb9"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [],
+                            "states": []
+                        },
+                        "uuid": "c028f686-b190-4e5f-8099-2a160dcf86ba"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "abfc8f4c-57d9-4c8b-a916-3fbfe8c1b0bc"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "037363f1-3ec2-4931-91cc-e9a263802ad7"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "cd2d2a90-d256-4e7a-9bee-33d46b8bd886"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "037397de-3f8b-44be-8c24-fc381088b780"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "0dbf4ec1-12d5-413b-a505-6c04c5a82499"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "406ef221-2855-4c05-b0da-c40de2472f89"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [],
+                            "states": []
+                        },
+                        "uuid": "47e58eaa-191b-465f-ace4-a5156d5ad8a7"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "c7f5dc9f-57f7-480b-b617-3e9d0e96057f"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "e84bd914-897f-4a23-9432-35068673c96c"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "c2b48805-6726-48ca-bb30-f55a473fd5f9"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "069bc6de-e715-4432-8551-00c3b15baf96"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "AU"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "8aa6af4c-339e-4786-8577-9e30b75f3b14"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "3c4bfdec-39cd-4262-88de-fdda488d0956"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "d0ffd0aa-6aa9-4f90-b376-31c6becb396f"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "3c23a3f5-5711-4fff-817c-f244ed6aff19"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "c1f2e3bf-53af-4213-b8df-f7d616396aeb"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "b3e4a9e6-5391-4189-be9d-a12c3ecf3204"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "54778067-cdb8-4c1c-b40f-48a2646cf75d"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "5e464835-8b65-4f28-9f9b-7f72d74747cc"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "159d4543-3f5e-4c1a-9b5a-a5e93bafa7c5"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "603cdd69-4629-4b8f-bc7d-490e6d072cef"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "fe9eedc7-8520-43fa-a3ce-94e7932b6b7d"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "f3b5d570-b1c1-4475-8a87-ad45d978f2d1"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "bc7d21e1-a3ef-43d6-b4ea-bc84bf255a58"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "ca3ae689-8109-422a-868f-6a7b5d8ca5c2"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "10433481-11f1-459c-813c-d8537d3bbcb6"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "1ba487af-119b-4d01-8e7e-7c15ae7ec5a2"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "b1a23283-e703-45d9-bafd-24bff90f4b5d"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "da945c42-8ff9-4558-9062-25c5bf331f36"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "3d7362d3-9f03-44af-9140-c3328a04a292"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "28781dc3-760c-47dd-a9b6-67bd4221d707"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "2096f930-2221-4f50-b381-fc81648439e1"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "MX"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "fcf1a2a5-1424-4c96-b29c-fe164b0dd2f3"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "MX"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "e6bf5a39-eb48-4864-9101-1d922377b2f9"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "ddb5e059-53f7-474c-9820-0627f96472e8"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "b2f5d206-cd9d-4890-bf62-9e173cc36e04"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "e6996776-648e-483a-8c08-dda7b598e166"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "e64f2754-52fe-42e2-917d-26be75b014c3"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "8903dbd9-25ca-40de-9099-3269ec1e4680"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "558c379e-8136-477c-9c41-0943da6dc8d7"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "4a6659b5-38e2-4892-8822-a3cd3a11ad59"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "d9e117c8-e8f8-410e-9d1c-59ab5d7bbc87"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "875ff1ab-c78a-457a-9379-8bc0104e2fd0"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "1b0e1bcd-8ad9-4cd5-9a7f-d74c62604040"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "cd721797-ddf0-42b4-80af-e6d82128f658"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "3206dbc7-24be-4a19-8c26-f6dbecb061af"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "3c1a0335-b256-4b58-9f3a-cb1e60adfd9f"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "936428b4-634b-419c-8951-9e32cda7603a"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "79633938-eb8d-46d1-bf24-9f71db496fa8"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "d4428191-9706-4b8c-9625-5e8ba4dc3cec"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "a3ba06d1-5163-40cc-96d3-2b44d8f94269"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "af9762b0-290d-45ae-864e-71cd6373a18d"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "876535e8-e44e-48e0-8536-7b331a352334"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "a06a7436-b59d-466c-bca3-1b942e50698f"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "6acd026f-de7f-4f48-bbdc-dafe3bd664d0"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "4f034313-1e84-4cd3-a15c-e92d2c240d66"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "6250261b-75cb-4f57-93f8-7be1fdb22e96"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "9442497d-a80b-49dd-a8d0-b3f84ad4f2dc"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "6fa34b8e-ae81-4d75-9c3f-6601de757470"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "d0867545-ffbf-46f6-8dd2-4078eb8b823f"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "83cb72ac-1596-4a97-b364-707c4b417e17"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "1ad91b99-41ae-4332-819d-33b7aafe2223"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "e3bbbe84-5dee-4a85-889e-4df55e7c5227"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "0b2281fb-7b70-4ed3-9ba8-dac1aa198cd8"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "08e4ed1d-26b2-4aba-af63-b28c8bcd7630"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "a20c07ae-32b0-4887-b6ca-eb885bdbd5b8"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "f34fc5e4-1700-4e80-aedb-280ec11e54dc"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": [
+                                "CA"
+                            ]
+                        },
+                        "uuid": "220256bb-39d1-4310-83f2-a0a22d7cbeb6"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "17da9f09-4c10-4fd9-9e9d-e478446e0ec1"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "3d71b3b3-9af4-43a9-b3f3-ed3874c33dde"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "2b628374-4488-4af3-8921-cc8e05947bf7"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "8afdf83c-3993-49fd-80e0-78b1b194e5f0"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "acfffc62-7a67-4de9-9c29-dd3604df2d4d"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "88bb0415-2da2-4fea-b603-6adf1f7e56bf"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "ec425736-30d6-4257-8b34-35465e19d59d"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "a0e3f2af-1f99-4384-ae70-aae96db6d467"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "ac329ec1-54a2-4160-a91c-6be4b5807143"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "a8d839fe-c408-4edf-9fd1-95319cad3557"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "5ba504a5-edc4-4dfd-b8a5-2f517b9d68d0"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "44ecf965-2e3f-4401-855a-d9016bd04c35"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "da6f2779-0c43-4ec3-8811-ee7d5cc3337a"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "283c22c1-c390-4be7-8092-2b2d2148faca"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "9f604c34-5e9a-4461-8adc-bb9245f163b1"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "5191928d-6f2b-4fd9-b991-4cd6bd5c235a"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "08f225ab-3a08-4637-b754-52cf47896682"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "CA"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "62a20dae-d4ea-4876-98bb-7b6ab95a1cd0"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "CA"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "7215232f-4790-450f-9837-695745f1b7f6"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "CA"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "0bca67cc-5e62-4075-b88e-0a4103c38770"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "CA"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "369f4f2b-4af2-4d09-83bf-54ceb3f6458d"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "edb4ad12-63d2-4628-9e01-bafaa266eb98"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "ebbc5b4e-cbc1-4294-914f-52da5525c0f4"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "AU"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "d244f6a1-1b06-4a06-a90c-a7fba35dca03"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "AU"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "c21482ad-3485-4134-948b-1682cb4bd114"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "4ebd25e8-d9e8-4c7c-a645-a95cd2a3c5b5"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "208397bb-a921-466c-9be1-4230051badcc"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "cfb6f6db-6c13-4406-9011-2a3b5e7b0d96"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "88a46a60-a372-4a82-a5c2-2deed055e66e"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "a954d0f3-e8ce-4d97-96eb-728e9f6890e8"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "02dea2af-ec08-4b35-8d20-8d2a70c666e0"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "3fed6173-330e-47e4-9f19-ba60ac21b95f"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "a1fed1d7-959b-4de1-890d-fa7990f18c27"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "f4097e4e-9568-4a6c-b6c2-adbedea545b6"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "e4d598df-0f44-4fa4-8ddc-beb7aca29ef1"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "50a16779-faf0-4c8d-bfad-4f5b48926c3e"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "1953c352-1723-4a96-8b97-21846c4d1dd0"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "a1a31730-b791-454a-90d0-2f635290d3d2"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "68885b51-97ed-4106-b844-930edad8f408"
+                    }
+                },
+                {
+                    "node": {
+                        "locationRestriction": {
+                            "restrictionType": "allowlist",
+                            "countries": [
+                                "US"
+                            ],
+                            "states": []
+                        },
+                        "uuid": "96720fa0-ff5b-4823-9882-dcf088c9cb2c"
+                    }
+                }
+            ]
+        },
+        "allContentfulAutoCompletePreQuery": {
+            "edges": [
+                {
+                    "node": {
+                        "pageType": "default",
+                        "uuidList": [
+                            "64b3c632-8610-4b17-9a48-9efee7fa3266",
+                            "32ab61e5-44b4-4316-ad59-9f04fc876e0a",
+                            "2fc3236d-78a9-45a1-8c0c-fc290e74259e",
+                            "da1b2400-322b-459b-97b0-0c557f05d017"
+                        ],
+                        "popularSearchTerms": [
+                            "data science",
+                            "ai",
+                            "finance",
+                            "business"
+                        ],
+                        "programs": [
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/2fc3236d-78a9-45a1-8c0c-fc290e74259e-f3b970b5cd3a.jpg",
+                                "degree": null,
+                                "marketingUrl": "https://www.edx.org/masters/micromasters/mitx-supply-chain-management",
+                                "organizationShortCodeOverride": "",
+                                "owners": [
+                                    {
+                                        "key": "MITx"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "edx"
+                                },
+                                "title": "Supply Chain Management",
+                                "type": "MicroMasters",
+                                "uuid": "2fc3236d-78a9-45a1-8c0c-fc290e74259e"
+                            },
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/64b3c632-8610-4b17-9a48-9efee7fa3266-6a1e055774b4.jpg",
+                                "degree": null,
+                                "marketingUrl": "https://www.edx.org/certificates/professional-certificate/harvardx-computer-science-for-game-development",
+                                "organizationShortCodeOverride": "",
+                                "owners": [
+                                    {
+                                        "key": "HarvardX"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "edx"
+                                },
+                                "title": "Computer Science for Game Development",
+                                "type": "Professional Certificate",
+                                "uuid": "64b3c632-8610-4b17-9a48-9efee7fa3266"
+                            }
+                        ],
+                        "courses": [
+                            {
+                                "title": "CS50's Introduction to Computer Science",
+                                "uuid": "da1b2400-322b-459b-97b0-0c557f05d017",
+                                "additionalMetadata": null,
+                                "courseType": "verified-audit",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/da1b2400-322b-459b-97b0-0c557f05d017-a3d1899c3344.small.png"
+                                },
+                                "marketingUrl": "https://www.edx.org/learn/computer-science/harvard-university-cs50-s-introduction-to-computer-science",
+                                "organizationShortCodeOverride": "",
+                                "owners": [
+                                    {
+                                        "key": "HarvardX"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "edx"
+                                }
+                            },
+                            {
+                                "title": "Artificial Intelligence: Implications for Business Strategy",
+                                "uuid": "32ab61e5-44b4-4316-ad59-9f04fc876e0a",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://mit-online.getsmarter.com/presentations/lp/mit-artificial-intelligence-online-short-course/"
+                                },
+                                "courseType": "executive-education-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/32ab61e5-44b4-4316-ad59-9f04fc876e0a-ef852b9b27e8.small.jpg"
+                                },
+                                "marketingUrl": "https://www.edx.org/executive-education/massachusetts-institute-of-technology-artificial-intelligence-implications-for-business-strategy",
+                                "organizationShortCodeOverride": "MIT Sloan School of Management",
+                                "owners": [
+                                    {
+                                        "key": "MITx"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "node": {
+                        "pageType": "degree-about-page",
+                        "uuidList": [
+                            "a3beb4fd-af7b-4ec6-9c66-b0a33039978a",
+                            "58331700-1a02-4abe-a858-4ebe83200d15",
+                            "ea953e86-de57-4512-8503-a89f00f1b2b1",
+                            "b3f587fc-0cee-4dbd-8bac-b2687731a40d"
+                        ],
+                        "popularSearchTerms": [
+                            "business",
+                            "computer science",
+                            "psychology",
+                            "python"
+                        ],
+                        "programs": [
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/ea953e86-de57-4512-8503-a89f00f1b2b1-3e40472c6ec7.png",
+                                "degree": {
+                                    "additionalMetadata": {
+                                        "externalUrl": "https://onlinegrad.syracuse.edu/requestinfo/mscs-spz-atf/?lsrc=edx&utm_source=edx&utm_medium=referral&utm_campaign=syr-comp"
+                                    }
+                                },
+                                "marketingUrl": "https://www.edx.org/masters/online-masters-in-computer-science/syracuse-master-of-science-in-computer-science",
+                                "organizationShortCodeOverride": "Syracuse University",
+                                "owners": [
+                                    {
+                                        "key": "SyracuseUniversity"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                },
+                                "title": "Master of Science in Computer Science",
+                                "type": "Masters",
+                                "uuid": "ea953e86-de57-4512-8503-a89f00f1b2b1"
+                            },
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/58331700-1a02-4abe-a858-4ebe83200d15-668e6ec44f53.png",
+                                "degree": {
+                                    "additionalMetadata": {
+                                        "externalUrl": "https://ischoolonline.berkeley.edu/requestinfo/mids-spz-atf/?lsrc=edx&utm_source=edx&utm_medium=referral&utm_campaign=ucb-data"
+                                    }
+                                },
+                                "marketingUrl": "https://www.edx.org/masters/online-masters-in-data-science/ucb-master-of-information-and-data-science",
+                                "organizationShortCodeOverride": "University of California, Berkeley",
+                                "owners": [
+                                    {
+                                        "key": "BerkeleyX"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                },
+                                "title": "Master of Information and Data Science",
+                                "type": "Masters",
+                                "uuid": "58331700-1a02-4abe-a858-4ebe83200d15"
+                            },
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/a3beb4fd-af7b-4ec6-9c66-b0a33039978a-23ef7b1cdf63.png",
+                                "degree": {
+                                    "additionalMetadata": {
+                                        "externalUrl": "https://analytics.hbs.edu/requestinfo/cba-spz-atf/?lsrc=edx&utm_source=edx&utm_medium=referral&utm_campaign=hu-cba"
+                                    }
+                                },
+                                "marketingUrl": "https://www.edx.org/certificates/harvard-certificate-in-business-analytics",
+                                "organizationShortCodeOverride": "Harvard University",
+                                "owners": [
+                                    {
+                                        "key": "HarvardX"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                },
+                                "title": "Certificate in Business Analytics",
+                                "type": "Certificate",
+                                "uuid": "a3beb4fd-af7b-4ec6-9c66-b0a33039978a"
+                            }
+                        ],
+                        "courses": [
+                            {
+                                "title": "MBA Essentials",
+                                "uuid": "b3f587fc-0cee-4dbd-8bac-b2687731a40d",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://onlinecertificatecourses.lse.ac.uk/presentations/lp/lse-mba-essentials-online-certificate-course-pr/"
+                                },
+                                "courseType": "executive-education-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/b3f587fc-0cee-4dbd-8bac-b2687731a40d-767a9bc772fa.small.jpg"
+                                },
+                                "marketingUrl": "https://www.edx.org/executive-education/the-london-school-of-economics-and-political-science-mba-essentials",
+                                "organizationShortCodeOverride": "LSE",
+                                "owners": [
+                                    {
+                                        "key": "LSE"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "node": {
+                        "pageType": "masters-container-page",
+                        "uuidList": [
+                            "a3beb4fd-af7b-4ec6-9c66-b0a33039978a",
+                            "58331700-1a02-4abe-a858-4ebe83200d15",
+                            "ea953e86-de57-4512-8503-a89f00f1b2b1",
+                            "b3f587fc-0cee-4dbd-8bac-b2687731a40d"
+                        ],
+                        "popularSearchTerms": [
+                            "business",
+                            "computer science",
+                            "psychology",
+                            "python"
+                        ],
+                        "programs": [
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/ea953e86-de57-4512-8503-a89f00f1b2b1-3e40472c6ec7.png",
+                                "degree": {
+                                    "additionalMetadata": {
+                                        "externalUrl": "https://onlinegrad.syracuse.edu/requestinfo/mscs-spz-atf/?lsrc=edx&utm_source=edx&utm_medium=referral&utm_campaign=syr-comp"
+                                    }
+                                },
+                                "marketingUrl": "https://www.edx.org/masters/online-masters-in-computer-science/syracuse-master-of-science-in-computer-science",
+                                "organizationShortCodeOverride": "Syracuse University",
+                                "owners": [
+                                    {
+                                        "key": "SyracuseUniversity"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                },
+                                "title": "Master of Science in Computer Science",
+                                "type": "Masters",
+                                "uuid": "ea953e86-de57-4512-8503-a89f00f1b2b1"
+                            },
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/58331700-1a02-4abe-a858-4ebe83200d15-668e6ec44f53.png",
+                                "degree": {
+                                    "additionalMetadata": {
+                                        "externalUrl": "https://ischoolonline.berkeley.edu/requestinfo/mids-spz-atf/?lsrc=edx&utm_source=edx&utm_medium=referral&utm_campaign=ucb-data"
+                                    }
+                                },
+                                "marketingUrl": "https://www.edx.org/masters/online-masters-in-data-science/ucb-master-of-information-and-data-science",
+                                "organizationShortCodeOverride": "University of California, Berkeley",
+                                "owners": [
+                                    {
+                                        "key": "BerkeleyX"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                },
+                                "title": "Master of Information and Data Science",
+                                "type": "Masters",
+                                "uuid": "58331700-1a02-4abe-a858-4ebe83200d15"
+                            },
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/a3beb4fd-af7b-4ec6-9c66-b0a33039978a-23ef7b1cdf63.png",
+                                "degree": {
+                                    "additionalMetadata": {
+                                        "externalUrl": "https://analytics.hbs.edu/requestinfo/cba-spz-atf/?lsrc=edx&utm_source=edx&utm_medium=referral&utm_campaign=hu-cba"
+                                    }
+                                },
+                                "marketingUrl": "https://www.edx.org/certificates/harvard-certificate-in-business-analytics",
+                                "organizationShortCodeOverride": "Harvard University",
+                                "owners": [
+                                    {
+                                        "key": "HarvardX"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                },
+                                "title": "Certificate in Business Analytics",
+                                "type": "Certificate",
+                                "uuid": "a3beb4fd-af7b-4ec6-9c66-b0a33039978a"
+                            }
+                        ],
+                        "courses": [
+                            {
+                                "title": "MBA Essentials",
+                                "uuid": "b3f587fc-0cee-4dbd-8bac-b2687731a40d",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://onlinecertificatecourses.lse.ac.uk/presentations/lp/lse-mba-essentials-online-certificate-course-pr/"
+                                },
+                                "courseType": "executive-education-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/b3f587fc-0cee-4dbd-8bac-b2687731a40d-767a9bc772fa.small.jpg"
+                                },
+                                "marketingUrl": "https://www.edx.org/executive-education/the-london-school-of-economics-and-political-science-mba-essentials",
+                                "organizationShortCodeOverride": "LSE",
+                                "owners": [
+                                    {
+                                        "key": "LSE"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "node": {
+                        "pageType": "bachelors-container-page",
+                        "uuidList": [
+                            "a3beb4fd-af7b-4ec6-9c66-b0a33039978a",
+                            "58331700-1a02-4abe-a858-4ebe83200d15",
+                            "ea953e86-de57-4512-8503-a89f00f1b2b1",
+                            "b3f587fc-0cee-4dbd-8bac-b2687731a40d"
+                        ],
+                        "popularSearchTerms": [
+                            "business",
+                            "computer science",
+                            "psychology",
+                            "python"
+                        ],
+                        "programs": [
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/ea953e86-de57-4512-8503-a89f00f1b2b1-3e40472c6ec7.png",
+                                "degree": {
+                                    "additionalMetadata": {
+                                        "externalUrl": "https://onlinegrad.syracuse.edu/requestinfo/mscs-spz-atf/?lsrc=edx&utm_source=edx&utm_medium=referral&utm_campaign=syr-comp"
+                                    }
+                                },
+                                "marketingUrl": "https://www.edx.org/masters/online-masters-in-computer-science/syracuse-master-of-science-in-computer-science",
+                                "organizationShortCodeOverride": "Syracuse University",
+                                "owners": [
+                                    {
+                                        "key": "SyracuseUniversity"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                },
+                                "title": "Master of Science in Computer Science",
+                                "type": "Masters",
+                                "uuid": "ea953e86-de57-4512-8503-a89f00f1b2b1"
+                            },
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/58331700-1a02-4abe-a858-4ebe83200d15-668e6ec44f53.png",
+                                "degree": {
+                                    "additionalMetadata": {
+                                        "externalUrl": "https://ischoolonline.berkeley.edu/requestinfo/mids-spz-atf/?lsrc=edx&utm_source=edx&utm_medium=referral&utm_campaign=ucb-data"
+                                    }
+                                },
+                                "marketingUrl": "https://www.edx.org/masters/online-masters-in-data-science/ucb-master-of-information-and-data-science",
+                                "organizationShortCodeOverride": "University of California, Berkeley",
+                                "owners": [
+                                    {
+                                        "key": "BerkeleyX"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                },
+                                "title": "Master of Information and Data Science",
+                                "type": "Masters",
+                                "uuid": "58331700-1a02-4abe-a858-4ebe83200d15"
+                            },
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/a3beb4fd-af7b-4ec6-9c66-b0a33039978a-23ef7b1cdf63.png",
+                                "degree": {
+                                    "additionalMetadata": {
+                                        "externalUrl": "https://analytics.hbs.edu/requestinfo/cba-spz-atf/?lsrc=edx&utm_source=edx&utm_medium=referral&utm_campaign=hu-cba"
+                                    }
+                                },
+                                "marketingUrl": "https://www.edx.org/certificates/harvard-certificate-in-business-analytics",
+                                "organizationShortCodeOverride": "Harvard University",
+                                "owners": [
+                                    {
+                                        "key": "HarvardX"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                },
+                                "title": "Certificate in Business Analytics",
+                                "type": "Certificate",
+                                "uuid": "a3beb4fd-af7b-4ec6-9c66-b0a33039978a"
+                            }
+                        ],
+                        "courses": [
+                            {
+                                "title": "MBA Essentials",
+                                "uuid": "b3f587fc-0cee-4dbd-8bac-b2687731a40d",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://onlinecertificatecourses.lse.ac.uk/presentations/lp/lse-mba-essentials-online-certificate-course-pr/"
+                                },
+                                "courseType": "executive-education-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/b3f587fc-0cee-4dbd-8bac-b2687731a40d-767a9bc772fa.small.jpg"
+                                },
+                                "marketingUrl": "https://www.edx.org/executive-education/the-london-school-of-economics-and-political-science-mba-essentials",
+                                "organizationShortCodeOverride": "LSE",
+                                "owners": [
+                                    {
+                                        "key": "LSE"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "node": {
+                        "pageType": "doctorate-container-page",
+                        "uuidList": [
+                            "a3beb4fd-af7b-4ec6-9c66-b0a33039978a",
+                            "58331700-1a02-4abe-a858-4ebe83200d15",
+                            "ea953e86-de57-4512-8503-a89f00f1b2b1",
+                            "b3f587fc-0cee-4dbd-8bac-b2687731a40d"
+                        ],
+                        "popularSearchTerms": [
+                            "business",
+                            "computer science",
+                            "psychology",
+                            "python"
+                        ],
+                        "programs": [
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/ea953e86-de57-4512-8503-a89f00f1b2b1-3e40472c6ec7.png",
+                                "degree": {
+                                    "additionalMetadata": {
+                                        "externalUrl": "https://onlinegrad.syracuse.edu/requestinfo/mscs-spz-atf/?lsrc=edx&utm_source=edx&utm_medium=referral&utm_campaign=syr-comp"
+                                    }
+                                },
+                                "marketingUrl": "https://www.edx.org/masters/online-masters-in-computer-science/syracuse-master-of-science-in-computer-science",
+                                "organizationShortCodeOverride": "Syracuse University",
+                                "owners": [
+                                    {
+                                        "key": "SyracuseUniversity"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                },
+                                "title": "Master of Science in Computer Science",
+                                "type": "Masters",
+                                "uuid": "ea953e86-de57-4512-8503-a89f00f1b2b1"
+                            },
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/58331700-1a02-4abe-a858-4ebe83200d15-668e6ec44f53.png",
+                                "degree": {
+                                    "additionalMetadata": {
+                                        "externalUrl": "https://ischoolonline.berkeley.edu/requestinfo/mids-spz-atf/?lsrc=edx&utm_source=edx&utm_medium=referral&utm_campaign=ucb-data"
+                                    }
+                                },
+                                "marketingUrl": "https://www.edx.org/masters/online-masters-in-data-science/ucb-master-of-information-and-data-science",
+                                "organizationShortCodeOverride": "University of California, Berkeley",
+                                "owners": [
+                                    {
+                                        "key": "BerkeleyX"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                },
+                                "title": "Master of Information and Data Science",
+                                "type": "Masters",
+                                "uuid": "58331700-1a02-4abe-a858-4ebe83200d15"
+                            },
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/a3beb4fd-af7b-4ec6-9c66-b0a33039978a-23ef7b1cdf63.png",
+                                "degree": {
+                                    "additionalMetadata": {
+                                        "externalUrl": "https://analytics.hbs.edu/requestinfo/cba-spz-atf/?lsrc=edx&utm_source=edx&utm_medium=referral&utm_campaign=hu-cba"
+                                    }
+                                },
+                                "marketingUrl": "https://www.edx.org/certificates/harvard-certificate-in-business-analytics",
+                                "organizationShortCodeOverride": "Harvard University",
+                                "owners": [
+                                    {
+                                        "key": "HarvardX"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                },
+                                "title": "Certificate in Business Analytics",
+                                "type": "Certificate",
+                                "uuid": "a3beb4fd-af7b-4ec6-9c66-b0a33039978a"
+                            }
+                        ],
+                        "courses": [
+                            {
+                                "title": "MBA Essentials",
+                                "uuid": "b3f587fc-0cee-4dbd-8bac-b2687731a40d",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://onlinecertificatecourses.lse.ac.uk/presentations/lp/lse-mba-essentials-online-certificate-course-pr/"
+                                },
+                                "courseType": "executive-education-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/b3f587fc-0cee-4dbd-8bac-b2687731a40d-767a9bc772fa.small.jpg"
+                                },
+                                "marketingUrl": "https://www.edx.org/executive-education/the-london-school-of-economics-and-political-science-mba-essentials",
+                                "organizationShortCodeOverride": "LSE",
+                                "owners": [
+                                    {
+                                        "key": "LSE"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "node": {
+                        "pageType": "executive-education-container-page",
+                        "uuidList": [
+                            "32ab61e5-44b4-4316-ad59-9f04fc876e0a",
+                            "b3f587fc-0cee-4dbd-8bac-b2687731a40d",
+                            "29065f42-dbf1-42a2-9e35-4e977bc38382"
+                        ],
+                        "popularSearchTerms": [
+                            "ai",
+                            "psychology",
+                            "marketing",
+                            "data science"
+                        ],
+                        "programs": [],
+                        "courses": [
+                            {
+                                "title": "Data Analytics Boot Camp",
+                                "uuid": "29065f42-dbf1-42a2-9e35-4e977bc38382",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://bootcamp.berkeley.edu/data/landing/?utm_source=edx&utm_medium=referral&utm_campaign=edx-ucb"
+                                },
+                                "courseType": "bootcamp-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/29065f42-dbf1-42a2-9e35-4e977bc38382-303ab75c2a27.small.png"
+                                },
+                                "marketingUrl": "https://www.edx.org/boot-camps/data-analytics/uc-berkeley-extension-data-analytics-boot-camp",
+                                "organizationShortCodeOverride": "UC Berkeley Extension",
+                                "owners": [
+                                    {
+                                        "key": "BerkeleyX"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            },
+                            {
+                                "title": "MBA Essentials",
+                                "uuid": "b3f587fc-0cee-4dbd-8bac-b2687731a40d",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://onlinecertificatecourses.lse.ac.uk/presentations/lp/lse-mba-essentials-online-certificate-course-pr/"
+                                },
+                                "courseType": "executive-education-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/b3f587fc-0cee-4dbd-8bac-b2687731a40d-767a9bc772fa.small.jpg"
+                                },
+                                "marketingUrl": "https://www.edx.org/executive-education/the-london-school-of-economics-and-political-science-mba-essentials",
+                                "organizationShortCodeOverride": "LSE",
+                                "owners": [
+                                    {
+                                        "key": "LSE"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            },
+                            {
+                                "title": "Artificial Intelligence: Implications for Business Strategy",
+                                "uuid": "32ab61e5-44b4-4316-ad59-9f04fc876e0a",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://mit-online.getsmarter.com/presentations/lp/mit-artificial-intelligence-online-short-course/"
+                                },
+                                "courseType": "executive-education-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/32ab61e5-44b4-4316-ad59-9f04fc876e0a-ef852b9b27e8.small.jpg"
+                                },
+                                "marketingUrl": "https://www.edx.org/executive-education/massachusetts-institute-of-technology-artificial-intelligence-implications-for-business-strategy",
+                                "organizationShortCodeOverride": "MIT Sloan School of Management",
+                                "owners": [
+                                    {
+                                        "key": "MITx"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "node": {
+                        "pageType": "executive-education-about-page",
+                        "uuidList": [
+                            "32ab61e5-44b4-4316-ad59-9f04fc876e0a",
+                            "b3f587fc-0cee-4dbd-8bac-b2687731a40d",
+                            "29065f42-dbf1-42a2-9e35-4e977bc38382"
+                        ],
+                        "popularSearchTerms": [
+                            "ai",
+                            "psychology",
+                            "marketing",
+                            "data science"
+                        ],
+                        "programs": [],
+                        "courses": [
+                            {
+                                "title": "Data Analytics Boot Camp",
+                                "uuid": "29065f42-dbf1-42a2-9e35-4e977bc38382",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://bootcamp.berkeley.edu/data/landing/?utm_source=edx&utm_medium=referral&utm_campaign=edx-ucb"
+                                },
+                                "courseType": "bootcamp-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/29065f42-dbf1-42a2-9e35-4e977bc38382-303ab75c2a27.small.png"
+                                },
+                                "marketingUrl": "https://www.edx.org/boot-camps/data-analytics/uc-berkeley-extension-data-analytics-boot-camp",
+                                "organizationShortCodeOverride": "UC Berkeley Extension",
+                                "owners": [
+                                    {
+                                        "key": "BerkeleyX"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            },
+                            {
+                                "title": "MBA Essentials",
+                                "uuid": "b3f587fc-0cee-4dbd-8bac-b2687731a40d",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://onlinecertificatecourses.lse.ac.uk/presentations/lp/lse-mba-essentials-online-certificate-course-pr/"
+                                },
+                                "courseType": "executive-education-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/b3f587fc-0cee-4dbd-8bac-b2687731a40d-767a9bc772fa.small.jpg"
+                                },
+                                "marketingUrl": "https://www.edx.org/executive-education/the-london-school-of-economics-and-political-science-mba-essentials",
+                                "organizationShortCodeOverride": "LSE",
+                                "owners": [
+                                    {
+                                        "key": "LSE"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            },
+                            {
+                                "title": "Artificial Intelligence: Implications for Business Strategy",
+                                "uuid": "32ab61e5-44b4-4316-ad59-9f04fc876e0a",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://mit-online.getsmarter.com/presentations/lp/mit-artificial-intelligence-online-short-course/"
+                                },
+                                "courseType": "executive-education-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/32ab61e5-44b4-4316-ad59-9f04fc876e0a-ef852b9b27e8.small.jpg"
+                                },
+                                "marketingUrl": "https://www.edx.org/executive-education/massachusetts-institute-of-technology-artificial-intelligence-implications-for-business-strategy",
+                                "organizationShortCodeOverride": "MIT Sloan School of Management",
+                                "owners": [
+                                    {
+                                        "key": "MITx"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "node": {
+                        "pageType": "professional-certificate-about-page",
+                        "uuidList": [
+                            "3c32e3e0-b6fe-4ee4-bd4f-210c6339e074",
+                            "71c95834-f6df-4f78-8cd7-c6461dd9b1d4",
+                            "10433481-11f1-459c-813c-d8537d3bbcb6",
+                            "32ab61e5-44b4-4316-ad59-9f04fc876e0a",
+                            "b3f587fc-0cee-4dbd-8bac-b2687731a40d"
+                        ],
+                        "popularSearchTerms": [
+                            "python",
+                            "ai",
+                            "finance",
+                            "cybersecurity"
+                        ],
+                        "programs": [
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/3c32e3e0-b6fe-4ee4-bd4f-210c6339e074-09fdeca85b81.jpg",
+                                "degree": null,
+                                "marketingUrl": "https://www.edx.org/certificates/professional-certificate/harvardx-data-science",
+                                "organizationShortCodeOverride": "",
+                                "owners": [
+                                    {
+                                        "key": "HarvardX"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "edx"
+                                },
+                                "title": "Data  Science",
+                                "type": "Professional Certificate",
+                                "uuid": "3c32e3e0-b6fe-4ee4-bd4f-210c6339e074"
+                            },
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/71c95834-f6df-4f78-8cd7-c6461dd9b1d4-9e5243cc0513.jpg",
+                                "degree": null,
+                                "marketingUrl": "https://www.edx.org/masters/micromasters/mitx-statistics-and-data-science-retired",
+                                "organizationShortCodeOverride": "",
+                                "owners": [
+                                    {
+                                        "key": "MITx"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "edx"
+                                },
+                                "title": "Statistics and Data Science (Social Sciences Track) -Retired \"old version\"",
+                                "type": "MicroMasters",
+                                "uuid": "71c95834-f6df-4f78-8cd7-c6461dd9b1d4"
+                            }
+                        ],
+                        "courses": [
+                            {
+                                "title": "MBA Essentials",
+                                "uuid": "b3f587fc-0cee-4dbd-8bac-b2687731a40d",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://onlinecertificatecourses.lse.ac.uk/presentations/lp/lse-mba-essentials-online-certificate-course-pr/"
+                                },
+                                "courseType": "executive-education-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/b3f587fc-0cee-4dbd-8bac-b2687731a40d-767a9bc772fa.small.jpg"
+                                },
+                                "marketingUrl": "https://www.edx.org/executive-education/the-london-school-of-economics-and-political-science-mba-essentials",
+                                "organizationShortCodeOverride": "LSE",
+                                "owners": [
+                                    {
+                                        "key": "LSE"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            },
+                            {
+                                "title": "Artificial Intelligence: Implications for Business Strategy",
+                                "uuid": "32ab61e5-44b4-4316-ad59-9f04fc876e0a",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://mit-online.getsmarter.com/presentations/lp/mit-artificial-intelligence-online-short-course/"
+                                },
+                                "courseType": "executive-education-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/32ab61e5-44b4-4316-ad59-9f04fc876e0a-ef852b9b27e8.small.jpg"
+                                },
+                                "marketingUrl": "https://www.edx.org/executive-education/massachusetts-institute-of-technology-artificial-intelligence-implications-for-business-strategy",
+                                "organizationShortCodeOverride": "MIT Sloan School of Management",
+                                "owners": [
+                                    {
+                                        "key": "MITx"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            },
+                            {
+                                "title": "Cybersecurity Boot Camp",
+                                "uuid": "10433481-11f1-459c-813c-d8537d3bbcb6",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://techbootcamps.smu.edu/cybersecurity/landing-b5b/?utm_source=edx&utm_medium=referral&utm_campaign=edx-smu"
+                                },
+                                "courseType": "bootcamp-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/10433481-11f1-459c-813c-d8537d3bbcb6-183792c4f172.small.png"
+                                },
+                                "marketingUrl": "https://www.edx.org/boot-camps/cybersecurity/southern-methodist-university-cybersecurity-boot-camp",
+                                "organizationShortCodeOverride": "",
+                                "owners": [
+                                    {
+                                        "key": "SMU"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "node": {
+                        "pageType": "professional-certificate-container-page",
+                        "uuidList": [
+                            "3c32e3e0-b6fe-4ee4-bd4f-210c6339e074",
+                            "71c95834-f6df-4f78-8cd7-c6461dd9b1d4",
+                            "10433481-11f1-459c-813c-d8537d3bbcb6",
+                            "32ab61e5-44b4-4316-ad59-9f04fc876e0a",
+                            "b3f587fc-0cee-4dbd-8bac-b2687731a40d"
+                        ],
+                        "popularSearchTerms": [
+                            "python",
+                            "ai",
+                            "finance",
+                            "cybersecurity"
+                        ],
+                        "programs": [
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/3c32e3e0-b6fe-4ee4-bd4f-210c6339e074-09fdeca85b81.jpg",
+                                "degree": null,
+                                "marketingUrl": "https://www.edx.org/certificates/professional-certificate/harvardx-data-science",
+                                "organizationShortCodeOverride": "",
+                                "owners": [
+                                    {
+                                        "key": "HarvardX"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "edx"
+                                },
+                                "title": "Data  Science",
+                                "type": "Professional Certificate",
+                                "uuid": "3c32e3e0-b6fe-4ee4-bd4f-210c6339e074"
+                            },
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/71c95834-f6df-4f78-8cd7-c6461dd9b1d4-9e5243cc0513.jpg",
+                                "degree": null,
+                                "marketingUrl": "https://www.edx.org/masters/micromasters/mitx-statistics-and-data-science-retired",
+                                "organizationShortCodeOverride": "",
+                                "owners": [
+                                    {
+                                        "key": "MITx"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "edx"
+                                },
+                                "title": "Statistics and Data Science (Social Sciences Track) -Retired \"old version\"",
+                                "type": "MicroMasters",
+                                "uuid": "71c95834-f6df-4f78-8cd7-c6461dd9b1d4"
+                            }
+                        ],
+                        "courses": [
+                            {
+                                "title": "MBA Essentials",
+                                "uuid": "b3f587fc-0cee-4dbd-8bac-b2687731a40d",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://onlinecertificatecourses.lse.ac.uk/presentations/lp/lse-mba-essentials-online-certificate-course-pr/"
+                                },
+                                "courseType": "executive-education-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/b3f587fc-0cee-4dbd-8bac-b2687731a40d-767a9bc772fa.small.jpg"
+                                },
+                                "marketingUrl": "https://www.edx.org/executive-education/the-london-school-of-economics-and-political-science-mba-essentials",
+                                "organizationShortCodeOverride": "LSE",
+                                "owners": [
+                                    {
+                                        "key": "LSE"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            },
+                            {
+                                "title": "Artificial Intelligence: Implications for Business Strategy",
+                                "uuid": "32ab61e5-44b4-4316-ad59-9f04fc876e0a",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://mit-online.getsmarter.com/presentations/lp/mit-artificial-intelligence-online-short-course/"
+                                },
+                                "courseType": "executive-education-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/32ab61e5-44b4-4316-ad59-9f04fc876e0a-ef852b9b27e8.small.jpg"
+                                },
+                                "marketingUrl": "https://www.edx.org/executive-education/massachusetts-institute-of-technology-artificial-intelligence-implications-for-business-strategy",
+                                "organizationShortCodeOverride": "MIT Sloan School of Management",
+                                "owners": [
+                                    {
+                                        "key": "MITx"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            },
+                            {
+                                "title": "Cybersecurity Boot Camp",
+                                "uuid": "10433481-11f1-459c-813c-d8537d3bbcb6",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://techbootcamps.smu.edu/cybersecurity/landing-b5b/?utm_source=edx&utm_medium=referral&utm_campaign=edx-smu"
+                                },
+                                "courseType": "bootcamp-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/10433481-11f1-459c-813c-d8537d3bbcb6-183792c4f172.small.png"
+                                },
+                                "marketingUrl": "https://www.edx.org/boot-camps/cybersecurity/southern-methodist-university-cybersecurity-boot-camp",
+                                "organizationShortCodeOverride": "",
+                                "owners": [
+                                    {
+                                        "key": "SMU"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "node": {
+                        "pageType": "microbachelors-about-page",
+                        "uuidList": [
+                            "3c32e3e0-b6fe-4ee4-bd4f-210c6339e074",
+                            "71c95834-f6df-4f78-8cd7-c6461dd9b1d4",
+                            "10433481-11f1-459c-813c-d8537d3bbcb6",
+                            "32ab61e5-44b4-4316-ad59-9f04fc876e0a",
+                            "b3f587fc-0cee-4dbd-8bac-b2687731a40d"
+                        ],
+                        "popularSearchTerms": [
+                            "python",
+                            "ai",
+                            "finance",
+                            "cybersecurity"
+                        ],
+                        "programs": [
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/3c32e3e0-b6fe-4ee4-bd4f-210c6339e074-09fdeca85b81.jpg",
+                                "degree": null,
+                                "marketingUrl": "https://www.edx.org/certificates/professional-certificate/harvardx-data-science",
+                                "organizationShortCodeOverride": "",
+                                "owners": [
+                                    {
+                                        "key": "HarvardX"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "edx"
+                                },
+                                "title": "Data  Science",
+                                "type": "Professional Certificate",
+                                "uuid": "3c32e3e0-b6fe-4ee4-bd4f-210c6339e074"
+                            },
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/71c95834-f6df-4f78-8cd7-c6461dd9b1d4-9e5243cc0513.jpg",
+                                "degree": null,
+                                "marketingUrl": "https://www.edx.org/masters/micromasters/mitx-statistics-and-data-science-retired",
+                                "organizationShortCodeOverride": "",
+                                "owners": [
+                                    {
+                                        "key": "MITx"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "edx"
+                                },
+                                "title": "Statistics and Data Science (Social Sciences Track) -Retired \"old version\"",
+                                "type": "MicroMasters",
+                                "uuid": "71c95834-f6df-4f78-8cd7-c6461dd9b1d4"
+                            }
+                        ],
+                        "courses": [
+                            {
+                                "title": "MBA Essentials",
+                                "uuid": "b3f587fc-0cee-4dbd-8bac-b2687731a40d",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://onlinecertificatecourses.lse.ac.uk/presentations/lp/lse-mba-essentials-online-certificate-course-pr/"
+                                },
+                                "courseType": "executive-education-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/b3f587fc-0cee-4dbd-8bac-b2687731a40d-767a9bc772fa.small.jpg"
+                                },
+                                "marketingUrl": "https://www.edx.org/executive-education/the-london-school-of-economics-and-political-science-mba-essentials",
+                                "organizationShortCodeOverride": "LSE",
+                                "owners": [
+                                    {
+                                        "key": "LSE"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            },
+                            {
+                                "title": "Artificial Intelligence: Implications for Business Strategy",
+                                "uuid": "32ab61e5-44b4-4316-ad59-9f04fc876e0a",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://mit-online.getsmarter.com/presentations/lp/mit-artificial-intelligence-online-short-course/"
+                                },
+                                "courseType": "executive-education-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/32ab61e5-44b4-4316-ad59-9f04fc876e0a-ef852b9b27e8.small.jpg"
+                                },
+                                "marketingUrl": "https://www.edx.org/executive-education/massachusetts-institute-of-technology-artificial-intelligence-implications-for-business-strategy",
+                                "organizationShortCodeOverride": "MIT Sloan School of Management",
+                                "owners": [
+                                    {
+                                        "key": "MITx"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            },
+                            {
+                                "title": "Cybersecurity Boot Camp",
+                                "uuid": "10433481-11f1-459c-813c-d8537d3bbcb6",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://techbootcamps.smu.edu/cybersecurity/landing-b5b/?utm_source=edx&utm_medium=referral&utm_campaign=edx-smu"
+                                },
+                                "courseType": "bootcamp-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/10433481-11f1-459c-813c-d8537d3bbcb6-183792c4f172.small.png"
+                                },
+                                "marketingUrl": "https://www.edx.org/boot-camps/cybersecurity/southern-methodist-university-cybersecurity-boot-camp",
+                                "organizationShortCodeOverride": "",
+                                "owners": [
+                                    {
+                                        "key": "SMU"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "node": {
+                        "pageType": "microbachelors-container-page",
+                        "uuidList": [
+                            "3c32e3e0-b6fe-4ee4-bd4f-210c6339e074",
+                            "71c95834-f6df-4f78-8cd7-c6461dd9b1d4",
+                            "10433481-11f1-459c-813c-d8537d3bbcb6",
+                            "32ab61e5-44b4-4316-ad59-9f04fc876e0a",
+                            "b3f587fc-0cee-4dbd-8bac-b2687731a40d"
+                        ],
+                        "popularSearchTerms": [
+                            "python",
+                            "ai",
+                            "finance",
+                            "cybersecurity"
+                        ],
+                        "programs": [
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/3c32e3e0-b6fe-4ee4-bd4f-210c6339e074-09fdeca85b81.jpg",
+                                "degree": null,
+                                "marketingUrl": "https://www.edx.org/certificates/professional-certificate/harvardx-data-science",
+                                "organizationShortCodeOverride": "",
+                                "owners": [
+                                    {
+                                        "key": "HarvardX"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "edx"
+                                },
+                                "title": "Data  Science",
+                                "type": "Professional Certificate",
+                                "uuid": "3c32e3e0-b6fe-4ee4-bd4f-210c6339e074"
+                            },
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/71c95834-f6df-4f78-8cd7-c6461dd9b1d4-9e5243cc0513.jpg",
+                                "degree": null,
+                                "marketingUrl": "https://www.edx.org/masters/micromasters/mitx-statistics-and-data-science-retired",
+                                "organizationShortCodeOverride": "",
+                                "owners": [
+                                    {
+                                        "key": "MITx"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "edx"
+                                },
+                                "title": "Statistics and Data Science (Social Sciences Track) -Retired \"old version\"",
+                                "type": "MicroMasters",
+                                "uuid": "71c95834-f6df-4f78-8cd7-c6461dd9b1d4"
+                            }
+                        ],
+                        "courses": [
+                            {
+                                "title": "MBA Essentials",
+                                "uuid": "b3f587fc-0cee-4dbd-8bac-b2687731a40d",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://onlinecertificatecourses.lse.ac.uk/presentations/lp/lse-mba-essentials-online-certificate-course-pr/"
+                                },
+                                "courseType": "executive-education-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/b3f587fc-0cee-4dbd-8bac-b2687731a40d-767a9bc772fa.small.jpg"
+                                },
+                                "marketingUrl": "https://www.edx.org/executive-education/the-london-school-of-economics-and-political-science-mba-essentials",
+                                "organizationShortCodeOverride": "LSE",
+                                "owners": [
+                                    {
+                                        "key": "LSE"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            },
+                            {
+                                "title": "Artificial Intelligence: Implications for Business Strategy",
+                                "uuid": "32ab61e5-44b4-4316-ad59-9f04fc876e0a",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://mit-online.getsmarter.com/presentations/lp/mit-artificial-intelligence-online-short-course/"
+                                },
+                                "courseType": "executive-education-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/32ab61e5-44b4-4316-ad59-9f04fc876e0a-ef852b9b27e8.small.jpg"
+                                },
+                                "marketingUrl": "https://www.edx.org/executive-education/massachusetts-institute-of-technology-artificial-intelligence-implications-for-business-strategy",
+                                "organizationShortCodeOverride": "MIT Sloan School of Management",
+                                "owners": [
+                                    {
+                                        "key": "MITx"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            },
+                            {
+                                "title": "Cybersecurity Boot Camp",
+                                "uuid": "10433481-11f1-459c-813c-d8537d3bbcb6",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://techbootcamps.smu.edu/cybersecurity/landing-b5b/?utm_source=edx&utm_medium=referral&utm_campaign=edx-smu"
+                                },
+                                "courseType": "bootcamp-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/10433481-11f1-459c-813c-d8537d3bbcb6-183792c4f172.small.png"
+                                },
+                                "marketingUrl": "https://www.edx.org/boot-camps/cybersecurity/southern-methodist-university-cybersecurity-boot-camp",
+                                "organizationShortCodeOverride": "",
+                                "owners": [
+                                    {
+                                        "key": "SMU"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "node": {
+                        "pageType": "micromasters-container-page",
+                        "uuidList": [
+                            "3c32e3e0-b6fe-4ee4-bd4f-210c6339e074",
+                            "71c95834-f6df-4f78-8cd7-c6461dd9b1d4",
+                            "10433481-11f1-459c-813c-d8537d3bbcb6",
+                            "32ab61e5-44b4-4316-ad59-9f04fc876e0a",
+                            "b3f587fc-0cee-4dbd-8bac-b2687731a40d"
+                        ],
+                        "popularSearchTerms": [
+                            "python",
+                            "ai",
+                            "finance",
+                            "cybersecurity"
+                        ],
+                        "programs": [
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/3c32e3e0-b6fe-4ee4-bd4f-210c6339e074-09fdeca85b81.jpg",
+                                "degree": null,
+                                "marketingUrl": "https://www.edx.org/certificates/professional-certificate/harvardx-data-science",
+                                "organizationShortCodeOverride": "",
+                                "owners": [
+                                    {
+                                        "key": "HarvardX"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "edx"
+                                },
+                                "title": "Data  Science",
+                                "type": "Professional Certificate",
+                                "uuid": "3c32e3e0-b6fe-4ee4-bd4f-210c6339e074"
+                            },
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/71c95834-f6df-4f78-8cd7-c6461dd9b1d4-9e5243cc0513.jpg",
+                                "degree": null,
+                                "marketingUrl": "https://www.edx.org/masters/micromasters/mitx-statistics-and-data-science-retired",
+                                "organizationShortCodeOverride": "",
+                                "owners": [
+                                    {
+                                        "key": "MITx"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "edx"
+                                },
+                                "title": "Statistics and Data Science (Social Sciences Track) -Retired \"old version\"",
+                                "type": "MicroMasters",
+                                "uuid": "71c95834-f6df-4f78-8cd7-c6461dd9b1d4"
+                            }
+                        ],
+                        "courses": [
+                            {
+                                "title": "MBA Essentials",
+                                "uuid": "b3f587fc-0cee-4dbd-8bac-b2687731a40d",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://onlinecertificatecourses.lse.ac.uk/presentations/lp/lse-mba-essentials-online-certificate-course-pr/"
+                                },
+                                "courseType": "executive-education-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/b3f587fc-0cee-4dbd-8bac-b2687731a40d-767a9bc772fa.small.jpg"
+                                },
+                                "marketingUrl": "https://www.edx.org/executive-education/the-london-school-of-economics-and-political-science-mba-essentials",
+                                "organizationShortCodeOverride": "LSE",
+                                "owners": [
+                                    {
+                                        "key": "LSE"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            },
+                            {
+                                "title": "Artificial Intelligence: Implications for Business Strategy",
+                                "uuid": "32ab61e5-44b4-4316-ad59-9f04fc876e0a",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://mit-online.getsmarter.com/presentations/lp/mit-artificial-intelligence-online-short-course/"
+                                },
+                                "courseType": "executive-education-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/32ab61e5-44b4-4316-ad59-9f04fc876e0a-ef852b9b27e8.small.jpg"
+                                },
+                                "marketingUrl": "https://www.edx.org/executive-education/massachusetts-institute-of-technology-artificial-intelligence-implications-for-business-strategy",
+                                "organizationShortCodeOverride": "MIT Sloan School of Management",
+                                "owners": [
+                                    {
+                                        "key": "MITx"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            },
+                            {
+                                "title": "Cybersecurity Boot Camp",
+                                "uuid": "10433481-11f1-459c-813c-d8537d3bbcb6",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://techbootcamps.smu.edu/cybersecurity/landing-b5b/?utm_source=edx&utm_medium=referral&utm_campaign=edx-smu"
+                                },
+                                "courseType": "bootcamp-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/10433481-11f1-459c-813c-d8537d3bbcb6-183792c4f172.small.png"
+                                },
+                                "marketingUrl": "https://www.edx.org/boot-camps/cybersecurity/southern-methodist-university-cybersecurity-boot-camp",
+                                "organizationShortCodeOverride": "",
+                                "owners": [
+                                    {
+                                        "key": "SMU"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "node": {
+                        "pageType": "micromasters-about-page",
+                        "uuidList": [
+                            "3c32e3e0-b6fe-4ee4-bd4f-210c6339e074",
+                            "71c95834-f6df-4f78-8cd7-c6461dd9b1d4",
+                            "10433481-11f1-459c-813c-d8537d3bbcb6",
+                            "32ab61e5-44b4-4316-ad59-9f04fc876e0a",
+                            "b3f587fc-0cee-4dbd-8bac-b2687731a40d"
+                        ],
+                        "popularSearchTerms": [
+                            "python",
+                            "ai",
+                            "finance",
+                            "cybersecurity"
+                        ],
+                        "programs": [
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/3c32e3e0-b6fe-4ee4-bd4f-210c6339e074-09fdeca85b81.jpg",
+                                "degree": null,
+                                "marketingUrl": "https://www.edx.org/certificates/professional-certificate/harvardx-data-science",
+                                "organizationShortCodeOverride": "",
+                                "owners": [
+                                    {
+                                        "key": "HarvardX"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "edx"
+                                },
+                                "title": "Data  Science",
+                                "type": "Professional Certificate",
+                                "uuid": "3c32e3e0-b6fe-4ee4-bd4f-210c6339e074"
+                            },
+                            {
+                                "cardImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/card_images/71c95834-f6df-4f78-8cd7-c6461dd9b1d4-9e5243cc0513.jpg",
+                                "degree": null,
+                                "marketingUrl": "https://www.edx.org/masters/micromasters/mitx-statistics-and-data-science-retired",
+                                "organizationShortCodeOverride": "",
+                                "owners": [
+                                    {
+                                        "key": "MITx"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "edx"
+                                },
+                                "title": "Statistics and Data Science (Social Sciences Track) -Retired \"old version\"",
+                                "type": "MicroMasters",
+                                "uuid": "71c95834-f6df-4f78-8cd7-c6461dd9b1d4"
+                            }
+                        ],
+                        "courses": [
+                            {
+                                "title": "MBA Essentials",
+                                "uuid": "b3f587fc-0cee-4dbd-8bac-b2687731a40d",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://onlinecertificatecourses.lse.ac.uk/presentations/lp/lse-mba-essentials-online-certificate-course-pr/"
+                                },
+                                "courseType": "executive-education-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/b3f587fc-0cee-4dbd-8bac-b2687731a40d-767a9bc772fa.small.jpg"
+                                },
+                                "marketingUrl": "https://www.edx.org/executive-education/the-london-school-of-economics-and-political-science-mba-essentials",
+                                "organizationShortCodeOverride": "LSE",
+                                "owners": [
+                                    {
+                                        "key": "LSE"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            },
+                            {
+                                "title": "Artificial Intelligence: Implications for Business Strategy",
+                                "uuid": "32ab61e5-44b4-4316-ad59-9f04fc876e0a",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://mit-online.getsmarter.com/presentations/lp/mit-artificial-intelligence-online-short-course/"
+                                },
+                                "courseType": "executive-education-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/32ab61e5-44b4-4316-ad59-9f04fc876e0a-ef852b9b27e8.small.jpg"
+                                },
+                                "marketingUrl": "https://www.edx.org/executive-education/massachusetts-institute-of-technology-artificial-intelligence-implications-for-business-strategy",
+                                "organizationShortCodeOverride": "MIT Sloan School of Management",
+                                "owners": [
+                                    {
+                                        "key": "MITx"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            },
+                            {
+                                "title": "Cybersecurity Boot Camp",
+                                "uuid": "10433481-11f1-459c-813c-d8537d3bbcb6",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://techbootcamps.smu.edu/cybersecurity/landing-b5b/?utm_source=edx&utm_medium=referral&utm_campaign=edx-smu"
+                                },
+                                "courseType": "bootcamp-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/10433481-11f1-459c-813c-d8537d3bbcb6-183792c4f172.small.png"
+                                },
+                                "marketingUrl": "https://www.edx.org/boot-camps/cybersecurity/southern-methodist-university-cybersecurity-boot-camp",
+                                "organizationShortCodeOverride": "",
+                                "owners": [
+                                    {
+                                        "key": "SMU"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "node": {
+                        "pageType": "open-course-about-page",
+                        "uuidList": [
+                            "da1b2400-322b-459b-97b0-0c557f05d017",
+                            "6774d438-134f-4d20-95a2-ea763f59ff23",
+                            "941c1967-d0ee-49bc-b3c5-e6ccf4681f2a",
+                            "32ab61e5-44b4-4316-ad59-9f04fc876e0a",
+                            "338e9937-2c57-4832-b7c8-ff55beccdae3"
+                        ],
+                        "popularSearchTerms": [
+                            "python",
+                            "excel",
+                            "data science",
+                            "computer science"
+                        ],
+                        "programs": [],
+                        "courses": [
+                            {
+                                "title": "Coding Boot Camp",
+                                "uuid": "338e9937-2c57-4832-b7c8-ff55beccdae3",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://bootcamp.berkeley.edu/coding/landing-ftpt-dual/?utm_source=edx&utm_medium=referral&utm_campaign=edx-ucb"
+                                },
+                                "courseType": "bootcamp-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/338e9937-2c57-4832-b7c8-ff55beccdae3-d3df54f6432d.small.png"
+                                },
+                                "marketingUrl": "https://www.edx.org/boot-camps/coding/uc-berkeley-extension-coding-boot-camp",
+                                "organizationShortCodeOverride": "UC Berkeley Extension",
+                                "owners": [
+                                    {
+                                        "key": "BerkeleyX"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            },
+                            {
+                                "title": "Rhetoric: The Art of Persuasive Writing and Public Speaking",
+                                "uuid": "941c1967-d0ee-49bc-b3c5-e6ccf4681f2a",
+                                "additionalMetadata": null,
+                                "courseType": "verified-audit",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/941c1967-d0ee-49bc-b3c5-e6ccf4681f2a-14ac60434ff5.small.jpeg"
+                                },
+                                "marketingUrl": "https://www.edx.org/learn/rhetoric/harvard-university-rhetoric-the-art-of-persuasive-writing-and-public-speaking",
+                                "organizationShortCodeOverride": "",
+                                "owners": [
+                                    {
+                                        "key": "HarvardX"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "edx"
+                                }
+                            },
+                            {
+                                "title": "CS50's Introduction to Computer Science",
+                                "uuid": "da1b2400-322b-459b-97b0-0c557f05d017",
+                                "additionalMetadata": null,
+                                "courseType": "verified-audit",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/da1b2400-322b-459b-97b0-0c557f05d017-a3d1899c3344.small.png"
+                                },
+                                "marketingUrl": "https://www.edx.org/learn/computer-science/harvard-university-cs50-s-introduction-to-computer-science",
+                                "organizationShortCodeOverride": "",
+                                "owners": [
+                                    {
+                                        "key": "HarvardX"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "edx"
+                                }
+                            },
+                            {
+                                "title": "Exercising Leadership: Foundational Principles",
+                                "uuid": "6774d438-134f-4d20-95a2-ea763f59ff23",
+                                "additionalMetadata": null,
+                                "courseType": "verified-audit",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/6774d438-134f-4d20-95a2-ea763f59ff23-985bdf6b8a01.small.png"
+                                },
+                                "marketingUrl": "https://www.edx.org/learn/leadership/harvard-university-exercising-leadership-foundational-principles",
+                                "organizationShortCodeOverride": "",
+                                "owners": [
+                                    {
+                                        "key": "HarvardX"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "edx"
+                                }
+                            },
+                            {
+                                "title": "Artificial Intelligence: Implications for Business Strategy",
+                                "uuid": "32ab61e5-44b4-4316-ad59-9f04fc876e0a",
+                                "additionalMetadata": {
+                                    "externalUrl": "https://mit-online.getsmarter.com/presentations/lp/mit-artificial-intelligence-online-short-course/"
+                                },
+                                "courseType": "executive-education-2u",
+                                "image": {
+                                    "src": "https://prod-discovery.edx-cdn.org/media/course/image/32ab61e5-44b4-4316-ad59-9f04fc876e0a-ef852b9b27e8.small.jpg"
+                                },
+                                "marketingUrl": "https://www.edx.org/executive-education/massachusetts-institute-of-technology-artificial-intelligence-implications-for-business-strategy",
+                                "organizationShortCodeOverride": "MIT Sloan School of Management",
+                                "owners": [
+                                    {
+                                        "key": "MITx"
+                                    }
+                                ],
+                                "productSource": {
+                                    "slug": "2u"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

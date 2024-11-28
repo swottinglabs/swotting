@@ -11,19 +11,24 @@ import os
 import sys
 import django
 import dotenv
+from pathlib import Path
 
 dotenv.load_dotenv()
 
-# Setting up django's project full path.
-sys.path.insert(0, '../../../swotting')
-# Setting up Django's settings module name.
+# Get the root directory
+ROOT_DIR = Path(__file__).resolve().parent.parent.parent.parent
+
+# Add the root directory to the Python path
+sys.path.insert(0, str(ROOT_DIR))
+
+# Setting up Django's settings module name
 os.environ['DJANGO_SETTINGS_MODULE'] = 'swotting.settings'
 django.setup()
 
 BOT_NAME = "scrapy_project"
 
-SPIDER_MODULES = ["scrapy_project.spiders"]
-NEWSPIDER_MODULE = "scrapy_project.spiders"
+SPIDER_MODULES = ["core.scrapy_project.scrapers"]
+NEWSPIDER_MODULE = "core.scrapy_project.scrapers"
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -38,7 +43,8 @@ ROBOTSTXT_OBEY = False
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-#DOWNLOAD_DELAY = 3
+DOWNLOAD_DELAY = 1  # 1 second delay between requests
+RANDOMIZE_DOWNLOAD_DELAY = True  # Adds some randomization to be more polite
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
@@ -104,3 +110,20 @@ ROBOTSTXT_OBEY = False
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
+
+ITEM_PIPELINES = {
+    # Pre-process Validators
+    'core.scrapy_project.pipelines.validators.pre_process_validator.PreProcessValidatorPipeline': 110,
+    
+    # Duplicate Filter
+    'core.scrapy_project.pipelines.learning_resources.duplicate_filter.DuplicateFilterPipeline': 115,
+    
+    # Text Cleaning
+    'core.scrapy_project.pipelines.learning_resources.clean_text.TextCleanerPipeline': 120,
+    
+    # Database Validation
+    'core.scrapy_project.pipelines.validators.database_validator.DatabaseValidatorPipeline': 900,
+    
+    # Database Save (final step)
+    'core.scrapy_project.pipelines.learning_resources.database_save.DatabaseSavePipeline': 950,
+}

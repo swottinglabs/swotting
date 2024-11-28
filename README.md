@@ -46,6 +46,10 @@ To run a Scrapy spider, use the Django management command:
 
 python manage.py scrape <spider_name>
 
+# Init DB Data
+python manage.py init_db_data
+
+
 # Get the database running
 1. Install postgres
 2. create postgres user and password user (should be there by default): postgres password: postgres

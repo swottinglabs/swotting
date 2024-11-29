@@ -27,6 +27,8 @@ setup(
         'coverage==7.0.3',
         'whitenoise==6.3.0',
         'pgvector==0.2.3',
+        'algoliasearch-django==3.0.0',
+        'pandas==2.2.3',
     ],
 
     extras_require={

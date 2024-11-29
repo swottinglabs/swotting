@@ -160,3 +160,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 .aider*
+
+# Local development files
+.local/
+.local*

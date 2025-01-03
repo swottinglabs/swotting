@@ -1,0 +1,98 @@
+.app {
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.app_header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+}
+
+.app_main {
+  flex: 1;
+  padding: 20px;
+  background-color: var(--background, #f5f5f5);
+}
+
+.flex_container {
+  display: flex;
+  height: calc(100vh - 100px); /* Adjust based on header height */
+  gap: 20px;
+}
+
+.chat_section {
+  flex: 1;
+  background-color: var(--card, #fff);
+  padding: 20px;
+  border-radius: var(--radius, 0.5rem);
+  overflow-y: auto;
+}
+
+.curriculum_section {
+  flex: 1;
+  background-color: var(--card, #fff);
+  padding: 20px;
+  border-radius: var(--radius, 0.5rem);
+  overflow-y: auto;
+}
+
+.chat_bot_container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.curriculum_container {
+  height: 100%;
+}
+
+.skill_section {
+  margin: 20px 0;
+  text-align: left;
+}
+
+.skill_section h3 {
+  color: var(--primary, #282c34);
+  margin-bottom: 10px;
+}
+
+.skill_section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.skill_section li {
+  margin: 8px 0;
+}
+
+.skill_section a {
+  color: var(--primary, #282c34);
+  text-decoration: none;
+}
+
+.skill_section a:hover {
+  text-decoration: underline;
+}
+
+.curriculum_placeholder {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--muted-foreground, #666);
+}
+
+h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+h2 {
+  color: var(--primary, #282c34);
+  margin-bottom: 20px;
+} 

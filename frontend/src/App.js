@@ -1,31 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
-import ChatBot from './components/ChatBot';
-import Curriculum from './components/Curriculum';
+import LeftPanel from './components/layout/LeftPanel';
+import RightPanel from './components/layout/RightPanel';
 
 function App() {
-  const [curriculum, setCurriculum] = useState(null);
-
   return (
     <div className="app">
-      <header className="app_header">
-        <h1>Learning Resources Aggregator</h1>
-      </header>
-      <main className="app_main">
-        <div className="flex_container">
-          <div className="chat_section">
-            <ChatBot 
-              setCurriculum={setCurriculum} 
-              resetCurriculum={() => setCurriculum(null)} 
-            />
-          </div>
-          <div className="curriculum_section">
-            <Curriculum curriculum={curriculum} />
-          </div>
-        </div>
-      </main>
+      <LeftPanel />
+      <RightPanel />
     </div>
   );
 }
 
-export default App; 
+export default App;

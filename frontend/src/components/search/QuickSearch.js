@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
+import { api } from '../../services/api';
 
 const QuickSearch = ({ onComplete }) => {
   const [search_term, set_search_term] = useState('');
@@ -9,22 +10,22 @@ const QuickSearch = ({ onComplete }) => {
     if (!search_term.trim()) return;
 
     try {
-      // Demo API call
-      const response = await fetch('https://api.example.com/quick-search', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          search_term: search_term
-        })
-      });
+      const response = await api.get(`/search/?q=${encodeURIComponent(search_term)}`);
+      console.log('Search results:', response);
       
-      // For demo purposes, we'll just pass the search term
-      onComplete({
-        search_term: search_term,
-        type: 'quick_search'
+      // Dispatch event for RightPanel
+      const event = new CustomEvent('search-complete', {
+        detail: response
       });
+      document.dispatchEvent(event);
+
+      if (onComplete) {
+        onComplete({
+          search_term: search_term,
+          type: 'quick_search',
+          results: response.results
+        });
+      }
     } catch (error) {
       console.error('Quick search API call failed:', error);
     }

@@ -1,26 +1,25 @@
+/* Base Layout */
 .app {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 
 .left-panel {
-  position: relative;
-  flex: 1;
+  width: 40%;
+  height: 100vh;
+  overflow-y: auto;
   background-color: #f5f5f5;
   padding: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 400px;
 }
 
 .right-panel {
-  flex: 1;
+  width: 60%;
+  height: 100vh;
+  overflow-y: auto;
   background-color: white;
   padding: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .button-container {
@@ -93,40 +92,41 @@
   width: 100%;
 }
 
-.button-wrapper:hover::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  left: calc(100% + 20px);
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 1rem;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  width: 250px;
-  z-index: 1000;
-  line-height: 1.4;
-}
+/* Activate Tooltip in custom mode*/
+  /* .button-wrapper:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: calc(100% + 20px);
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    width: 250px;
+    z-index: 1000;
+    line-height: 1.4;
+  }
 
-.button-wrapper::before {
-  content: '';
-  position: absolute;
-  left: calc(100% + 10px);
-  top: 50%;
-  transform: translateY(-50%);
-  border: 10px solid transparent;
-  border-right-color: rgba(0, 0, 0, 0.8);
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.2s ease;
-  z-index: 1000;
-}
+  .button-wrapper::before {
+    content: '';
+    position: absolute;
+    left: calc(100% + 10px);
+    top: 50%;
+    transform: translateY(-50%);
+    border: 10px solid transparent;
+    border-right-color: rgba(0, 0, 0, 0.8);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 1000;
+  }
 
-.button-wrapper:hover::before {
-  opacity: 1;
-  visibility: visible;
-}
+  .button-wrapper:hover::before {
+    opacity: 1;
+    visibility: visible;
+  } */
 
 .chat-container {
   width: 100%;
@@ -219,12 +219,12 @@
 }
 
 .content-container {
-  width: 100%;
-  height: 100%;
+  flex: 1;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
-  transition: all 0.3s ease;
+  padding: 20px 0;
 }
 
 .content-container.chat-active {
@@ -243,20 +243,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
+  /* padding: 1rem; */
 }
 
 .quick-search-form {
   width: 100%;
-  max-width: 400px;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  /* gap: 0.5rem; */
 }
 
 .search-input-container {
   position: relative;
-  width: 100%;
+  width: 87%;
+  margin-bottom: 1rem;
 }
 
 .search-icon {
@@ -284,7 +284,8 @@
 }
 
 .search-button {
-  padding: 1rem 2rem;
+  width: 100%;
+  padding: 1rem;
   font-size: 1.1rem;
   background-color: #007bff;
   color: white;
@@ -412,3 +413,21 @@
   clear: both;
   height: 0;
 }
+
+@media (max-width: 768px) {
+  .app {
+    flex-direction: column;
+    overflow: auto;
+  }
+
+  .main-content {
+    margin-right: 0;
+    height: auto;
+  }
+
+  .left-panel {
+    height: auto;
+    min-height: 100vh;
+  }
+}
+

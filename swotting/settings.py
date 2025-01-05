@@ -60,9 +60,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'algoliasearch_django',
     # 'huey.contrib.djhuey',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -186,3 +188,12 @@ ALGOLIA = {
 # Huey Configuration
 # pool = ConnectionPool.from_url(os.environ.get('REDIS_URL', 'redis://localhost:6379'))
 # HUEY = RedisHuey('swotting', connection_pool=pool)
+
+# CORS settings
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True
+else:
+    CORS_ALLOWED_ORIGINS = [
+        "https://swotting.org",
+        "https://api.swotting.org",
+    ]

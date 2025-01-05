@@ -22,12 +22,7 @@ const PathwaysChat = ({ onComplete }) => {
   const chat_flow = [
     {
       question: "What's your age?",
-      type: "slider",
-      config: {
-        min: 13,
-        max: 100,
-        defaultValue: 25
-      }
+      type: "text"
     },
     {
       question: "What's your current occupation?",

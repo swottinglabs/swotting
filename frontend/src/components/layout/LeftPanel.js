@@ -31,6 +31,7 @@ const LeftPanel = () => {
   const handleReset = () => {
     set_active_mode(null);
     set_selected_mode(null);
+    document.dispatchEvent(new Event('reset-panel'));
   };
 
   const handle_button_click = (button_id) => {

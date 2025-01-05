@@ -1,26 +1,49 @@
 import React, { useState, useEffect } from 'react';
-import CourseRecommendations from '../recommendations/CourseRecommendations';
+import CourseCard from '../courses/CourseCard';
+import './RightPanel.css';
 
 const RightPanel = () => {
-  const [chat_data, set_chat_data] = useState(null);
+  const [search_results, set_search_results] = useState(null);
 
   useEffect(() => {
-    const handle_chat_complete = (event) => {
-      set_chat_data(event.detail);
+    const handle_search_complete = (event) => {
+      set_search_results(event.detail);
     };
 
-    // Add event listener
-    document.addEventListener('chat-complete', handle_chat_complete);
+    const handle_reset = () => {
+      set_search_results(null);
+    };
+
+    // Add event listeners
+    document.addEventListener('search-complete', handle_search_complete);
+    document.addEventListener('reset-panel', handle_reset);
 
     // Cleanup
     return () => {
-      document.removeEventListener('chat-complete', handle_chat_complete);
+      document.removeEventListener('search-complete', handle_search_complete);
+      document.removeEventListener('reset-panel', handle_reset);
     };
   }, []);
 
   return (
     <div className="right-panel">
-      <CourseRecommendations chatData={chat_data} />
+      {search_results ? (
+        <div className="search-results">
+          <h2 className="results-header">
+            Courses for "{search_results.query}"
+          </h2>
+          <div className="courses-grid">
+            {search_results.results.map((course) => (
+              <CourseCard key={course.uuid} course={course} />
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="empty-state">
+          <h2>Welcome to Swotting</h2>
+          <p>Select an option from the left panel to start exploring courses.</p>
+        </div>
+      )}
     </div>
   );
 };

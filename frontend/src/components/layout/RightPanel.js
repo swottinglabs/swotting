@@ -40,7 +40,6 @@ const RightPanel = () => {
         </div>
       ) : (
         <div className="empty-state">
-          <h2>Welcome to Swotting</h2>
           <p>Select an option from the left panel to start exploring courses.</p>
         </div>
       )}

@@ -56,16 +56,19 @@ const LeftPanel = () => {
         return <PathwaysChat onComplete={handle_completion} />;
       default:
         return (
-          <div className="button-container">
-            {buttons.map((button, index) => (
-              <div key={index} className="button-wrapper" data-tooltip={button.tooltip}>
-                <NavigationButton 
-                  text={button.text}
-                  onClick={() => handle_button_click(button.id)}
-                />
-              </div>
-            ))}
-          </div>
+          <>
+            <h2 className="intro-heading">30k Free High Quality courses to explore.</h2>
+            <div className="button-container">
+              {buttons.map((button, index) => (
+                <div key={index} className="button-wrapper" data-tooltip={button.tooltip}>
+                  <NavigationButton 
+                    text={button.text}
+                    onClick={() => handle_button_click(button.id)}
+                  />
+                </div>
+              ))}
+            </div>
+          </>
         );
     }
   };

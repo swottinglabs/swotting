@@ -9,7 +9,7 @@ urlpatterns = [
     path('learning-resources/', views.LearningResourceListCreateView.as_view(), name='learning_resources'),
     path('learning-resources/<uuid:id>/', views.LearningResourceDetailView.as_view(), name='learning_resource_detail'),
     path('search/', views.search_learning_resources, name='search'),
-
+    path('generate-curriculum/', views.generate_curriculum, name='generate_curriculum'),
 
     # Landing page
     path('', TemplateView.as_view(template_name="core/index.html"), name='index'),

@@ -108,6 +108,14 @@ Return the result in JSON with the following structure:
             ]
         }
 
+def search_courses_for_term(search_term: str, hits_per_page: int = 5) -> list:
+    """
+    Search for courses using a search term and return top matches.
+    """
+    params = {"hitsPerPage": hits_per_page}
+    response = raw_search(LearningResource, search_term, params)
+    return response.get('hits', [])
+
 @api_view(['POST'])
 def generate_curriculum(request):
     """
@@ -127,7 +135,13 @@ def generate_curriculum(request):
     # Generate learning plan using LLM
     learning_plan = generate_learning_plan_with_llm(desired_skill, current_knowledge)
 
-    # For now, return the learning plan
+    # Add course recommendations for each step
+    for step in learning_plan.get('learningPlanSteps', []):
+        search_term = step.get('search_term', '')
+        recommended_courses = search_courses_for_term(search_term)
+        step['recommended_courses'] = recommended_courses
+
+    # Return the learning plan with course recommendations
     response_data = {
         'desired_skill': desired_skill,
         'current_knowledge': current_knowledge,

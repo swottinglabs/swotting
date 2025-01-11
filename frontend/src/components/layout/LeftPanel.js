@@ -4,7 +4,6 @@ import { BiReset } from 'react-icons/bi';
 import ChatBot from '../chat/ChatBot';
 import QuickSearch from '../search/QuickSearch';
 import PathwaysChat from '../chat/PathwaysChat';
-import { testGenerateCurriculum } from '../../services/api';
 
 const LeftPanel = () => {
   const [active_mode, set_active_mode] = useState(null);
@@ -35,18 +34,9 @@ const LeftPanel = () => {
     document.dispatchEvent(new Event('reset-panel'));
   };
 
-  const handle_button_click = async (button_id) => {
+  const handle_button_click = (button_id) => {
     set_selected_mode(button_id);
     set_active_mode(button_id);
-    
-    if (button_id === 'build-curriculum') {
-      try {
-        const response = await testGenerateCurriculum();
-        console.log('Successfully tested curriculum generation:', response);
-      } catch (error) {
-        console.error('Failed to test curriculum generation:', error);
-      }
-    }
   };
 
   const handle_completion = (data) => {

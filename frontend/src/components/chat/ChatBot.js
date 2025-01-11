@@ -2,10 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import ChatInput from './ChatInput';
 import ChatMessage from './ChatMessage';
 import MultipleChoice from './MultipleChoice';
+import { api } from '../../services/api';
 
 const ChatBot = ({ onComplete }) => {
   const [messages, set_messages] = useState([]);
   const [current_step, set_current_step] = useState(0);
+  const [user_data, set_user_data] = useState({});
   const messages_end_ref = useRef(null);
 
   const scroll_to_bottom = () => {
@@ -49,37 +51,42 @@ const ChatBot = ({ onComplete }) => {
     // Add user message to chat
     set_messages(prev => [...prev, { text: message, sender: 'user' }]);
     
+    // Store response in user data
+    set_user_data(prev => ({
+      ...prev,
+      [current_step]: message
+    }));
+    
     // Move to next step
     const next_step = current_step + 1;
     
     if (next_step < chat_flow.length) {
       // Add next bot question to chat
       set_messages(prev => [...prev, { text: chat_flow[next_step].question, sender: 'bot' }]);
-    }
-    
-    if (current_step === chat_flow.length - 1) {
-      // Make demo API call
+    } else {
+      // Chat complete, make API call
       try {
-        const response = await fetch('https://api.example.com/recommendations', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            topic: messages[1].text,
-            current_knowledge: messages[3].text,
-            hours_per_week: message
-          })
-        });
-        
-        // For demo purposes, we'll just move forward
-        onComplete({
-          topic: messages[1].text,
-          current_knowledge: messages[3].text,
+        const response = await api.generateCurriculum({
+          desired_skill: user_data[0],
+          current_knowledge: user_data[1],
           hours_per_week: message
         });
+        
+        console.log('Curriculum generation response:', response);
+        
+        onComplete({
+          desired_skill: user_data[0],
+          current_knowledge: user_data[1],
+          hours_per_week: message,
+          curriculum: response,
+          type: 'curriculum'
+        });
       } catch (error) {
-        console.error('API call failed:', error);
+        console.error('Curriculum generation failed:', error);
+        set_messages(prev => [...prev, { 
+          text: "Sorry, there was an error generating your curriculum. Please try again.", 
+          sender: 'bot' 
+        }]);
       }
     }
     

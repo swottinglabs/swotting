@@ -8,6 +8,7 @@ const ChatBot = ({ onComplete }) => {
   const [messages, set_messages] = useState([]);
   const [current_step, set_current_step] = useState(0);
   const [user_data, set_user_data] = useState({});
+  const [is_chat_complete, set_is_chat_complete] = useState(false);
   const messages_end_ref = useRef(null);
 
   const scroll_to_bottom = () => {
@@ -27,16 +28,6 @@ const ChatBot = ({ onComplete }) => {
     {
       question: "What is your current knowledge in this area?",
       type: "text"
-    },
-    {
-      question: "How many hours do you want to spend learning per week?",
-      type: "multiple_choice",
-      options: [
-        "0-2 hours",
-        "2-5 hours",
-        "5-10 hours",
-        "10+ hours"
-      ]
     }
   ];
 
@@ -46,6 +37,39 @@ const ChatBot = ({ onComplete }) => {
       { text: chat_flow[0].question, sender: 'bot' }
     ]);
   }, []);
+
+  // Handle API call when chat is complete
+  useEffect(() => {
+    const generate_curriculum = async () => {
+      if (!is_chat_complete) return;
+
+      try {
+        const response = await api.generateCurriculum({
+          desired_skill: user_data[0],
+          current_knowledge: user_data[1]
+        });
+        
+        console.log('Curriculum generation response:', response);
+        
+        onComplete({
+          desired_skill: user_data[0],
+          current_knowledge: user_data[1],
+          curriculum: response,
+          type: 'curriculum'
+        });
+      } catch (error) {
+        console.error('Curriculum generation failed:', error);
+        set_messages(prev => [...prev, { 
+          text: "Sorry, there was an error generating your curriculum. Please try again.", 
+          sender: 'bot' 
+        }]);
+        // Reset chat completion state to allow retry
+        set_is_chat_complete(false);
+      }
+    };
+
+    generate_curriculum();
+  }, [is_chat_complete, user_data, onComplete]);
 
   const handle_message = async (message) => {
     // Add user message to chat
@@ -63,34 +87,12 @@ const ChatBot = ({ onComplete }) => {
     if (next_step < chat_flow.length) {
       // Add next bot question to chat
       set_messages(prev => [...prev, { text: chat_flow[next_step].question, sender: 'bot' }]);
+      set_current_step(next_step);
     } else {
-      // Chat complete, make API call
-      try {
-        const response = await api.generateCurriculum({
-          desired_skill: user_data[0],
-          current_knowledge: user_data[1],
-          hours_per_week: message
-        });
-        
-        console.log('Curriculum generation response:', response);
-        
-        onComplete({
-          desired_skill: user_data[0],
-          current_knowledge: user_data[1],
-          hours_per_week: message,
-          curriculum: response,
-          type: 'curriculum'
-        });
-      } catch (error) {
-        console.error('Curriculum generation failed:', error);
-        set_messages(prev => [...prev, { 
-          text: "Sorry, there was an error generating your curriculum. Please try again.", 
-          sender: 'bot' 
-        }]);
-      }
+      // Mark chat as complete after all updates
+      set_current_step(next_step);
+      set_is_chat_complete(true);
     }
-    
-    set_current_step(next_step);
   };
 
   return (

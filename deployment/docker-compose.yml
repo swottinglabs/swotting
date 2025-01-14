@@ -1,7 +1,7 @@
 x-app: &default-app
   image: ghcr.io/swottinglabs/swotting-prod:latest
   restart: unless-stopped
-  env_file: .env
+  env_file: ../.env
   logging:
     driver: journald
     options:
@@ -30,7 +30,7 @@ services:
       POSTGRES_PASSWORD: swotting
       POSTGRES_DB: swotting
     env_file:
-      - ./.env
+      - ../.env
 
 
 volumes:

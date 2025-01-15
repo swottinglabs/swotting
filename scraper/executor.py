@@ -12,6 +12,8 @@ from typing import Optional, List, Dict, Any
 from .logging import SpiderExecutionLogger
 from .statistics import SpiderStatisticsManager
 from twisted.internet import reactor
+from twisted.internet.defer import Deferred
+from scrapy.utils.log import configure_logging
 
 scraping_logger = logging.getLogger(__name__)
 
@@ -33,12 +35,15 @@ class SpiderExecutor:
         scrapy_settings = self._prepare_settings(item_storage.name)
         scrapy_spider_cls = self._get_spider_class()
         
+        # Configure logging
+        configure_logging(scrapy_settings)
         runner = CrawlerRunner(settings=scrapy_settings)
         log_capture_string, log_handler = self.logger.setup_logging()
         spider_logger = logging.getLogger(scrapy_spider_cls.name)
         spider_logger.addHandler(log_handler)
         
-        deferred = runner.crawl(scrapy_spider_cls)
+        # Create a deferred that will be fired when crawling is done
+        finished = Deferred()
         
         def _crawler_done(crawler):
             log_contents = log_capture_string.getvalue()
@@ -56,16 +61,16 @@ class SpiderExecutor:
             item_storage.close()
             os.remove(item_storage.name)
             
-            if not reactor._stopped:
-                reactor.stop()
-            
             return execution
 
+        # Run the spider with platform_id
+        spider_kwargs = {'platform_id': 'edx'}
+        deferred = runner.crawl(scrapy_spider_cls, **spider_kwargs)
         deferred.addCallback(_crawler_done)
+        deferred.addCallback(lambda _: finished.callback(execution))
+        deferred.addErrback(lambda f: finished.errback(f))
         
-        reactor.run(installSignalHandlers=0)
-        
-        return execution
+        return finished
 
     def process_results(self, execution: Execution):
         """Process execution results and update spider status"""
@@ -113,6 +118,13 @@ class SpiderExecutor:
             'DOWNLOAD_TIMEOUT': 180,
             'CLOSESPIDER_TIMEOUT': 7200,
             'CLOSESPIDER_ERRORCOUNT': 50,
+            'ITEM_PIPELINES': {
+                'scraper.scrapy_project.pipelines.validators.pre_process_validator.PreProcessValidatorPipeline': 100,
+                'scraper.scrapy_project.pipelines.learning_resources.duplicate_filter.DuplicateFilterPipeline': 200,
+                'scraper.scrapy_project.pipelines.learning_resources.clean_text.TextCleanerPipeline': 300,
+                'scraper.scrapy_project.pipelines.validators.database_validator.DatabaseValidatorPipeline': 400,
+                'scraper.scrapy_project.pipelines.learning_resources.database_save.DatabaseSavePipeline': 500,
+            }
         }
 
         internal_settings = {

@@ -29,7 +29,8 @@ class EdxSpider(BaseSpider, SitemapSpider):
     FORMAT = "Video"
     
     def __init__(self, platform_id=None, *args, **kwargs):
-        BaseSpider.__init__(self, platform_id, *args, **kwargs)
+        self.platform_id = platform_id or 'edx'  # Default to 'edx' if not provided
+        BaseSpider.__init__(self, self.platform_id, *args, **kwargs)
         SitemapSpider.__init__(self, *args, **kwargs)
 
     def sitemap_filter(self, entries):
@@ -162,9 +163,15 @@ class EdxSpider(BaseSpider, SitemapSpider):
         return level_mapping.get(normalized_level)
 
     def parse(self, response):
+        self.logger.info(f"Parsing URL: {response.url}")
         try:
             json_data = response.json()
             course = json_data.get('result', {}).get('pageContext', {}).get('course', {})
+            
+            if not course:
+                self.logger.warning(f"No course data found in response from {response.url}")
+                return
+            
             active_run = course.get('activeCourseRun', {})
             clean_url = response.url.replace('page-data/', '').replace('page-data.json', '')
 
@@ -213,7 +220,7 @@ class EdxSpider(BaseSpider, SitemapSpider):
                 'format': self.FORMAT,
             }
 
-            # Yield course first
+            self.logger.info(f"Successfully parsed course: {learning_resource['name']}")
             yield {
                 'type': 'learning_resource',
                 'data': learning_resource

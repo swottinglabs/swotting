@@ -13,7 +13,7 @@ class SpiderExecutionLogger:
 
     def _ensure_log_directory(self) -> str:
         """Ensure the log directory exists and return its path"""
-        log_dir = getattr(settings, 'SCRATCHY_LOG_DIR', 'spider_logs')
+        log_dir = getattr(settings, 'SCRAPER_LOG_DIR', 'spider_logs')
         if not os.path.isabs(log_dir):
             log_dir = os.path.join(settings.BASE_DIR, log_dir)
         os.makedirs(log_dir, exist_ok=True)

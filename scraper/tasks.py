@@ -7,8 +7,8 @@ from django.conf import settings
 from django.utils.timezone import now
 from scrapy.crawler import Crawler, CrawlerProcess
 from scrapy.utils.spider import iter_spider_classes
-from scratchy.executor import SpiderExecutor
-from scratchy.models import Spider as SpiderModel, Execution, Item
+from scraper.executor import SpiderExecutor
+from scraper.models import Spider as SpiderModel, Execution, Item
 from huey import crontab
 from huey.contrib.djhuey import db_periodic_task, db_task
 
@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 @db_periodic_task(crontab(day_of_week='0', hour='0', minute='0')) # Runs weekly
 def start_spiders():
-    logger.info("Starting task 'Start Spiders' in scratchy module")
+    logger.info("Starting task 'Start Spiders' in scraper module")
     for spider in SpiderModel.objects.filter(active=True):
         run_spider(spider.id)
 

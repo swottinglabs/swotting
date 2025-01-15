@@ -1,6 +1,5 @@
 from typing import Dict, Any, List
 from django.db import transaction
-from asgiref.sync import sync_to_async
 from core.models import (
     LearningResource,
     Creator,
@@ -10,47 +9,36 @@ from core.models import (
     Tag,
     Level
 )
-from functools import partial
 
 class DatabaseSavePipeline:
     """Pipeline to save validated learning resources and related data to the database"""
 
-    async def process_item(self, item: Dict[str, Any], spider) -> Dict[str, Any]:
+    def process_item(self, item: Dict[str, Any], spider) -> Dict[str, Any]:
         """
         Save the learning resource and its related data to the database.
-        
-        Args:
-            item: Dictionary containing the validated item data
-            spider: The spider instance that scraped the item
-            
-        Returns:
-            Dict[str, Any]: The processed item
         """
         if item.get('type') != 'learning_resource':
             return item
 
         try:
-            await self._save_learning_resource(item['data'], spider)
+            self._save_learning_resource(item['data'], spider)
             return item
         except Exception as e:
             spider.logger.error(f'Error saving to database: {str(e)}')
             raise
 
-    async def _get_or_create_tags(self, tag_names: List[str]) -> List[Tag]:
+    def _get_or_create_tags(self, tag_names: List[str]) -> List[Tag]:
         """Get or create tags by name"""
         tags = []
         for tag_name in tag_names:
-            get_or_create_tag = sync_to_async(Tag.objects.get_or_create)
-            tag, _ = await get_or_create_tag(name=tag_name.lower().strip())
+            tag, _ = Tag.objects.get_or_create(name=tag_name.lower().strip())
             tags.append(tag)
         return tags
 
-    async def _save_learning_resource(self, resource_data: Dict[str, Any], spider) -> None:
+    def _save_learning_resource(self, resource_data: Dict[str, Any], spider) -> None:
         """Save learning resource and its related data to the database"""
         
-        @sync_to_async
-        @transaction.atomic
-        def save_to_db():
+        with transaction.atomic():
             # Extract related data
             creators_data = resource_data.pop('creators', [])
             tags_data = resource_data.pop('tags', [])
@@ -110,13 +98,10 @@ class DatabaseSavePipeline:
             learning_resource.tags.set(tags)
             learning_resource.languages.set(languages)
 
-            return learning_resource, created
-
-        # Execute the atomic transaction
-        learning_resource, created = await save_to_db()
-
-        action = "Created" if created else "Updated"
-        spider.logger.info(
-            f"{action} learning resource: {learning_resource.name} "
-            f"(ID: {learning_resource.id})"
-        ) 
+            action = "Created" if created else "Updated"
+            spider.logger.info(
+                f"{action} learning resource: {learning_resource.name} "
+                f"(ID: {learning_resource.id})"
+            )
+            
+            return learning_resource, created 

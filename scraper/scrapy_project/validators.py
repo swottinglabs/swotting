@@ -36,7 +36,11 @@ class LearningResourceBase(BaseModel):
     is_active: bool
 
     # Important fields
-    dollar_price: Optional[Decimal] = Field(None, decimal_places=2, max_digits=10)
+    dollar_price: Optional[Decimal] = Field(
+        None,
+        ge=0,  # minimum value
+        le=Decimal('999999.99')  # maximum value
+    )
     has_certificate: bool
     creators: List[CreatorBase] = []
     format: str
@@ -45,14 +49,15 @@ class LearningResourceBase(BaseModel):
     # Nice to have fields
     platform_last_update: Optional[datetime] = None
     platform_thumbnail_url: Optional[HttpUrl] = None
-    duration_h: Optional[Decimal] = Field(None, decimal_places=2, max_digits=10)
+    duration_h: Optional[Decimal] = Field(
+        None,
+        ge=0
+    )
     platform_reviews_count: Optional[int] = Field(default=0, ge=0)
     platform_reviews_rating: Optional[Decimal] = Field(
-        None, 
-        ge=1, 
-        le=5, 
-        decimal_places=2, 
-        max_digits=3
+        None,
+        ge=Decimal('1.0'),
+        le=Decimal('5.0')
     )
     enrollment_count: Optional[int] = Field(default=0, ge=0)
     level: Optional[str] = None
@@ -107,6 +112,27 @@ class LearningResourceBase(BaseModel):
     def validate_positive_integer(cls, v: Optional[int]) -> Optional[int]:
         if v is not None and v < 0:
             raise ValueError('Count cannot be negative')
+        return v
+
+    @field_validator('dollar_price')
+    @classmethod
+    def validate_price_precision(cls, v: Optional[Decimal]) -> Optional[Decimal]:
+        if v is not None:
+            return Decimal(str(v)).quantize(Decimal('.01'))  # Forces 2 decimal places
+        return v
+
+    @field_validator('duration_h')
+    @classmethod
+    def validate_duration_precision(cls, v: Optional[Decimal]) -> Optional[Decimal]:
+        if v is not None:
+            return Decimal(str(v)).quantize(Decimal('.01'))  # Forces 2 decimal places
+        return v
+
+    @field_validator('platform_reviews_rating')
+    @classmethod
+    def validate_rating_precision(cls, v: Optional[Decimal]) -> Optional[Decimal]:
+        if v is not None:
+            return Decimal(str(v)).quantize(Decimal('.01'))  # Forces 2 decimal places
         return v
 
 class CreatorInput(CreatorBase):

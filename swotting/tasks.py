@@ -1,11 +1,12 @@
-from celery import shared_task
+from huey import crontab
+from huey.contrib.djhuey import task, db_task
 import subprocess
 import logging
 from typing import List
 
 logger = logging.getLogger(__name__)
 
-@shared_task
+@db_task()
 def run_scraper(spider_name: str) -> str:
     """
     Run a single scraper
@@ -32,7 +33,7 @@ def run_scraper(spider_name: str) -> str:
         logger.error(error_message)
         raise Exception(error_message)
 
-@shared_task
+@task()
 def run_all_scrapers() -> List[str]:
     """
     Run all scrapers sequentially
@@ -41,7 +42,7 @@ def run_all_scrapers() -> List[str]:
     results = []
     
     for spider in spider_names:
-        result = run_scraper.delay(spider)
+        result = run_scraper(spider)
         results.append(result)
     
     return results

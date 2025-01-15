@@ -10,8 +10,8 @@ from django.urls import path, reverse
 from django.utils.html import format_html
 from django.utils.html import mark_safe
 
-from scratchy.models import Spider, Execution, Item
-from scratchy.tasks import run_spider
+from scraper.models import Spider, Execution, Item
+from scraper.tasks import run_spider
 
 
 def dict_to_html_table(d):
@@ -189,12 +189,12 @@ class ExecutionAdmin(admin.ModelAdmin):
             path(
                 '<int:pk>/download/excel/',
                 self.admin_site.admin_view(self.download('excel')),
-                name='scratchy_execution_download_excel',
+                name='scraper_execution_download_excel',
             ),
             path(
                 '<int:pk>/download/sqlite/',
                 self.admin_site.admin_view(self.download('sqlite')),
-                name='scratchy_execution_download_sqlite',
+                name='scraper_execution_download_sqlite',
             ),
         ]
         return custom_urls + urls
@@ -234,8 +234,8 @@ class ExecutionAdmin(admin.ModelAdmin):
         return format_html(
             '<a class="button" download href="{}">Excel</a>&nbsp;'
             '<a class="button" download href="{}">SQLite</a>',
-            reverse('admin:scratchy_execution_download_excel', args=[obj.pk]),
-            reverse('admin:scratchy_execution_download_sqlite', args=[obj.pk]),
+            reverse('admin:scraper_execution_download_excel', args=[obj.pk]),
+            reverse('admin:scraper_execution_download_sqlite', args=[obj.pk]),
         )
 
     download_markup.short_description = 'Download Items'

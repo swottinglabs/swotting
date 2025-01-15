@@ -57,9 +57,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'swotting',
     'core',
+    'scraper',
     'rest_framework',
     'algoliasearch_django',
-    # 'huey.contrib.djhuey',
+    'huey.contrib.djhuey',
 ]
 
 MIDDLEWARE = [
@@ -96,16 +97,11 @@ WSGI_APPLICATION = 'swotting.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://postgres:postgres@127.0.0.1/postgres',
-                                      conn_max_age=600)
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL', 'postgres://swotting:swotting@127.0.0.1/swotting?sslmode=disable'),
+        conn_max_age=600
+    )
 }
 
 # Password validation

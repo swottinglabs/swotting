@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class ScratchyConfig(AppConfig):
+class ScraperConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'scratchy'
+    name = 'scraper'

@@ -17,7 +17,7 @@ setup(
         'python-dotenv==1.0.0',
         # 'django-taggit==3.1.0',
         'django-lifecycle==1.0.0',
-        # 'huey==2.5.0',
+        'huey==2.5.0',
         'djangorestframework==3.14',
         'pydantic==2.5.2',
         'pydantic_core==2.14.5',
@@ -29,6 +29,7 @@ setup(
         'pgvector==0.2.3',
         'algoliasearch-django==3.0.0',
         'pandas==2.2.3',
+        'pycountry==24.6.1'
     ],
 
     extras_require={

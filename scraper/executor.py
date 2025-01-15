@@ -5,12 +5,13 @@ import os
 import tempfile
 from django.conf import settings
 from django.utils.timezone import now
-from scrapy.crawler import Crawler, CrawlerProcess
+from scrapy.crawler import Crawler, CrawlerProcess, CrawlerRunner
 from scrapy.utils.spider import iter_spider_classes
-from scratchy.models import Spider as SpiderModel, Execution, Item
+from scraper.models import Spider as SpiderModel, Execution, Item
 from typing import Optional, List, Dict, Any
 from .logging import SpiderExecutionLogger
 from .statistics import SpiderStatisticsManager
+from twisted.internet import reactor
 
 scraping_logger = logging.getLogger(__name__)
 
@@ -32,33 +33,37 @@ class SpiderExecutor:
         scrapy_settings = self._prepare_settings(item_storage.name)
         scrapy_spider_cls = self._get_spider_class()
         
-        process = CrawlerProcess(settings=None, install_root_handler=False)
+        runner = CrawlerRunner(settings=scrapy_settings)
         log_capture_string, log_handler = self.logger.setup_logging()
         spider_logger = logging.getLogger(scrapy_spider_cls.name)
         spider_logger.addHandler(log_handler)
         
-        crawler = Crawler(scrapy_spider_cls, scrapy_settings)
-        process.crawl(crawler)
-        process.start()
+        deferred = runner.crawl(scrapy_spider_cls)
         
-        # Capture results
-        log_contents = log_capture_string.getvalue()
-        self.logger.cleanup_logging(log_handler, spider_logger)
+        def _crawler_done(crawler):
+            log_contents = log_capture_string.getvalue()
+            self.logger.cleanup_logging(log_handler, spider_logger)
+            
+            execution.time_ended = now()
+            execution.stats = crawler.stats._stats
+            execution.log = log_contents
+            execution.save()
+            
+            items = self._process_items(item_storage, execution)
+            execution.items_scraped = len(items)
+            execution.save()
+            
+            item_storage.close()
+            os.remove(item_storage.name)
+            
+            if not reactor._stopped:
+                reactor.stop()
+            
+            return execution
+
+        deferred.addCallback(_crawler_done)
         
-        # Update execution record
-        execution.time_ended = now()
-        execution.stats = crawler.stats._stats
-        execution.log = log_contents
-        execution.save()
-        
-        # Process items
-        items = self._process_items(item_storage, execution)
-        execution.items_scraped = len(items)
-        execution.save()
-        
-        # Cleanup
-        item_storage.close()
-        os.remove(item_storage.name)
+        reactor.run(installSignalHandlers=0)
         
         return execution
 
@@ -91,7 +96,7 @@ class SpiderExecutor:
 
     def _prepare_settings(self, feed_uri: str) -> dict:
         """Prepare scrapy settings with proper precedence"""
-        user_settings = getattr(settings, 'SCRATCHY_SPIDERS', {})
+        user_settings = getattr(settings, 'SCRAPER_SPIDERS', {})
         
         default_settings = {
             'DOWNLOAD_DELAY': 1.5,
@@ -125,12 +130,20 @@ class SpiderExecutor:
 
     def _get_spider_class(self):
         """Import and return the spider class"""
-        module = importlib.import_module(self.spider.module)
+        # Convert file path to Python module path
+        module_path = self.spider.module.replace('/', '.')
+        if module_path.startswith('.'):
+            module_path = module_path[1:]  # Remove leading dot if present
+        
+        try:
+            module = importlib.import_module(module_path)
+        except ImportError as e:
+            raise ImportError(f'Failed to import spider module {module_path}: {str(e)}')
         
         for cls in iter_spider_classes(module):
             return cls
             
-        raise RuntimeError(f'No valid spider class found in module {self.spider.module}')
+        raise RuntimeError(f'No valid spider class found in module {module_path}')
 
     def _process_items(self, item_storage, execution: Execution) -> List[Item]:
         """Process and save scraped items"""

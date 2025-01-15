@@ -6,11 +6,10 @@ from django.db.models import JSONField, IntegerField
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 from django.template.defaultfilters import filesizeformat
-from scratchy import ScrapedFields as sf, SOFT_REQUIREMENTS
 from typing import Tuple, Dict, Any, Optional
 import re
 
-logger = logging.getLogger('core.scratchy')
+logger = logging.getLogger('core.scraper')
 
 
 class Spider(models.Model):

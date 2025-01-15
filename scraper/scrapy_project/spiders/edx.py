@@ -4,41 +4,48 @@ from urllib.parse import parse_qs, urlparse
 from uuid import uuid4
 import bs4
 
-from .base_scraper import BaseScraper
+from scraper.scrapy_project.spiders.base_scraper import BaseSpider
 from scrapy.spiders import SitemapSpider
+
+
+TESTING = True
 
 # Improvements:
 # Dynamically set the language based on the written out language on the website then get the iso code from that 
 # Check Archived courses: https://www.edx.org/learn/social-science/mcgill-social-learning-for-social-impact
 # The is_free and is_limited_free seems to work but needs to be verified on more examples
 
-class EdxScraper(BaseScraper, SitemapSpider):
-    name = 'edx_scraper'
+class EdxSpider(BaseSpider, SitemapSpider):
+    name = 'edx'
     base_url = 'https://www.edx.org'
     sitemap_urls = [ base_url + '/sitemap.xml']
 
     # Constants
+    TESTING = True
+    TEST_LIMIT = 2
     IS_FREE = False
     IS_LIMITED_FREE = True
     LANGUAGE = ['en']
     FORMAT = "Video"
     
     def __init__(self, platform_id=None, *args, **kwargs):
-        BaseScraper.__init__(self, platform_id, *args, **kwargs)
+        BaseSpider.__init__(self, platform_id, *args, **kwargs)
         SitemapSpider.__init__(self, *args, **kwargs)
 
     def sitemap_filter(self, entries):
-        # Invalid: A url with only one '/' after the learn is a category page e.g. https://www.edx.org/learn/media-law
-        # Invalid: A url with something else than learn after the base_url is an invalid url e.g. https://www.edx.org/certificates/professional-certificate/ucsandiegox-virtual-reality-app-development
-        # Invalid: A two letter language iso code after the base is invalid for now e.g. https://www.edx.org/es/certificates/professional-certificate/ucsandiegox-virtual-reality-app-development
-        # Valid: A url with 3 or more '/' after the base_url is a course e.g. https://www.edx.org/learn/statistics/university-of-adelaide-mathtrackx-statistics
-
+        count = 0
+        
         for entry in entries:
+            # If in testing mode and we've reached the limit, stop
+            if self.TESTING and count >= self.TEST_LIMIT:
+                break
+                
             url = entry['loc']
-            
             pattern = rf'^{re.escape(self.base_url)}/learn/[^/]+/[^/]+$'
+            
             if re.match(pattern, url):
                 entry['loc'] = self._convert_to_json_url(entry['loc'])
+                count += 1
                 yield entry
 
     def start_requests(self):

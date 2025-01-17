@@ -1,0 +1,82 @@
+.learning-plan {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.learning-plan-title {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.learning-plan-step {
+  margin-bottom: 3rem;
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.step-header {
+  margin-bottom: 1rem;
+}
+
+.step-number {
+  font-size: 0.9rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.step-title {
+  font-size: 1.5rem;
+  color: #333;
+  margin: 0;
+}
+
+.step-description {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.courses-scroll-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.courses-horizontal-grid {
+  display: flex;
+  overflow-x: auto;
+  gap: 1.5rem;
+  padding: 1rem 0;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.courses-horizontal-grid::-webkit-scrollbar {
+  height: 8px;
+}
+
+.courses-horizontal-grid::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.courses-horizontal-grid::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.courses-horizontal-grid::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
+.course-card-wrapper {
+  flex: 0 0 auto;
+  width: 600px;
+} 

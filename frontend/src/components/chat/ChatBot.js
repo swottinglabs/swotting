@@ -44,6 +44,9 @@ const ChatBot = ({ onComplete }) => {
       if (!is_chat_complete) return;
 
       try {
+        // Dispatch loading event before making API call
+        document.dispatchEvent(new CustomEvent('start-loading'));
+        
         const response = await api.generateCurriculum({
           desired_skill: user_data[0],
           current_knowledge: user_data[1]
@@ -65,6 +68,8 @@ const ChatBot = ({ onComplete }) => {
         }]);
         // Reset chat completion state to allow retry
         set_is_chat_complete(false);
+        // Stop loading on error
+        document.dispatchEvent(new CustomEvent('stop-loading'));
       }
     };
 

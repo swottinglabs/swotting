@@ -43,7 +43,7 @@ class LearningResourceDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 def search_learning_resources(request):
     query = request.GET.get('q', '')
-    params = {"hitsPerPage": 10}
+    params = {"hitsPerPage": 50}
     if query:
         response = raw_search(LearningResource, query, params)
         results = response.get('hits', [])

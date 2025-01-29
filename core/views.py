@@ -134,12 +134,23 @@ def generate_curriculum(request):
 
     # Generate learning plan using LLM
     learning_plan = generate_learning_plan_with_llm(desired_skill, current_knowledge)
-
-    # Add course recommendations for each step
+    
+    # Filter and reorder steps based on course availability
+    filtered_steps = []
+    step_number = 1
+    
     for step in learning_plan.get('learningPlanSteps', []):
         search_term = step.get('search_term', '')
         recommended_courses = search_courses_for_term(search_term)
-        step['recommended_courses'] = recommended_courses
+        
+        if recommended_courses:  # Only include steps that have courses
+            step['recommended_courses'] = recommended_courses
+            step['step_number'] = step_number  # Update step number
+            filtered_steps.append(step)
+            step_number += 1
+    
+    # Update learning plan with filtered and reordered steps
+    learning_plan['learningPlanSteps'] = filtered_steps
 
     # Return the learning plan with course recommendations
     response_data = {

@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  postgres:
+    container_name: postgres
+    image: pgvector/pgvector:pg16
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    command: postgres -c shared_preload_libraries=pg_stat_statements -c pg_stat_statements.track=all -c max_connections=200
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: swotting
+      POSTGRES_PASSWORD: swotting
+      POSTGRES_DB: swotting
+    env_file:
+      - ../.env
+
+
+  redis:
+    container_name: redis
+    image: redis:6
+    restart: always
+    volumes:
+      - redis:/data
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+
+
+volumes:
+  postgres_data:
+  redis:

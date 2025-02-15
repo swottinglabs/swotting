@@ -14,14 +14,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy pyproject.toml first to leverage Docker cache
+# Copy dependency files first to leverage Docker cache
 COPY pyproject.toml .
+COPY swotting/ swotting/
+COPY manage.py .
 
 # Install Python dependencies
 RUN python -m pip install --upgrade pip && \
-    python -m pip install .
+    python -m pip install -e .
 
-# Copy project files
+# Now copy the rest of your project files
 COPY . .
 
 # Collect static files

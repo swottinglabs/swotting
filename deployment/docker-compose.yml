@@ -1,7 +1,7 @@
 x-app: &default-app
   image: ghcr.io/swottinglabs/swotting-prod:latest
   restart: unless-stopped
-  env_file: ../.env
+  env_file: .env
   logging:
     driver: journald
     options:
@@ -26,13 +26,13 @@ services:
     environment:
       - C_FORCE_ROOT=true
     deploy:
-      replicas: 2  # Run 2 worker containers
+      replicas: 2
 
   celery_beat:
     <<: *default-app
     command: celery -A swotting beat --loglevel=info
     deploy:
-      replicas: 1  # Only need one beat scheduler
+      replicas: 1
 
   redis:
     image: redis:7-alpine
@@ -56,7 +56,7 @@ services:
       POSTGRES_PASSWORD: swotting
       POSTGRES_DB: swotting
     env_file:
-      - ../.env
+      - .env
 
 volumes:
   postgres_data:

@@ -2,10 +2,8 @@
 
 # Constants
 REGISTRY="ghcr.io"
-USERNAME="your-username"  # Replace with your GitHub username
+USERNAME="swottinglabs"  # Already correct!
 IMAGE_NAME="swotting-prod"
-CONTAINER_NAME="my-app"
-PORT=8000
 
 # GitHub Token
 echo "Enter your GitHub Token:"
@@ -14,14 +12,17 @@ read -s GITHUB_TOKEN
 # Login to GitHub Container Registry
 echo $GITHUB_TOKEN | docker login $REGISTRY -u $USERNAME --password-stdin
 
-# Pull the latest image
-docker pull $REGISTRY/$USERNAME/$IMAGE_NAME:latest
+# Stop existing containers and remove volumes
+docker-compose -f docker-compose.yml down --volumes
 
-# Stop the existing container (if it exists)
-docker stop $CONTAINER_NAME || true
-docker rm $CONTAINER_NAME || true
+# Pull the latest images
+docker-compose -f docker-compose.yml pull
 
-# Run the new container
-docker run --name $CONTAINER_NAME -d -p 80:$PORT $REGISTRY/$USERNAME/$IMAGE_NAME:latest gunicorn swotting.wsgi:application --bind 0.0.0.0:$PORT
+# Start all services in detached mode
+docker-compose -f docker-compose.yml up -d
 
-echo "Deployment of $IMAGE_NAME completed."
+echo "Deployment completed. Services running:"
+docker-compose -f docker-compose.yml ps
+
+# Show logs (comment out if not needed)
+docker-compose -f docker-compose.yml logs -f

@@ -126,3 +126,19 @@ ITEM_PIPELINES = {
     # Database Save (final step)
     'scraper.scrapy_project.pipelines.learning_resources.database_save.DatabaseSavePipeline': 950,
 }
+
+# Use a simple reactor that works in threads
+TWISTED_REACTOR = 'twisted.internet.asyncioreactor.AsyncioSelectorReactor'
+
+# Disable features we don't need in threads
+TELNETCONSOLE_ENABLED = False
+SIGNALS_ENABLED = False
+
+# Basic feed settings
+FEEDS = {
+    '%(name)s.jl': {
+        'format': 'jsonlines',
+        'encoding': 'utf-8',
+        'overwrite': True,
+    }
+}

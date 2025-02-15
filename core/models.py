@@ -1,7 +1,14 @@
 import uuid
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.utils.text import slugify
 
+class TimeStampMixin(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True 
 
 class Level(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -10,7 +17,7 @@ class Level(models.Model):
     def __str__(self):
         return self.name
 
-class Platform(models.Model):
+class Platform(TimeStampMixin, models.Model):
     id = models.CharField(primary_key=True, max_length=255)
     url = models.URLField(max_length=255)
     name = models.CharField(max_length=255)
@@ -23,7 +30,7 @@ class Platform(models.Model):
         return self.name
 
 
-class Creator(models.Model):
+class Creator(TimeStampMixin, models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
     url = models.URLField(max_length=255, blank=True, null=True)
@@ -36,7 +43,7 @@ class Creator(models.Model):
         return self.name
 
 
-class Format(models.Model):
+class Format(TimeStampMixin, models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
 
@@ -44,7 +51,7 @@ class Format(models.Model):
         return self.name
 
 
-class Language(models.Model):
+class Language(TimeStampMixin, models.Model):
     iso_code = models.CharField(
         max_length=10, 
         primary_key=True,
@@ -58,15 +65,51 @@ class Language(models.Model):
         return self.name
 
 
-class Tag(models.Model):
+class Tag(TimeStampMixin, models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    slug = models.SlugField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['name']),
+            models.Index(fields=['slug']),
+        ]
 
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        # Ensure name is always cleaned
+        self.name = self.clean_tag_name(self.name)
+        # Auto-generate slug from name if not provided
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
-class LearningResource(models.Model):
+    @staticmethod
+    def clean_tag_name(name):
+        """Clean and standardize tag names."""
+        return name.lower().strip()
+
+    @classmethod
+    def get_or_create_tags(cls, tag_names):
+        """
+        Get or create multiple tags at once.
+        Returns a list of Tag objects.
+        """
+        tags = []
+        for name in tag_names:
+            cleaned_name = cls.clean_tag_name(name)
+            tag, _ = cls.objects.get_or_create(
+                name=cleaned_name,
+                defaults={'slug': slugify(cleaned_name)}
+            )
+            tags.append(tag)
+        return tags
+
+
+class LearningResource(TimeStampMixin, models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     scraped_timestamp = models.DateTimeField(auto_now_add=True)
     uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)

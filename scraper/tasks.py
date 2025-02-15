@@ -1,60 +1,46 @@
-import importlib
-import json
-import logging
-import os
-import tempfile
-from django.conf import settings
+from celery import shared_task
+from celery.utils.log import get_task_logger
 from django.utils.timezone import now
-from scrapy.crawler import Crawler, CrawlerProcess
-from scrapy.utils.spider import iter_spider_classes
-from scraper.executor import SpiderExecutor
-from scraper.models import Spider as SpiderModel, Execution, Item
-from huey import crontab
-from huey.contrib.djhuey import db_periodic_task, db_task
+from scraper.logging import SpiderExecutionLogger
+from scraper.models import Spider as SpiderModel, Execution
+from scrapy.crawler import CrawlerRunner
+from scrapy.utils.project import get_project_settings
 from twisted.internet import reactor
+from crochet import setup, wait_for
+from scrapy.signalmanager import dispatcher
+from scrapy import signals
+import importlib
+import logging
 
+from scraper.statistics import SpiderStatisticsManager
+from scraper.executor import SpiderExecutor
 
-logger = logging.getLogger(__name__)
+# Initialize crochet for handling async operations
+setup()
+logger = get_task_logger(__name__)
 
-
-@db_periodic_task(crontab(day_of_week='0', hour='0', minute='0')) # Runs weekly
-def start_spiders():
-    logger.info("Starting task 'Start Spiders' in scraper module")
+@shared_task(bind=True)
+def start_spiders(self):
+    """Start all active spiders"""
+    logger.info("Starting scheduled spider runs")
     for spider in SpiderModel.objects.filter(active=True):
-        run_spider(spider.id)
+        run_spider.delay(spider.id)
+    return "Scheduled all active spiders"
 
-
-@db_task()
-def run_spider(spider_id, processing_execution_id=None):
-    spider = SpiderModel.objects.get(id=spider_id)
-    executor = SpiderExecutor(spider)
-    
+@shared_task(
+    bind=True,
+    rate_limit='3/m',  # Limit to 3 spiders per minute
+    max_retries=3,     # Retry failed spiders 3 times
+    soft_time_limit=3600,  # 1 hour timeout
+    acks_late=True  # Important for proper shutdown
+)
+def run_spider(self, spider_id):
+    """Run a single spider using the SpiderExecutor"""
     try:
-        # Create a future to store the result
-        future = {}
-        
-        def on_success(execution):
-            future['result'] = execution
-            
-        def on_error(failure):
-            future['error'] = failure
-            logger.error(f"Spider failed: {failure.getErrorMessage()}")
-            
-        # Run the spider and wait for completion
-        deferred = executor.execute()
-        deferred.addCallbacks(on_success, on_error)
-        
-        # Let the reactor run until the spider is done
-        while 'result' not in future and 'error' not in future:
-            reactor.runUntilCurrent()
-            
-        if 'error' in future:
-            raise Exception(str(future['error']))
-            
-        execution_result = future['result']
-        executor.process_results(execution_result)
-        
+        spider_model = SpiderModel.objects.get(id=spider_id)
+        executor = SpiderExecutor(spider_model)
+        return executor.execute()
     except Exception as e:
-        logger.error(f"Error running spider {spider.name}: {str(e)}")
+        logger.error(f"Spider task failed: {str(e)}", exc_info=True)
         raise
 

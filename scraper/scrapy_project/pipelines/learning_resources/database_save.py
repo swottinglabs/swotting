@@ -9,11 +9,31 @@ from core.models import (
     Tag,
     Level
 )
+from urllib.parse import urlparse
+from asgiref.sync import sync_to_async
+import logging
+
+logger = logging.getLogger(__name__)
 
 class DatabaseSavePipeline:
     """Pipeline to save validated learning resources and related data to the database"""
 
-    def process_item(self, item: Dict[str, Any], spider) -> Dict[str, Any]:
+    def __init__(self):
+        self.logger = logging.getLogger(__name__)
+
+    def _clean_url(self, url: Any) -> str:
+        """Clean and validate URL"""
+        if not url:
+            return None
+        if hasattr(url, '__str__'):
+            url = str(url)
+        try:
+            parsed = urlparse(url)
+            return url if parsed.scheme and parsed.netloc else None
+        except Exception:
+            return None
+
+    async def process_item(self, item: Dict[str, Any], spider) -> Dict[str, Any]:
         """
         Save the learning resource and its related data to the database.
         """
@@ -21,87 +41,121 @@ class DatabaseSavePipeline:
             return item
 
         try:
-            self._save_learning_resource(item['data'], spider)
+            # Clean URLs before saving
+            data = item['data']
+            if 'url' in data:
+                data['url'] = self._clean_url(data['url'])
+            if 'thumbnail_url' in data:
+                data['thumbnail_url'] = self._clean_url(data['thumbnail_url'])
+                
+            # Clean creator URLs
+            if 'creators' in data:
+                for creator in data['creators']:
+                    if 'url' in creator:
+                        creator['url'] = self._clean_url(creator['url'])
+                    if 'platform_thumbnail_url' in creator:
+                        creator['platform_thumbnail_url'] = self._clean_url(creator['platform_thumbnail_url'])
+
+            await sync_to_async(self._save_learning_resource)(data, spider)
             return item
         except Exception as e:
             spider.logger.error(f'Error saving to database: {str(e)}')
             raise
 
     def _get_or_create_tags(self, tag_names: List[str]) -> List[Tag]:
-        """Get or create tags by name"""
-        tags = []
-        for tag_name in tag_names:
-            tag, _ = Tag.objects.get_or_create(name=tag_name.lower().strip())
-            tags.append(tag)
-        return tags
+        """Get or create tags by name using the Tag model's helper method"""
+        return Tag.get_or_create_tags(tag_names)
 
-    def _save_learning_resource(self, resource_data: Dict[str, Any], spider) -> None:
-        """Save learning resource and its related data to the database"""
-        
-        with transaction.atomic():
-            # Extract related data
-            creators_data = resource_data.pop('creators', [])
-            tags_data = resource_data.pop('tags', [])
-            language_codes = resource_data.pop('languages', [])
-            format_name = resource_data.pop('format', None)
-            level_name = resource_data.pop('level', None)
-            platform_id = resource_data.pop('platform_id')
-
-            try:
-                platform = Platform.objects.get(name=platform_id)
-            except Platform.DoesNotExist:
-                raise Platform.DoesNotExist(
-                    f"Platform '{platform_id}' not found. Please ensure the platform exists in the database."
+    def _save_learning_resource(self, data: Dict[str, Any], spider) -> None:
+        """Synchronous method to save learning resource to database"""
+        try:
+            with transaction.atomic():
+                # Get or create platform
+                platform, _ = Platform.objects.get_or_create(
+                    name=data['platform_id']
                 )
 
-            # Updated creator handling
-            creators = []
-            for creator_data in creators_data:
-                creator, _ = Creator.objects.update_or_create(
+                # Get or create format
+                format_name = data.get('format')
+                format_obj = None
+                if format_name:
+                    format_obj, _ = Format.objects.get_or_create(
+                        name=format_name
+                    )
+
+                # Get or create level
+                level_name = data.get('level')
+                level_obj = None
+                if level_name:
+                    level_obj, _ = Level.objects.get_or_create(
+                        name=level_name
+                    )
+
+                # Create or update creators
+                creators = []
+                for creator_data in data.get('creators', []):
+                    creator, _ = Creator.objects.get_or_create(
+                        platform_id=platform,
+                        platform_creator_id=creator_data['platform_creator_id'],
+                        defaults={
+                            'name': creator_data['name'],
+                            'url': creator_data.get('url'),
+                            'description': creator_data.get('description', ''),
+                            'platform_thumbnail_url': creator_data.get('platform_thumbnail_url')
+                        }
+                    )
+                    creators.append(creator)
+
+                # Get or create languages
+                languages = []
+                for lang_code in data.get('languages', []):
+                    lang, _ = Language.objects.get_or_create(
+                        iso_code=lang_code,
+                        defaults={'name': lang_code}  # Simple default, you might want to map proper names
+                    )
+                    languages.append(lang)
+
+                # Get or create tags
+                tags = Tag.get_or_create_tags(data.get('tags', []))
+
+                # Create or update learning resource
+                resource, created = LearningResource.objects.get_or_create(
                     platform_id=platform,
-                    platform_creator_id=creator_data.get('platform_creator_id'),
+                    platform_course_id=data['platform_course_id'],
                     defaults={
-                        'name': creator_data.get('name'),
-                        'url': creator_data.get('url'),
-                        'platform_thumbnail_url': creator_data.get('platform_thumbnail_url'),
-                        'description': creator_data.get('description'),
+                        'name': data['name'],
+                        'description': data['description'],
+                        'short_description': data.get('short_description', ''),
+                        'url': data['url'],
+                        'platform_thumbnail_url': data.get('platform_thumbnail_url'),
+                        'is_free': data.get('is_free', False),
+                        'is_limited_free': data.get('is_limited_free', False),
+                        'dollar_price': data.get('dollar_price'),
+                        'has_certificate': data.get('has_certificate', False),
+                        'level': level_obj,
+                        'format': format_obj,
+                        'duration_h': data.get('duration_h'),
+                        'platform_reviews_count': data.get('platform_reviews_count'),
+                        'platform_reviews_rating': data.get('platform_reviews_rating'),
+                        'enrollment_count': data.get('enrollment_count'),
+                        'is_active': data.get('is_active', True),
+                        'html_description': data.get('html_description'),
+                        'platform_last_update': data.get('platform_last_update'),
                     }
                 )
-                creators.append(creator)
 
-            tags = []
-            for tag_name in tags_data:
-                tag, _ = Tag.objects.get_or_create(name=tag_name.lower().strip())
-                tags.append(tag)
+                # Set many-to-many relationships
+                resource.creators.set(creators)
+                resource.languages.set(languages)
+                resource.tags.set(tags)
 
-            languages = [
-                Language.objects.get(iso_code=code)
-                for code in language_codes
-            ]
+                # Log success
+                action = "Created" if created else "Updated"
+                self.logger.info(
+                    f"{action} learning resource: {data['name']} "
+                    f"(Platform: {platform.name}, ID: {data['platform_course_id']})"
+                )
 
-            if format_name:
-                resource_data['format'] = Format.objects.get(name=format_name)
-            if level_name:
-                resource_data['level'] = Level.objects.get(name=level_name)
-
-            resource_data['platform_id'] = platform
-
-            # Create or update learning resource
-            learning_resource, created = LearningResource.objects.update_or_create(
-                platform_id=platform,
-                platform_course_id=resource_data['platform_course_id'],
-                defaults=resource_data
-            )
-
-            # Set many-to-many relationships
-            learning_resource.creators.set(creators)
-            learning_resource.tags.set(tags)
-            learning_resource.languages.set(languages)
-
-            action = "Created" if created else "Updated"
-            spider.logger.info(
-                f"{action} learning resource: {learning_resource.name} "
-                f"(ID: {learning_resource.id})"
-            )
-            
-            return learning_resource, created 
+        except Exception as e:
+            self.logger.error(f"Error saving learning resource {data.get('name')}: {str(e)}")
+            raise 

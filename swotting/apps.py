@@ -6,6 +6,6 @@ class SwottingConfig(AppConfig):
 
     def ready(self):
         try:
-            import swotting.tasks  # This ensures tasks are loaded
+            import swotting.tasks
         except ImportError:
             pass

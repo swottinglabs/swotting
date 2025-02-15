@@ -12,150 +12,146 @@ from typing import Optional, List, Dict, Any
 from .logging import SpiderExecutionLogger
 from .statistics import SpiderStatisticsManager
 from twisted.internet import reactor
-from twisted.internet.defer import Deferred
-from scrapy.utils.log import configure_logging
+from scrapy.utils.project import get_project_settings
+from scrapy import signals
+from asgiref.sync import sync_to_async
+import signal
+from scrapy.utils.defer import deferred_to_future
+from crochet import setup, wait_for
 
-scraping_logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
 class SpiderExecutor:
-    def __init__(self, spider: SpiderModel):
-        self.spider = spider
-        self.logger = SpiderExecutionLogger(spider.name)
+    """Core spider execution logic used by both direct calls and Celery tasks"""
+    def __init__(self, spider_model):
+        self.spider = spider_model
+        self.logger = SpiderExecutionLogger(spider_model.name)
         self.stats_manager = SpiderStatisticsManager()
-        
-    def execute(self) -> Execution:
-        """Execute the spider and return the execution record"""
-        execution = Execution.objects.create(
-            spider=self.spider,
-            time_started=now()
-        )
-        
-        item_storage = self._setup_temp_storage()
-        scrapy_settings = self._prepare_settings(item_storage.name)
-        scrapy_spider_cls = self._get_spider_class()
-        
-        # Configure logging
-        configure_logging(scrapy_settings)
-        runner = CrawlerRunner(settings=scrapy_settings)
-        log_capture_string, log_handler = self.logger.setup_logging()
-        spider_logger = logging.getLogger(scrapy_spider_cls.name)
-        spider_logger.addHandler(log_handler)
-        
-        # Create a deferred that will be fired when crawling is done
-        finished = Deferred()
-        
-        def _crawler_done(crawler):
-            log_contents = log_capture_string.getvalue()
-            self.logger.cleanup_logging(log_handler, spider_logger)
-            
-            execution.time_ended = now()
-            execution.stats = crawler.stats._stats
-            execution.log = log_contents
-            execution.save()
-            
-            items = self._process_items(item_storage, execution)
-            execution.items_scraped = len(items)
-            execution.save()
-            
-            item_storage.close()
-            os.remove(item_storage.name)
-            
-            return execution
+        self.settings = self._prepare_settings()
+        self.execution = None
 
-        # Run the spider with platform_id
-        spider_kwargs = {'platform_id': 'edx'}
-        deferred = runner.crawl(scrapy_spider_cls, **spider_kwargs)
-        deferred.addCallback(_crawler_done)
-        deferred.addCallback(lambda _: finished.callback(execution))
-        deferred.addErrback(lambda f: finished.errback(f))
-        
-        return finished
+    def _prepare_settings(self):
+        base_settings = get_project_settings()
+        spider_settings = self.spider.settings or {}
+        base_settings.update(spider_settings)
+        return base_settings
 
-    def process_results(self, execution: Execution):
-        """Process execution results and update spider status"""
+    def execute(self):
+        """Main execution method"""
+        try:
+            # Setup logging
+            log_capture_string, handlers = self.logger.setup_logging()
+            
+            # Create execution record
+            self.execution = Execution.objects.create(
+                spider=self.spider,
+                time_started=now()
+            )
+
+            # Load spider class
+            spider_class = self._get_spider_class()
+            
+            # Initialize crawler
+            runner = CrawlerRunner(self.settings)
+            
+            # Setup spider parameters
+            spider_kwargs = {
+                'name': self.spider.name.lower(),
+                'platform_id': self.spider.name.lower(),
+                'execution_id': self.execution.id,
+                'stats_manager': self.stats_manager,
+                'settings': self.spider.settings,
+                'log_level': self.spider.log_level
+            }
+
+            # Run spider using crochet to handle the reactor
+            setup()  # Initialize crochet
+            
+            @wait_for(timeout=3600)
+            def run_spider():
+                return runner.crawl(spider_class, **spider_kwargs)
+            
+            # Execute and wait
+            run_spider()
+            
+            return {
+                'status': 'success',
+                'execution_id': self.execution.id,
+                'items_scraped': self.stats_manager.get_stat('items_scraped')
+            }
+
+        except Exception as e:
+            logger.error(f"Spider execution failed: {str(e)}", exc_info=True)
+            raise
+
+    def create_crawler(self, spider_class):
+        """Create a crawler instance"""
+        # Use the runner's create_crawler method directly
+        crawler = self.runner.create_crawler(spider_class)
+        
+        # Connect signals
+        crawler.signals.connect(self._item_scraped, signal=signals.item_scraped)
+        crawler.signals.connect(self._spider_error, signal=signals.spider_error)
+        crawler.signals.connect(self._spider_closed, signal=signals.spider_closed)
+        
+        return crawler
+    
+    def _item_scraped(self, item, response, spider):
+        """Handle scraped item signal"""
+        self.stats_manager.increment_stat('items_scraped')
+        logger.info(f"Scraped item from {response.url}")
+
+    def _spider_error(self, failure, response, spider):
+        """Handle spider error signal"""
+        self.stats_manager.increment_stat('errors')
+        logger.error(f"Spider error on {response.url}: {failure.value}")
+
+    def _spider_closed(self, spider, reason):
+        """Handle spider closed signal"""
+        logger.info(f"Spider {spider.name} closed: {reason}")
+        logger.info(f"Final stats: {spider.crawler.stats.get_stats()}")
+        self.stats_manager.set_stat('end_time', now())
+
+    async def process_results(self, execution_result: Any) -> None:
+        """Process the results of the spider execution"""
+        await sync_to_async(self._process_results_sync)(execution_result)
+
+    def _process_results_sync(self, execution: Execution) -> None:
+        """Process the results of the spider execution"""
         if execution.items_scraped == 0:
             self._handle_zero_items()
             return
 
-        execution_list = (Execution.objects
-                         .filter(spider=self.spider)
-                         .filter(time_ended__isnull=False)
-                         .order_by('-time_ended'))
-
-        if len(execution_list) >= 4:
-            avg, avg_message = calculate_execution_average(execution_list, execution.items_scraped)
-            scraping_logger.info(avg_message)
-            
-            status, message = check_spider_health(self.spider, execution.items_scraped, avg)
-            if message:
-                scraping_logger.info(message)
-            
-            if status == "faulty":
-                self.spider.faulty = True
-                self.spider.save()
+        self._check_execution_health(execution)
 
     def _setup_temp_storage(self):
         """Create temporary storage for spider output"""
-        return tempfile.NamedTemporaryFile(delete=False)
-
-    def _prepare_settings(self, feed_uri: str) -> dict:
-        """Prepare scrapy settings with proper precedence"""
-        user_settings = getattr(settings, 'SCRAPER_SPIDERS', {})
-        
-        default_settings = {
-            'DOWNLOAD_DELAY': 1.5,
-            'CONCURRENT_REQUESTS_PER_DOMAIN': 8,
-            'AUTOTHROTTLE_ENABLED': True,
-            'AUTOTHROTTLE_START_DELAY': 5,
-            'AUTOTHROTTLE_TARGET_CONCURRENCY': 1.0,
-            'RETRY_ENABLED': True,
-            'RETRY_TIMES': 3,
-            'RETRY_HTTP_CODES': [500, 502, 503, 504, 429],
-            'USER_AGENT': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-            'ROBOTSTXT_OBEY': True,
-            'HTTPERROR_ALLOWED_CODES': [404, 403],
-            'DOWNLOAD_TIMEOUT': 180,
-            'CLOSESPIDER_TIMEOUT': 7200,
-            'CLOSESPIDER_ERRORCOUNT': 50,
-            'ITEM_PIPELINES': {
-                'scraper.scrapy_project.pipelines.validators.pre_process_validator.PreProcessValidatorPipeline': 100,
-                'scraper.scrapy_project.pipelines.learning_resources.duplicate_filter.DuplicateFilterPipeline': 200,
-                'scraper.scrapy_project.pipelines.learning_resources.clean_text.TextCleanerPipeline': 300,
-                'scraper.scrapy_project.pipelines.validators.database_validator.DatabaseValidatorPipeline': 400,
-                'scraper.scrapy_project.pipelines.learning_resources.database_save.DatabaseSavePipeline': 500,
-            }
-        }
-
-        internal_settings = {
-            'FEED_FORMAT': 'jsonlines',
-            'FEED_EXPORT_ENCODING': 'utf-8',
-            'FEED_URI': feed_uri,
-        }
-
-        return {
-            **default_settings,
-            **user_settings,
-            **self.spider.settings,
-            **internal_settings,
-        }
+        return tempfile.NamedTemporaryFile(
+            prefix=f"spider_{self.spider.name}_",
+            suffix='.jl',
+            delete=False
+        )
 
     def _get_spider_class(self):
         """Import and return the spider class"""
-        # Convert file path to Python module path
-        module_path = self.spider.module.replace('/', '.')
-        if module_path.startswith('.'):
-            module_path = module_path[1:]  # Remove leading dot if present
-        
         try:
-            module = importlib.import_module(module_path)
-        except ImportError as e:
-            raise ImportError(f'Failed to import spider module {module_path}: {str(e)}')
-        
-        for cls in iter_spider_classes(module):
-            return cls
+            module_path = self.spider.module.replace('/', '.').rstrip('.py')
+            if module_path.startswith('.'):
+                module_path = module_path[1:]
             
-        raise RuntimeError(f'No valid spider class found in module {module_path}')
+            logger.info(f"Attempting to import module: {module_path}")
+            module = importlib.import_module(module_path)
+            
+            for cls in iter_spider_classes(module):
+                logger.info(f"Found spider class: {cls.__name__}")
+                return cls
+            
+            raise RuntimeError(f'No spider class found in {module_path}')
+            
+        except ImportError as e:
+            logger.error(f"Import error for {module_path}: {str(e)}")
+            raise
 
     def _process_items(self, item_storage, execution: Execution) -> List[Item]:
         """Process and save scraped items"""
@@ -179,8 +175,53 @@ class SpiderExecutor:
         if not self.spider.faulty:
             self.spider.faulty = True
             self.spider.save()
-            message = f'Spider {self.spider.name} returned 0 items. Marked as Faulty.'
-            scraping_logger.info(message)
+            logger.warning(f'Spider {self.spider.name} returned 0 items')
+
+    def _check_execution_health(self, execution: Execution):
+        """Check the health of the execution"""
+        from .tasks import calculate_execution_average, check_spider_health
+        
+        executions = (Execution.objects
+                     .filter(spider=self.spider)
+                     .filter(time_ended__isnull=False)
+                     .order_by('-time_ended'))[:4]
+
+        if len(executions) >= 4:
+            avg, msg = calculate_execution_average(executions, execution.items_scraped)
+            if msg:
+                logger.info(msg)
+            
+            status, health_msg = check_spider_health(self.spider, execution.items_scraped, avg)
+            if health_msg:
+                logger.info(health_msg)
+            
+            if status == "faulty":
+                self.spider.faulty = True
+                self.spider.save()
+
+    def _handle_sigterm(self, signum, frame):
+        """Handle termination signals gracefully"""
+        logger.info("Received shutdown signal, stopping reactor...")
+        try:
+            if reactor.running:
+                reactor.callFromThread(reactor.stop)
+        except Exception as e:
+            logger.error(f"Error stopping reactor: {e}")
+
+    def cleanup(self):
+        """Cleanup resources"""
+        try:
+            if reactor.running:
+                reactor.callFromThread(reactor.stop)
+        except Exception as e:
+            logger.error(f"Error during cleanup: {e}")
+        finally:
+            # Force cleanup if needed
+            if reactor.running:
+                try:
+                    reactor._stopReactor()
+                except:
+                    pass
 
 
 def calculate_execution_average(execution_list, items_scraped):

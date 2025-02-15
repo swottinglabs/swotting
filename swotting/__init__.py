@@ -1,1 +1,3 @@
-default_app_config = 'swotting.apps.SwottingConfig'
+from .celery import app as celery_app
+
+__all__ = ('celery_app',)

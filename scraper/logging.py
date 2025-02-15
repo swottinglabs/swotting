@@ -39,14 +39,17 @@ class SpiderExecutionLogger:
             datefmt='%Y-%m-%d %H:%M:%S'
         )
         
+        handlers = []
         for handler in [string_handler, file_handler]:
             handler.setFormatter(formatter)
             handler.setLevel(logging.INFO)
+            handlers.append(handler)
         
-        return log_capture_string, [string_handler, file_handler]
+        return log_capture_string, handlers
 
     def cleanup_logging(self, handlers: List[logging.Handler], logger: logging.Logger) -> None:
         """Clean up all logging handlers"""
         for handler in handlers:
-            logger.removeHandler(handler)
-            handler.close() 
+            if handler in logger.handlers:
+                logger.removeHandler(handler)
+                handler.close() 

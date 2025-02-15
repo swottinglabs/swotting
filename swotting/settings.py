@@ -15,6 +15,7 @@ from dotenv import load_dotenv
 import dj_database_url
 # from huey import RedisHuey
 # from redis import ConnectionPool
+from celery.schedules import crontab
 
 # Load environment variables from .env file
 load_dotenv()
@@ -60,7 +61,8 @@ INSTALLED_APPS = [
     'scraper',
     'rest_framework',
     'algoliasearch_django',
-    'huey.contrib.djhuey',
+    'django_celery_results',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -153,9 +155,6 @@ STORAGES = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Django Taggit Settings
-TAGGIT_CASE_INSENSITIVE = True
-
 # REST Framework Settings
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
@@ -179,6 +178,23 @@ ALGOLIA = {
 }
 
 
-# Huey Configuration
-# pool = ConnectionPool.from_url(os.environ.get('REDIS_URL', 'redis://localhost:6379'))
-# HUEY = RedisHuey('swotting', connection_pool=pool)
+
+# Add Celery settings
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+
+# Add celery beat settings if you want to use the scheduler
+CELERY_BEAT_SCHEDULE = {
+    'run-spiders-weekly': {
+        'task': 'scraper.tasks.start_spiders',
+        'schedule': crontab(day_of_week='0', hour='0', minute='0'),
+    },
+}
+
+# settings.py
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')

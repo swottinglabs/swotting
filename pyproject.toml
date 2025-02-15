@@ -59,4 +59,6 @@ test = []
 [tool.setuptools]
 packages = ["swotting"]
 include-package-data = true
-scripts = ["manage.py"] 
+
+[project.scripts]
+manage = "manage:main" 

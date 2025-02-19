@@ -1,0 +1,3 @@
+https://alioguzhan.medium.com/how-to-use-scrapy-with-django-application-c16fabd0e62e
+
+Investigate if we can use Scrapy with Django in a cleaner way.

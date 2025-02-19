@@ -15,7 +15,6 @@ import logging
 from scraper.statistics import SpiderStatisticsManager
 from scraper.executor import SpiderExecutor
 
-# Initialize crochet for handling async operations
 setup()
 logger = get_task_logger(__name__)
 

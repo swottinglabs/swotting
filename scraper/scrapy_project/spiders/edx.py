@@ -3,9 +3,8 @@ from datetime import datetime
 from urllib.parse import parse_qs, urlparse
 from uuid import uuid4
 import bs4
-
-from scraper.scrapy_project.spiders.base_scraper import BaseSpider
 from scrapy.spiders import SitemapSpider
+from scraper.scrapy_project.spiders.base_scraper import BaseSpider
 
 
 TESTING = True
@@ -15,10 +14,15 @@ TESTING = True
 # Check Archived courses: https://www.edx.org/learn/social-science/mcgill-social-learning-for-social-impact
 # The is_free and is_limited_free seems to work but needs to be verified on more examples
 
-class EdxSpider(BaseSpider, SitemapSpider):
+class EdxSpider(SitemapSpider, BaseSpider):
     name = 'edx'
     base_url = 'https://www.edx.org'
-    sitemap_urls = [ base_url + '/sitemap.xml']
+    sitemap_urls = [base_url + '/sitemap.xml']
+    custom_settings = {
+        'CONCURRENT_REQUESTS': 8,
+        'DOWNLOAD_DELAY': 2,
+        'RANDOMIZE_DOWNLOAD_DELAY': True,
+    }
 
     # Constants
     TESTING = True
@@ -28,10 +32,12 @@ class EdxSpider(BaseSpider, SitemapSpider):
     LANGUAGE = ['en']
     FORMAT = "Video"
     
-    def __init__(self, platform_id=None, *args, **kwargs):
-        self.platform_id = platform_id or 'edx'  # Default to 'edx' if not provided
-        BaseSpider.__init__(self, self.platform_id, *args, **kwargs)
-        SitemapSpider.__init__(self, *args, **kwargs)
+    def __init__(self, *args, **kwargs):
+        # Set default platform_id if not provided
+        platform_id = kwargs.pop('platform_id', 'edx')
+        # Initialize both parent classes properly
+        SitemapSpider.__init__(self, platform_id, *args, **kwargs)
+        BaseSpider.__init__(self, platform_id, *args, **kwargs)
 
     def sitemap_filter(self, entries):
         count = 0
@@ -51,9 +57,11 @@ class EdxSpider(BaseSpider, SitemapSpider):
 
     def start_requests(self):
         for request in SitemapSpider.start_requests(self):
-            url = request.url
-
-            yield request.replace(url=url)
+            yield request.replace(
+                url=request.url,
+                dont_filter=True,
+                meta={'dont_retry': False}
+            )
 
     def _convert_to_json_url(self, course_url):
         """Convert course URL to corresponding page-data.json URL."""
@@ -228,3 +236,8 @@ class EdxSpider(BaseSpider, SitemapSpider):
             
         except Exception as e:
             self.logger.error(f"Error parsing JSON from {response.url}: {str(e)}")
+
+    def closed(self, reason):
+        """Handle spider cleanup"""
+        self.logger.info(f"Spider closed: {reason}")
+        # super().closed(reason)

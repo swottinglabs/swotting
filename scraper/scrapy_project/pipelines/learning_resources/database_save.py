@@ -10,7 +10,6 @@ from core.models import (
     Level
 )
 from urllib.parse import urlparse
-from asgiref.sync import sync_to_async
 import logging
 
 logger = logging.getLogger(__name__)
@@ -33,7 +32,7 @@ class DatabaseSavePipeline:
         except Exception:
             return None
 
-    async def process_item(self, item: Dict[str, Any], spider) -> Dict[str, Any]:
+    def process_item(self, item: Dict[str, Any], spider) -> Dict[str, Any]:
         """
         Save the learning resource and its related data to the database.
         """
@@ -56,7 +55,7 @@ class DatabaseSavePipeline:
                     if 'platform_thumbnail_url' in creator:
                         creator['platform_thumbnail_url'] = self._clean_url(creator['platform_thumbnail_url'])
 
-            await sync_to_async(self._save_learning_resource)(data, spider)
+            self._save_learning_resource(data, spider)
             return item
         except Exception as e:
             spider.logger.error(f'Error saving to database: {str(e)}')

@@ -9,7 +9,7 @@
 
 import os
 import sys
-import django
+import django.conf
 import dotenv
 from pathlib import Path
 
@@ -22,8 +22,12 @@ ROOT_DIR = Path(__file__).resolve().parent.parent.parent.parent
 sys.path.insert(0, str(ROOT_DIR))
 
 # Setting up Django's settings module name
-os.environ['DJANGO_SETTINGS_MODULE'] = 'swotting.settings'
-django.setup()
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'swotting.settings')
+
+# Only setup Django if it hasn't been setup already
+import django
+if not django.conf.settings.configured:
+    django.setup()
 
 BOT_NAME = "scrapy_project"
 
@@ -75,9 +79,12 @@ RANDOMIZE_DOWNLOAD_DELAY = True  # Adds some randomization to be more polite
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
-#EXTENSIONS = {
-#    "scrapy.extensions.telnet.TelnetConsole": None,
-#}
+EXTENSIONS = {
+    'scrapy.extensions.telnet.TelnetConsole': None,
+    'scrapy.extensions.memusage.MemoryUsage': None,
+    'scrapy.extensions.corestats.CoreStats': None,
+    'scrapy.extensions.logstats.LogStats': None,
+}
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
@@ -127,11 +134,25 @@ ITEM_PIPELINES = {
     'scraper.scrapy_project.pipelines.learning_resources.database_save.DatabaseSavePipeline': 950,
 }
 
-# Use a simple reactor that works in threads
-TWISTED_REACTOR = 'twisted.internet.asyncioreactor.AsyncioSelectorReactor'
+# Use select reactor instead of asyncio
+TWISTED_REACTOR = 'twisted.internet.selectreactor.SelectReactor'
 
-# Disable features we don't need in threads
+# Disable reactor timeout
+REACTOR_THREADPOOL_MAXSIZE = None
+
+# Reduce concurrent requests to minimize thread issues
+CONCURRENT_REQUESTS = 4
+CONCURRENT_REQUESTS_PER_DOMAIN = 2
+CONCURRENT_REQUESTS_PER_IP = 2
+
+# Configure thread pool
+REACTOR_THREADPOOL_SIZE = 1
+
+# Disable features that might cause thread issues
+COOKIES_ENABLED = False
 TELNETCONSOLE_ENABLED = False
+
+# Disable signals we don't need
 SIGNALS_ENABLED = False
 
 # Basic feed settings
@@ -142,3 +163,26 @@ FEEDS = {
         'overwrite': True,
     }
 }
+
+# Configure cleanup and shutdown
+CLOSESPIDER_TIMEOUT = 180  # 3 minutes timeout
+CLOSESPIDER_ERRORCOUNT = 1  # Stop after first error
+
+# Configure logging
+LOG_LEVEL = 'INFO'
+LOG_FORMAT = '%(asctime)s [%(name)s] %(levelname)s: %(message)s'
+
+# Disable retry middleware
+RETRY_ENABLED = False
+
+# Configure retry and timeout settings
+RETRY_TIMES = 3
+RETRY_HTTP_CODES = [500, 502, 503, 504, 522, 524, 408, 429]
+DOWNLOAD_TIMEOUT = 180
+
+# Disable some features during shutdown
+MEDIA_ALLOW_REDIRECTS = False
+REDIRECT_MAX_TIMES = 1
+
+# Configure item pipelines to close gracefully
+ITEM_PIPELINE_CLOSE_TIMEOUT = 60  # seconds

@@ -109,6 +109,10 @@ jobs:
       - name: Authenticate with DigitalOcean
         run: doctl auth init --access-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
+      - name: Debug SSH connection
+        run: |
+          ssh -v -i ~/.ssh/id_rsa root@143.110.209.181 "echo 'Connection successful'"
+
       - name: Deploy to DigitalOcean
         run: |
           ssh -i ~/.ssh/id_rsa root@143.110.209.181 "cd /home/swotting && \

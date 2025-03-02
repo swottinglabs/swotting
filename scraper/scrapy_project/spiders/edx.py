@@ -26,7 +26,7 @@ class EdxSpider(SitemapSpider, BaseSpider):
 
     # Constants
     TESTING = True
-    TEST_LIMIT = 100
+    TEST_LIMIT = 50
     IS_FREE = False
     IS_LIMITED_FREE = True
     LANGUAGE = ['en']

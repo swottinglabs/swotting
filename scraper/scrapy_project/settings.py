@@ -134,22 +134,15 @@ ITEM_PIPELINES = {
     'scraper.scrapy_project.pipelines.learning_resources.database_save.DatabaseSavePipeline': 950,
 }
 
-# Use select reactor instead of asyncio
-TWISTED_REACTOR = 'twisted.internet.selectreactor.SelectReactor'
+# Reactor and Threading Settings
+TWISTED_REACTOR = None  # Let Crochet choose the reactor
+REACTOR_THREADPOOL_MAXSIZE = 1
+TWISTED_REACTOR_MANAGE = False  # Let Crochet handle the reactor lifecycle
+CONCURRENT_REQUESTS = 1  # Reduce concurrent requests to minimum
+CONCURRENT_REQUESTS_PER_DOMAIN = 1
+CONCURRENT_REQUESTS_PER_IP = 1
 
-# Disable reactor timeout
-REACTOR_THREADPOOL_MAXSIZE = None
-
-# Reduce concurrent requests to minimize thread issues
-CONCURRENT_REQUESTS = 4
-CONCURRENT_REQUESTS_PER_DOMAIN = 2
-CONCURRENT_REQUESTS_PER_IP = 2
-
-# Configure thread pool
-REACTOR_THREADPOOL_SIZE = 1
-
-# Disable features that might cause thread issues
-COOKIES_ENABLED = False
+# Disable features that might interfere with Crochet
 TELNETCONSOLE_ENABLED = False
 
 # Disable signals we don't need

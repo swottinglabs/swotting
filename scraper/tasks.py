@@ -6,7 +6,7 @@ from scraper.models import Spider as SpiderModel, Execution
 from scrapy.crawler import CrawlerRunner
 from scrapy.utils.project import get_project_settings
 from twisted.internet import reactor
-from crochet import setup, wait_for
+from crochet import setup, wait_for, no_setup
 from scrapy.signalmanager import dispatcher
 from scrapy import signals
 import importlib
@@ -15,6 +15,7 @@ import logging
 from scraper.statistics import SpiderStatisticsManager
 from scraper.executor import SpiderExecutor
 
+# Configure crochet to use the reactor without trying to install it
 setup()
 logger = get_task_logger(__name__)
 

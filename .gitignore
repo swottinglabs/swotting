@@ -164,3 +164,4 @@ Temporary Items
 # Local development files
 .local/
 .local*
+node_modules

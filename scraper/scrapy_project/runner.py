@@ -3,25 +3,28 @@ import crochet
 from scrapy.crawler import CrawlerRunner
 from scrapy.spiders import Spider
 from twisted.internet import reactor
+from scrapy.utils.project import get_project_settings
 
+# Initialize crochet only once
 crochet.setup()
 
 class ScrapyRunner:
     def __init__(self):
-        self.crawler = CrawlerRunner()
-        self._crawl_deferred = None
+        self.settings = get_project_settings()
+        # Ensure we don't try to manage the reactor
+        self.settings.set('TWISTED_REACTOR_MANAGE', False)
+        self.crawler = CrawlerRunner(self.settings)
 
+    @crochet.wait_for(timeout=3600)
     def crawl(self, spider_cls: Type[Spider], *args, **kwargs):
         """Run the spider with proper cleanup"""
         try:
-            self._crawl_deferred = self.crawler.crawl(spider_cls, *args, **kwargs)
-            return self._crawl_deferred
+            return self.crawler.crawl(spider_cls, *args, **kwargs)
         except Exception as e:
             print(f"Error starting crawler: {e}")
-            self.stop()
             raise
 
     def stop(self):
         """Stop the crawler and cleanup"""
-        if reactor.running:
-            reactor.stop() 
+        # We don't need to manually stop the reactor as Crochet handles it
+        pass 

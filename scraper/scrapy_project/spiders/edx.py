@@ -43,6 +43,7 @@ class EdxSpider(SitemapSpider, BaseSpider):
         count = 0
         
         for entry in entries:
+            print(f"Processing entry {entry}")
             # If in testing mode and we've reached the limit, stop
             if self.TESTING and count >= self.TEST_LIMIT:
                 break

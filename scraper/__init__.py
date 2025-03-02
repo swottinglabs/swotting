@@ -1,4 +1,4 @@
-from scrapy.utils.reactor import install_reactor
-
-# Install asyncio reactor before any other imports
-install_reactor('twisted.internet.asyncioreactor.AsyncioSelectorReactor')
+"""
+This is the scraper package initialization file.
+We don't need to install reactor here as Crochet will handle it.
+"""

@@ -115,7 +115,11 @@ jobs:
 
       - name: Deploy to DigitalOcean
         run: |
-          ssh -i ~/.ssh/id_rsa root@143.110.209.181 "cd /home/swotting && \
+          # First, pass GitHub token to droplet and login to container registry
+          ssh -o StrictHostKeyChecking=no root@143.110.209.181 "docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}"
+          
+          # Then continue with the rest of the deployment
+          ssh -o StrictHostKeyChecking=no root@143.110.209.181 "cd /home/swotting && \
             export ALGOLIA_APP_ID='${{ secrets.ALGOLIA_APP_ID }}' && \
             export ALGOLIA_API_KEY='${{ secrets.ALGOLIA_API_KEY }}' && \
             docker pull ghcr.io/${{ github.repository_owner }}/swotting-prod:latest && \

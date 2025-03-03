@@ -121,6 +121,13 @@ jobs:
           # Copy docker-compose.yml to the droplet
           scp -o StrictHostKeyChecking=no deployment/docker-compose.yml root@143.110.209.181:/home/swotting/docker-compose.yml
           
+          # Create .env file with environment variables
+          ssh -o StrictHostKeyChecking=no root@143.110.209.181 "cat > /home/swotting/.env << EOF
+          ALGOLIA_APP_ID=${{ secrets.ALGOLIA_APP_ID }}
+          ALGOLIA_API_KEY=${{ secrets.ALGOLIA_API_KEY }}
+          # Add any other environment variables your application needs
+          EOF"
+          
           # First, pass GitHub token to droplet and login to container registry
           ssh -o StrictHostKeyChecking=no root@143.110.209.181 "docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}"
           
@@ -131,7 +138,7 @@ jobs:
             docker pull ghcr.io/${{ github.repository_owner }}/swotting-prod:latest && \
             docker ps -a && \
             docker compose down && \
-            ALGOLIA_APP_ID='${{ secrets.ALGOLIA_APP_ID }}' ALGOLIA_API_KEY='${{ secrets.ALGOLIA_API_KEY }}' docker compose up -d && \
+            docker compose up -d && \
             CONTAINER_NAME=\$(docker compose ps -q web) && \
             (crontab -l 2>/dev/null; echo '0 4 * * * docker exec '\$CONTAINER_NAME' python manage.py scrape edx') | sort - | uniq - | crontab -"
 

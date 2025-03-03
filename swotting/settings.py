@@ -103,7 +103,7 @@ WSGI_APPLICATION = 'swotting.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL', 'postgres://swotting:swotting@127.0.0.1/swotting?sslmode=disable'),
+        default=os.getenv('DATABASE_URL', 'postgres://swotting:swotting@swottingdb:5432/swotting'),
         conn_max_age=600
     )
 }

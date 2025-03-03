@@ -115,6 +115,12 @@ jobs:
 
       - name: Deploy to DigitalOcean
         run: |
+          # First create the directory if it doesn't exist
+          ssh -o StrictHostKeyChecking=no root@143.110.209.181 "mkdir -p /home/swotting"
+          
+          # Copy docker-compose.yml to the droplet
+          scp -o StrictHostKeyChecking=no deployment/docker-compose.yml root@143.110.209.181:/home/swotting/docker-compose.yml
+          
           # First, pass GitHub token to droplet and login to container registry
           ssh -o StrictHostKeyChecking=no root@143.110.209.181 "docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}"
           

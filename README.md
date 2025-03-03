@@ -58,3 +58,10 @@ python manage.py init_db_data
 4. python manage.py create_resources_from_csv path-to-file
 
 
+# Random Notes
+- when installing it on a new droplet. Some things to consisder: 
+    - To get cert for new domain run: sudo certbot --nginx -d swotting.org -d www.swotting.org
+    - you need to create a new superuser on the new droplet by running: docker compose exec web python manage.py createsuperuser
+    - then run python manage.py init_db_data
+- The python manage.py migrate command in the .github/workflows/main.yml file drasticaly slowed down the deployment.
+    - 

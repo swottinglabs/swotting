@@ -35,7 +35,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '165.22.29.100',  # Peter's server
     '143.110.209.181', # Heiko's server
-    'localhost', 
+    'localhost',  # Useful for local testing
     '127.0.0.1',  
     'api.swotting.org',
     'swotting.org',
@@ -181,8 +181,8 @@ ALGOLIA = {
 
 
 # Add Celery settings
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'django-db'
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', 'redis://localhost:6379/0')
+CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND', 'django-db')
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'

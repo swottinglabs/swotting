@@ -143,6 +143,9 @@ jobs:
             docker compose down && \
             docker compose up -d && \
             CONTAINER_NAME=\$(docker compose ps -q web) && \
+            echo 'Running database migrations...' && \
+            docker exec \$CONTAINER_NAME python manage.py migrate && \
+            echo 'Setting up cron job for scraping...' && \
             (crontab -l 2>/dev/null; echo '0 4 * * * docker exec '\$CONTAINER_NAME' python manage.py scrape edx') | sort - | uniq - | crontab -"
 
             

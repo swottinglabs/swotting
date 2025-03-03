@@ -5,9 +5,14 @@ from uuid import uuid4
 import bs4
 from scrapy.spiders import SitemapSpider
 from scraper.scrapy_project.spiders.base_scraper import BaseSpider
+import logging
+import os
 
 
-TESTING = True
+# Set this to False for production runs
+TESTING = True 
+# If testing is enabled, limit number of processed items
+TEST_LIMIT = 10
 
 # Improvements:
 # Dynamically set the language based on the written out language on the website then get the iso code from that 
@@ -19,14 +24,14 @@ class EdxSpider(SitemapSpider, BaseSpider):
     base_url = 'https://www.edx.org'
     sitemap_urls = [base_url + '/sitemap.xml']
     custom_settings = {
-        'CONCURRENT_REQUESTS': 8,
+        'CONCURRENT_REQUESTS': 4,  # Reduced from 8 for more stability
         'DOWNLOAD_DELAY': 2,
         'RANDOMIZE_DOWNLOAD_DELAY': True,
     }
 
     # Constants
-    TESTING = True
-    TEST_LIMIT = 50
+    TESTING = TESTING  # Use global setting for testing mode
+    TEST_LIMIT = TEST_LIMIT  # Use global setting for test limit
     IS_FREE = False
     IS_LIMITED_FREE = True
     LANGUAGE = ['en']
@@ -38,25 +43,43 @@ class EdxSpider(SitemapSpider, BaseSpider):
         # Initialize both parent classes properly
         SitemapSpider.__init__(self, platform_id, *args, **kwargs)
         BaseSpider.__init__(self, platform_id, *args, **kwargs)
+        
+        # Add debug logging
+        self.logger.setLevel(logging.DEBUG)
+        self.logger.debug(f"EdxSpider initialized. TESTING mode: {self.TESTING}, TEST_LIMIT: {self.TEST_LIMIT}")
+        
+        # Print database settings from environment
+        db_url = os.environ.get('DATABASE_URL', 'Not set in environment')
+        self.logger.debug(f"Spider init - DATABASE_URL environment: {db_url}")
 
     def sitemap_filter(self, entries):
         count = 0
         
+        self.logger.info(f"Sitemap filter received {len(list(entries))} entries. Testing mode: {self.TESTING}")
+        
         for entry in entries:
             # If in testing mode and we've reached the limit, stop
             if self.TESTING and count >= self.TEST_LIMIT:
+                self.logger.debug(f"Test limit reached ({self.TEST_LIMIT}), stopping sitemap filter")
                 break
                 
             url = entry['loc']
             pattern = rf'^{re.escape(self.base_url)}/learn/[^/]+/[^/]+$'
             
             if re.match(pattern, url):
+                self.logger.debug(f"URL matched pattern: {url}")
                 entry['loc'] = self._convert_to_json_url(entry['loc'])
                 count += 1
                 yield entry
+            else:
+                self.logger.debug(f"URL did not match pattern: {url}")
+        
+        self.logger.info(f"Sitemap filter yielded {count} entries")
 
     def start_requests(self):
+        self.logger.info("Starting requests for EdxSpider")
         for request in SitemapSpider.start_requests(self):
+            self.logger.debug(f"Sending request to: {request.url}")
             yield request.replace(
                 url=request.url,
                 dont_filter=True,
@@ -180,6 +203,8 @@ class EdxSpider(SitemapSpider, BaseSpider):
                 self.logger.warning(f"No course data found in response from {response.url}")
                 return
             
+            self.logger.debug(f"Found course: {course.get('title')}")
+            
             active_run = course.get('activeCourseRun', {})
             clean_url = response.url.replace('page-data/', '').replace('page-data.json', '')
 
@@ -229,6 +254,7 @@ class EdxSpider(SitemapSpider, BaseSpider):
             }
 
             self.logger.info(f"Successfully parsed course: {learning_resource['name']}")
+            self.logger.debug(f"Yielding learning resource: {learning_resource['name']} with ID {learning_resource['platform_course_id']}")
             yield {
                 'type': 'learning_resource',
                 'data': learning_resource
@@ -236,6 +262,8 @@ class EdxSpider(SitemapSpider, BaseSpider):
             
         except Exception as e:
             self.logger.error(f"Error parsing JSON from {response.url}: {str(e)}")
+            import traceback
+            self.logger.error(f"Full error traceback: {traceback.format_exc()}")
 
     def closed(self, reason):
         """Handle spider cleanup"""

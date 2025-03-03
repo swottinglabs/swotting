@@ -21,6 +21,10 @@ ROOT_DIR = Path(__file__).resolve().parent.parent.parent.parent
 # Add the root directory to the Python path
 sys.path.insert(0, str(ROOT_DIR))
 
+# Print debugging information about environment
+print(f"Scrapy settings initializing. DATABASE_URL: {os.environ.get('DATABASE_URL', 'Not set')}")
+print(f"Root directory: {ROOT_DIR}")
+
 # Setting up Django's settings module name
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'swotting.settings')
 
@@ -28,6 +32,16 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'swotting.settings')
 import django
 if not django.conf.settings.configured:
     django.setup()
+    print("Django settings configured in Scrapy settings.")
+else:
+    print("Django was already configured.")
+
+# After Django is set up, check database connections
+from django.db import connections
+db_settings = connections.databases.get('default', {})
+db_host = db_settings.get('HOST', 'unknown')
+db_port = db_settings.get('PORT', 'unknown')
+print(f"Scrapy using Django database connection: HOST={db_host}, PORT={db_port}")
 
 BOT_NAME = "scrapy_project"
 
@@ -148,6 +162,11 @@ TELNETCONSOLE_ENABLED = False
 # Disable signals we don't need
 SIGNALS_ENABLED = False
 
+# Enhanced logging for debugging
+LOG_LEVEL = 'DEBUG'  # Set to DEBUG for more detailed logs
+LOG_FORMAT = '%(asctime)s [%(name)s] %(levelname)s: %(message)s'
+LOG_STDOUT = True    # Also output to stdout
+
 # Basic feed settings
 FEEDS = {
     '%(name)s.jl': {
@@ -160,13 +179,6 @@ FEEDS = {
 # Configure cleanup and shutdown
 CLOSESPIDER_TIMEOUT = 180  # 3 minutes timeout
 CLOSESPIDER_ERRORCOUNT = 1  # Stop after first error
-
-# Configure logging
-LOG_LEVEL = 'INFO'
-LOG_FORMAT = '%(asctime)s [%(name)s] %(levelname)s: %(message)s'
-
-# Disable retry middleware
-RETRY_ENABLED = False
 
 # Configure retry and timeout settings
 RETRY_TIMES = 3

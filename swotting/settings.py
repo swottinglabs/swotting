@@ -44,7 +44,8 @@ ALLOWED_HOSTS = [
 
 CSRF_TRUSTED_ORIGINS = [
     'https://api.swotting.org',
-    'https://swotting.org'
+    'https://swotting.org',
+    'https://www.swotting.org'
 ]
 
 

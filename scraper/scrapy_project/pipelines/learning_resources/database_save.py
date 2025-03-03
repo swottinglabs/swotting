@@ -14,17 +14,15 @@ import logging
 import os
 import datetime
 
-# Configure a file logger for the database save pipeline
-DB_LOGGER = logging.getLogger('db_pipeline_logger')
-DB_LOGGER.setLevel(logging.DEBUG)
-log_file = f"db_pipeline_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
-file_handler = logging.FileHandler(log_file)
-file_handler.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-file_handler.setFormatter(formatter)
-DB_LOGGER.addHandler(file_handler)
-# Make sure this logger propagates regardless of Django settings
-DB_LOGGER.propagate = False
+# Set up direct debug printing
+def db_print(message, level="INFO"):
+    """Print database debug info to console"""
+    timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    print(f"DB {level} [{timestamp}]: {message}")
+
+# Log initialization
+db_print(f"Database pipeline initialized")
+db_print(f"Current working directory: {os.getcwd()}")
 
 logger = logging.getLogger(__name__)
 
@@ -36,8 +34,7 @@ class DatabaseSavePipeline:
         # Add debug information about database configuration
         db_url = os.environ.get('DATABASE_URL', 'Not set in environment')
         self.logger.info(f"DatabaseSavePipeline initialized with DATABASE_URL environment: {db_url}")
-        DB_LOGGER.info(f"DatabaseSavePipeline initialized with DATABASE_URL environment: {db_url}")
-        DB_LOGGER.info(f"Database pipeline logs being written to: {log_file}")
+        db_print(f"DatabaseSavePipeline initialized with DATABASE_URL environment: {db_url}")
         
         # Print current database connection info
         db_settings = connections.databases.get('default')
@@ -48,11 +45,21 @@ class DatabaseSavePipeline:
             db_name = db_settings.get('NAME', 'unknown')
             msg = f"Current database connection settings: HOST={db_host}, PORT={db_port}, NAME={db_name}"
             self.logger.info(msg)
-            DB_LOGGER.info(msg)
+            db_print(msg)
         else:
             msg = "Could not retrieve database connection settings"
             self.logger.warning(msg)
-            DB_LOGGER.warning(msg)
+            db_print(msg, "WARNING")
+
+        # Try to verify write access
+        try:
+            test_file = "db_test.txt"
+            with open(test_file, 'w') as f:
+                f.write("Test")
+            os.remove(test_file)
+            db_print("Successfully tested file write permission")
+        except Exception as e:
+            db_print(f"No write permission in current directory: {e}", "WARNING")
 
     def _clean_url(self, url: Any) -> str:
         """Clean and validate URL"""
@@ -72,12 +79,12 @@ class DatabaseSavePipeline:
         """
         if item.get('type') != 'learning_resource':
             self.logger.info(f"Skipping non-learning-resource item type: {item.get('type')}")
-            DB_LOGGER.info(f"Skipping non-learning-resource item type: {item.get('type')}")
+            db_print(f"Skipping non-learning-resource item type: {item.get('type')}")
             return item
 
         try:
             resource_name = item['data'].get('name', 'unnamed')
-            DB_LOGGER.info(f"Processing learning resource: {resource_name}")
+            db_print(f"Processing learning resource: {resource_name}")
             self.logger.info(f"Processing learning resource: {resource_name}")
             
             # Clean URLs before saving
@@ -96,19 +103,19 @@ class DatabaseSavePipeline:
                         creator['platform_thumbnail_url'] = self._clean_url(creator['platform_thumbnail_url'])
 
             # Save to database
-            DB_LOGGER.info(f"Calling _save_learning_resource for: {resource_name}")
+            db_print(f"Calling _save_learning_resource for: {resource_name}")
             self._save_learning_resource(data, spider)
-            DB_LOGGER.info(f"Successfully saved learning resource: {resource_name}")
+            db_print(f"Successfully saved learning resource: {resource_name}")
             self.logger.info(f"Successfully saved learning resource: {resource_name}")
             return item
         except Exception as e:
             spider.logger.error(f'Error saving to database: {str(e)}')
-            DB_LOGGER.error(f'Error saving to database: {str(e)}')
+            db_print(f'Error saving to database: {str(e)}', "ERROR")
             # More detailed error information
             import traceback
             trace = traceback.format_exc()
             self.logger.error(f"Full error traceback: {trace}")
-            DB_LOGGER.error(f"Full error traceback: {trace}")
+            db_print(f"Full error traceback: {trace}", "ERROR")
             raise
 
     def _get_or_create_tags(self, tag_names: List[str]) -> List[Tag]:
@@ -119,39 +126,43 @@ class DatabaseSavePipeline:
         """Synchronous method to save learning resource to database"""
         try:
             resource_name = data.get('name', 'unnamed')
-            DB_LOGGER.info(f"Starting database transaction for learning resource: {resource_name}")
+            db_print(f"Starting database transaction for learning resource: {resource_name}")
             self.logger.info(f"Starting database transaction for learning resource: {resource_name}")
             
             with transaction.atomic():
                 # Get or create platform
+                db_print("Creating or getting platform")
                 platform, platform_created = Platform.objects.get_or_create(
                     name=data['platform_id']
                 )
-                DB_LOGGER.info(f"Platform: {platform.name} ({'created' if platform_created else 'existing'})")
+                db_print(f"Platform: {platform.name} ({'created' if platform_created else 'existing'})")
                 self.logger.info(f"Platform: {platform.name} ({'created' if platform_created else 'existing'})")
 
                 # Get or create format
                 format_name = data.get('format')
                 format_obj = None
                 if format_name:
+                    db_print(f"Creating or getting format: {format_name}")
                     format_obj, format_created = Format.objects.get_or_create(
                         name=format_name
                     )
-                    DB_LOGGER.info(f"Format: {format_obj.name} ({'created' if format_created else 'existing'})")
+                    db_print(f"Format: {format_obj.name} ({'created' if format_created else 'existing'})")
                     self.logger.info(f"Format: {format_obj.name} ({'created' if format_created else 'existing'})")
 
                 # Get or create level
                 level_name = data.get('level')
                 level_obj = None
                 if level_name:
+                    db_print(f"Creating or getting level: {level_name}")
                     level_obj, level_created = Level.objects.get_or_create(
                         name=level_name
                     )
-                    DB_LOGGER.info(f"Level: {level_obj.name} ({'created' if level_created else 'existing'})")
+                    db_print(f"Level: {level_obj.name} ({'created' if level_created else 'existing'})")
                     self.logger.info(f"Level: {level_obj.name} ({'created' if level_created else 'existing'})")
 
                 # Create or update creators
                 creators = []
+                db_print(f"Processing {len(data.get('creators', []))} creators")
                 for creator_data in data.get('creators', []):
                     creator, creator_created = Creator.objects.get_or_create(
                         platform_id=platform,
@@ -164,26 +175,33 @@ class DatabaseSavePipeline:
                         }
                     )
                     creators.append(creator)
-                    DB_LOGGER.info(f"Creator: {creator.name} ({'created' if creator_created else 'existing'})")
+                    db_print(f"Creator: {creator.name} ({'created' if creator_created else 'existing'})")
                     self.logger.info(f"Creator: {creator.name} ({'created' if creator_created else 'existing'})")
 
                 # Get or create languages
                 languages = []
+                db_print(f"Processing {len(data.get('languages', []))} languages")
                 for lang_code in data.get('languages', []):
                     lang, lang_created = Language.objects.get_or_create(
                         iso_code=lang_code,
                         defaults={'name': lang_code}
                     )
                     languages.append(lang)
-                    DB_LOGGER.info(f"Language: {lang.iso_code} ({'created' if lang_created else 'existing'})")
+                    db_print(f"Language: {lang.iso_code} ({'created' if lang_created else 'existing'})")
                     self.logger.info(f"Language: {lang.iso_code} ({'created' if lang_created else 'existing'})")
 
                 # Get or create tags
+                db_print(f"Processing {len(data.get('tags', []))} tags")
                 tags = Tag.get_or_create_tags(data.get('tags', []))
-                DB_LOGGER.info(f"Created/found {len(tags)} tags")
+                db_print(f"Created/found {len(tags)} tags")
                 self.logger.info(f"Created/found {len(tags)} tags")
 
                 # Create or update learning resource
+                db_print("About to create or update learning resource")
+                
+                # Print key fields for debugging
+                db_print(f"Platform ID: {platform.id}, Platform course ID: {data['platform_course_id']}")
+                
                 resource, created = LearningResource.objects.get_or_create(
                     platform_id=platform,
                     platform_course_id=data['platform_course_id'],
@@ -208,8 +226,11 @@ class DatabaseSavePipeline:
                         'platform_last_update': data.get('platform_last_update'),
                     }
                 )
+                
+                db_print(f"Resource {'created' if created else 'updated'} with ID: {resource.id}")
 
                 # Set many-to-many relationships
+                db_print("Setting many-to-many relationships")
                 resource.creators.set(creators)
                 resource.languages.set(languages)
                 resource.tags.set(tags)
@@ -218,7 +239,7 @@ class DatabaseSavePipeline:
                 action = "Created" if created else "Updated"
                 msg = f"{action} learning resource: {data['name']} (Platform: {platform.name}, ID: {data['platform_course_id']})"
                 self.logger.info(msg)
-                DB_LOGGER.info(msg)
+                db_print(msg)
                 
                 # Try to verify that the resource was actually saved
                 verification = LearningResource.objects.filter(
@@ -228,13 +249,17 @@ class DatabaseSavePipeline:
                 
                 msg = f"Verification of save - resource exists in DB: {verification}"
                 self.logger.info(msg)
-                DB_LOGGER.info(msg)
+                db_print(msg)
+                
+                # Check row count as a sanity check
+                count = LearningResource.objects.count()
+                db_print(f"Total learning resources in database: {count}")
 
         except Exception as e:
             self.logger.error(f"Error saving learning resource {data.get('name')}: {str(e)}")
-            DB_LOGGER.error(f"Error saving learning resource {data.get('name')}: {str(e)}")
+            db_print(f"Error saving learning resource {data.get('name')}: {str(e)}", "ERROR")
             import traceback
             trace = traceback.format_exc()
             self.logger.error(f"Full error traceback: {trace}")
-            DB_LOGGER.error(f"Full error traceback: {trace}")
+            db_print(f"Full error traceback: {trace}", "ERROR")
             raise 

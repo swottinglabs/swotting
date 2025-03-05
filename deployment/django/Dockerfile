@@ -16,12 +16,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Copy dependency files first to leverage Docker cache
 COPY pyproject.toml .
+COPY requirements.txt .
 COPY swotting/ swotting/
 COPY manage.py .
 
 # Install Python dependencies
 RUN python -m pip install --upgrade pip && \
-    python -m pip install -e .
+    python -m pip install -e . && \
+    python -m pip install -r requirements.txt
 
 # Now copy the rest of your project files
 COPY . .

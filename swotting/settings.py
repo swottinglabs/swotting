@@ -48,6 +48,11 @@ CSRF_TRUSTED_ORIGINS = [
     'https://www.swotting.org'
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    "https://www.swotting.org",
+    "https://swotting.org", 
+]
+
 
 # Application definition
 
@@ -65,10 +70,12 @@ INSTALLED_APPS = [
     'algoliasearch_django',
     'django_celery_results',
     'django_celery_beat',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

@@ -10,7 +10,7 @@ import os
 
 
 # Set this to False for production runs
-TESTING = True 
+TESTING = False 
 # If testing is enabled, limit number of processed items
 TEST_LIMIT = 10
 

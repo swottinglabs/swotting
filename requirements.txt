@@ -90,3 +90,5 @@ whitenoise==6.3.0
 wrapt==1.17.2
 xmltodict==0.13.0
 zope.interface==7.2
+langchain-openai
+langchain-core

@@ -16,6 +16,7 @@ services:
     environment:
         - ALGOLIA_APP_ID=${ALGOLIA_APP_ID}
         - ALGOLIA_API_KEY=${ALGOLIA_API_KEY}
+        - OPENAI_API_KEY=${OPENAI_API_KEY}
     ports:
       - "127.0.0.1:8006:8000"
     command: gunicorn -b 0.0.0.0:8000 --timeout 120 --capture-output swotting.wsgi

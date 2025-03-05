@@ -23,6 +23,7 @@ jobs:
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
       ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
       ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
     services:
       postgres:
         image: ankane/pgvector:latest
@@ -125,6 +126,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no root@143.110.209.181 "cat > /home/swotting/.env << EOF
           ALGOLIA_APP_ID=${{ secrets.ALGOLIA_APP_ID }}
           ALGOLIA_API_KEY=${{ secrets.ALGOLIA_API_KEY }}
+          OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
           DATABASE_URL=postgres://swotting:swotting@swottingdb:5432/swotting?sslmode=disable
           CELERY_BROKER_URL=redis://redis:6379/0
           CELERY_RESULT_BACKEND=django-db
@@ -138,6 +140,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no root@143.110.209.181 "cd /home/swotting && \
             export ALGOLIA_APP_ID='${{ secrets.ALGOLIA_APP_ID }}' && \
             export ALGOLIA_API_KEY='${{ secrets.ALGOLIA_API_KEY }}' && \
+            export OPENAI_API_KEY='${{ secrets.OPENAI_API_KEY }}' && \
             docker pull ghcr.io/${{ github.repository_owner }}/swotting-prod:latest && \
             docker ps -a && \
             docker compose down && \

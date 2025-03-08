@@ -179,11 +179,13 @@ REST_FRAMEWORK = {
 # Algolia Settings
 ALGOLIA_APP_ID = os.getenv('ALGOLIA_APP_ID')
 ALGOLIA_API_KEY = os.getenv('ALGOLIA_API_KEY')
+ALGOLIA_INDEX_PREFIX = os.getenv('ALGOLIA_INDEX_PREFIX', '')
 
 # Algolia Settings
 ALGOLIA = {
     'APPLICATION_ID': os.getenv('ALGOLIA_APP_ID'),
-    'API_KEY': os.getenv('ALGOLIA_API_KEY')
+    'API_KEY': os.getenv('ALGOLIA_API_KEY'),
+    'INDEX_PREFIX': os.getenv('ALGOLIA_INDEX_PREFIX', '')
 }
 
 

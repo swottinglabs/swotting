@@ -27,6 +27,12 @@ class EdxSpider(SitemapSpider, BaseSpider):
         'CONCURRENT_REQUESTS': 4,  # Reduced from 8 for more stability
         'DOWNLOAD_DELAY': 2,
         'RANDOMIZE_DOWNLOAD_DELAY': True,
+        'LOG_LEVEL': 'DEBUG',  # Ensure detailed logging
+        'CLOSESPIDER_ERRORCOUNT': 5,  # Allow more errors before stopping
+        'CLOSESPIDER_TIMEOUT': 7200,  # 2 hours timeout
+        'DOWNLOAD_TIMEOUT': 180,  # 3 minutes timeout for each request
+        'RETRY_TIMES': 3,  # Retry failed requests 3 times
+        'RETRY_HTTP_CODES': [500, 502, 503, 504, 522, 524, 408, 429],  # Retry on these status codes
     }
 
     # Constants
@@ -44,9 +50,14 @@ class EdxSpider(SitemapSpider, BaseSpider):
         SitemapSpider.__init__(self, platform_id, *args, **kwargs)
         BaseSpider.__init__(self, platform_id, *args, **kwargs)
         
-        # Add debug logging
-        self.logger.setLevel(logging.DEBUG)
-        self.logger.debug(f"EdxSpider initialized. TESTING mode: {self.TESTING}, TEST_LIMIT: {self.TEST_LIMIT}")
+        # Add counters for debugging
+        self.sitemap_urls_found = 0
+        self.urls_matched_pattern = 0
+        self.requests_made = 0
+        self.successful_parses = 0
+        self.sitemap_files_processed = 0
+        
+        self.logger.info(f"EdxSpider initialized with TESTING={self.TESTING}, TEST_LIMIT={self.TEST_LIMIT}")
         
         # Print database settings from environment
         db_url = os.environ.get('DATABASE_URL', 'Not set in environment')
@@ -54,10 +65,58 @@ class EdxSpider(SitemapSpider, BaseSpider):
 
     def sitemap_filter(self, entries):
         count = 0
+        total_entries = list(entries)
+        self.sitemap_urls_found = len(total_entries)
         
-        self.logger.info(f"Sitemap filter received {len(list(entries))} entries. Testing mode: {self.TESTING}")
+        self.logger.info(f"Sitemap filter received {self.sitemap_urls_found} entries. Testing mode: {self.TESTING}")
         
-        for entry in entries:
+        # Analyze URL patterns but log only at debug level
+        url_patterns = {}
+        for entry in total_entries:
+            url = entry['loc']
+            parts = url.replace(self.base_url, '').strip('/').split('/')
+            if len(parts) >= 1:
+                pattern = '/'.join(parts[:min(3, len(parts))])
+                url_patterns[pattern] = url_patterns.get(pattern, 0) + 1
+        
+        # Log URL patterns at debug level only
+        self.logger.debug(f"URL patterns found in sitemap:")
+        for pattern, count in sorted(url_patterns.items(), key=lambda x: x[1], reverse=True)[:5]:  # Only log top 5
+            self.logger.debug(f"  - Pattern: {pattern}, Count: {count}")
+            
+        # Move detailed alternative pattern analysis to debug level
+        potential_course_urls = 0
+        current_pattern = rf'^{re.escape(self.base_url)}/learn/[^/]+/[^/]+$'
+        
+        alternative_patterns = [
+            r'/course/',
+            r'/professional-certificate/',
+            r'/xseries/',
+            r'/micromasters/',
+            r'/learn/.+/.+/.+',  # Deeper learn paths
+        ]
+        
+        alternative_matches = {pattern: 0 for pattern in alternative_patterns}
+        
+        for entry in total_entries:
+            url = entry['loc']
+            
+            if not re.match(current_pattern, url):
+                for pattern in alternative_patterns:
+                    if re.search(pattern, url):
+                        # Remove individual URL logging
+                        alternative_matches[pattern] += 1
+                        potential_course_urls += 1
+                        break
+        
+        # Log summary of alternative patterns at debug level
+        self.logger.debug(f"Found {potential_course_urls} potential course URLs that don't match our current pattern")
+        for pattern, count in alternative_matches.items():
+            if count > 0:
+                self.logger.debug(f"  - Alternative pattern '{pattern}' matched {count} URLs")
+            
+        # Continue with normal filtering
+        for entry in total_entries:
             # If in testing mode and we've reached the limit, stop
             if self.TESTING and count >= self.TEST_LIMIT:
                 self.logger.debug(f"Test limit reached ({self.TEST_LIMIT}), stopping sitemap filter")
@@ -67,30 +126,63 @@ class EdxSpider(SitemapSpider, BaseSpider):
             pattern = rf'^{re.escape(self.base_url)}/learn/[^/]+/[^/]+$'
             
             if re.match(pattern, url):
-                self.logger.debug(f"URL matched pattern: {url}")
+                # Remove individual URL logging for matched URLs
                 entry['loc'] = self._convert_to_json_url(entry['loc'])
                 count += 1
+                self.urls_matched_pattern += 1
                 yield entry
             else:
-                self.logger.debug(f"URL did not match pattern: {url}")
+                # Remove logging for non-matched URLs
+                pass
         
-        self.logger.info(f"Sitemap filter yielded {count} entries")
+        self.logger.info(f"Sitemap filter yielded {self.urls_matched_pattern} matching URLs out of {self.sitemap_urls_found} total")
 
     def start_requests(self):
         self.logger.info("Starting requests for EdxSpider")
         for request in SitemapSpider.start_requests(self):
-            self.logger.debug(f"Sending request to: {request.url}")
+            # Remove individual request URL logging
+            self.requests_made += 1
             yield request.replace(
                 url=request.url,
                 dont_filter=True,
                 meta={'dont_retry': False}
             )
+        self.logger.info(f"Total initial requests scheduled: {self.requests_made}")
+
+    def _parse_sitemap(self, response):
+        self.sitemap_files_processed += 1
+        self.logger.info(f"Parsing sitemap: {response.url} (sitemap #{self.sitemap_files_processed})")
+        
+        # Check if it's a sitemap index
+        body = response.body
+        if b'<sitemapindex' in body:
+            # Count how many sitemaps are in this index
+            sitemap_count = body.count(b'<sitemap>')
+            self.logger.info(f"Sitemap index contains {sitemap_count} child sitemaps")
+        elif b'<urlset' in body:
+            # Count how many URLs are in this sitemap
+            url_count = body.count(b'<url>')
+            self.logger.info(f"Found urlset sitemap with {url_count} URLs")
+            
+            # Move sample URL logging to debug level and reduce to 2 samples
+            import re
+            urls = re.findall(b'<loc>([^<]+)</loc>', body)[:2]
+            for url in urls:
+                self.logger.debug(f"Sample URL from sitemap: {url.decode('utf-8')}")
+        else:
+            self.logger.warning(f"Unknown sitemap format at {response.url}")
+        
+        # Call parent method to ensure all functionality is preserved
+        for result in super(EdxSpider, self)._parse_sitemap(response):
+            yield result
 
     def _convert_to_json_url(self, course_url):
         """Convert course URL to corresponding page-data.json URL."""
         # Remove base URL
         path = course_url.replace(self.base_url, '')
-        return f"{self.base_url}/page-data{path}/page-data.json"
+        json_url = f"{self.base_url}/page-data{path}/page-data.json"
+        # Remove individual URL conversion logging
+        return json_url
 
     def _clean_html_description(self, html_description):
         """Remove <p> tags and newlines from HTML description."""
@@ -194,6 +286,7 @@ class EdxSpider(SitemapSpider, BaseSpider):
         return level_mapping.get(normalized_level)
 
     def parse(self, response):
+        # Keep high-level parse logging for production
         self.logger.info(f"Parsing URL: {response.url}")
         try:
             json_data = response.json()
@@ -203,6 +296,7 @@ class EdxSpider(SitemapSpider, BaseSpider):
                 self.logger.warning(f"No course data found in response from {response.url}")
                 return
             
+            # Move detailed course info to debug level
             self.logger.debug(f"Found course: {course.get('title')}")
             
             active_run = course.get('activeCourseRun', {})
@@ -253,14 +347,16 @@ class EdxSpider(SitemapSpider, BaseSpider):
                 'format': self.FORMAT,
             }
 
-            self.logger.info(f"Successfully parsed course: {learning_resource['name']}")
-            self.logger.debug(f"Yielding learning resource: {learning_resource['name']} with ID {learning_resource['platform_course_id']}")
+            self.successful_parses += 1
+            self.logger.info(f"Successfully parsed course: {course.get('title')} ({self.successful_parses} total)")
+            
             yield {
                 'type': 'learning_resource',
                 'data': learning_resource
             }
             
         except Exception as e:
+            # Keep detailed error logging for production
             self.logger.error(f"Error parsing JSON from {response.url}: {str(e)}")
             import traceback
             self.logger.error(f"Full error traceback: {traceback.format_exc()}")
@@ -268,4 +364,10 @@ class EdxSpider(SitemapSpider, BaseSpider):
     def closed(self, reason):
         """Handle spider cleanup"""
         self.logger.info(f"Spider closed: {reason}")
+        self.logger.info(f"Final statistics:")
+        self.logger.info(f"- Total sitemap files processed: {self.sitemap_files_processed}")
+        self.logger.info(f"- Total sitemap URLs found: {self.sitemap_urls_found}")
+        self.logger.info(f"- URLs matching pattern: {self.urls_matched_pattern}")
+        self.logger.info(f"- Total requests made: {self.requests_made}")
+        self.logger.info(f"- Successfully parsed courses: {self.successful_parses}")
         # super().closed(reason)
